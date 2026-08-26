@@ -28,6 +28,7 @@ listed on each run, so the gap stays visible, so the
 build stays green while translations are still being produced. Tighten a
 threshold the moment a language has a committed reviewer.
 """
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -44,6 +45,44 @@ LANGUAGES = {
     "fr": 0.00,
     "es": 0.00,
 }
+
+
+# A body this similar to its English source has not been translated, whatever
+# the front matter claims. Tuned so a genuine translation of a short page full
+# of identifiers still passes: CG-2024-00001's Dutch body shares proper nouns,
+# CVEs and version strings with the English and lands well under this.
+ENGLISH_OVERLAP = 0.85
+
+
+def body_tokens(path: Path) -> set:
+    """Words of the body, without front matter, markup or identifiers.
+
+    Identifiers are stripped because they are supposed to be identical in every
+    language. Leaving them in would make a properly translated case page look
+    like an untranslated one.
+    """
+    text = path.read_text()
+    body = text.split("---", 2)[-1]
+    body = re.sub(r"\{\{<[^>]*>\}\}", " ", body)          # shortcodes
+    body = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", body)     # link targets
+    body = re.sub(r"`[^`]*`", " ", body)                   # code spans
+    body = re.sub(r"https?://\S+", " ", body)               # bare URLs
+    words = re.split(r"[^0-9A-Za-z\u00c0-\u024f]+", body.lower())
+    return {w for w in words
+            if len(w) > 3 and not re.fullmatch(r"(cve|cwe|cpe|cg)?[0-9].*", w)}
+
+
+def is_reviewed(path: Path) -> bool:
+    """True when a native speaker has signed the page off in its front matter."""
+    return bool(re.search(r"^reviewed:\s*true\s*$", path.read_text(), re.M))
+
+
+def looks_like_source(translated: Path, source: Path) -> float:
+    """Fraction of the translation's words that also appear in the English."""
+    t, s = body_tokens(translated), body_tokens(source)
+    if len(t) < 12:            # too short to judge; the title carries it
+        return 0.0
+    return len(t & s) / len(t)
 
 
 def git_mtime(path: Path) -> int:
@@ -90,12 +129,12 @@ def main() -> int:
         return 1
 
     failed = False
-    print(f"{'language':<10} {'translated':>12} {'missing':>9} {'stale':>7}   status")
-    print("-" * 62)
+    print(f"{'language':<10} {'translated':>12} {'missing':>9} {'stale':>7} {'english':>8} {'unreviewed':>11}   status")
+    print("-" * 86)
 
     details: list[str] = []
     for lang, threshold in LANGUAGES.items():
-        translated = missing = stale = 0
+        translated = missing = stale = english = unreviewed = 0
         for key, byline in sorted(pages.items()):
             f = byline.get(lang)
             # A file that exists but is explicitly flagged as still carrying the
@@ -109,21 +148,33 @@ def main() -> int:
             if lang in byline:
                 translated += 1
                 src = byline.get(DEFAULT_LANG)
-                if lang != DEFAULT_LANG and src and git_mtime(src) > git_mtime(byline[lang]):
-                    stale += 1
-                    details.append(f"  stale   [{lang}] {key}")
+                if lang != DEFAULT_LANG and src:
+                    if git_mtime(src) > git_mtime(byline[lang]):
+                        stale += 1
+                        details.append(f"  stale   [{lang}] {key}")
+                    # The flag above is manual, so it only catches the honest
+                    # mistake. This catches the other one.
+                    overlap = looks_like_source(byline[lang], src)
+                    if overlap >= ENGLISH_OVERLAP:
+                        english += 1
+                        details.append(
+                            f"  ENGLISH [{lang}] {key} "
+                            f"({overlap:.0%} of its words are in the English body)"
+                        )
+                    if not is_reviewed(byline[lang]):
+                        unreviewed += 1
             else:
                 missing += 1
                 details.append(f"  missing [{lang}] {key}")
 
         coverage = translated / total
-        ok = coverage >= threshold and not (threshold >= 1.0 and stale)
+        ok = coverage >= threshold and not (threshold >= 1.0 and stale) and not english
         if not ok:
             failed = True
         print(
             f"{lang:<10} {translated:>4}/{total:<3} {coverage:>5.0%} "
-            f"{missing:>9} {stale:>7}   "
-            f"{'ok' if ok else 'BELOW THRESHOLD'} (need {threshold:.0%})"
+            f"{missing:>9} {stale:>7} {english:>8} {unreviewed:>11}   "
+            f"{'ok' if ok else 'FAIL'} (need {threshold:.0%})"
         )
 
     if details:

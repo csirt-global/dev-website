@@ -4,31 +4,46 @@
 # email saying their system is vulnerable needs to establish, in seconds, that
 # we are a real registered foundation and not a phishing attempt. Every row is
 # something they can verify on a third-party source, not a claim we make.
+#
+# Labels and notes are i18n keys, because they are the site talking. `value` is
+# a literal fact and is never translated: an RSIN, a registered address and a
+# phone number are the same in every language, and a filename is a filename.
+# Where the value is a description rather than an identifier, `valueKey` is an
+# i18n key instead.
 rows:
-  - key: "Legal entity"
+  - label: verify_legal_entity
     value: "Stichting CSIRT.global"
     url: "https://openkvk.nl/company/stichting-stichting-csirtglobal-85998265"
-    note: "KvK register"
-  - key: "RSIN"
+    noteKey: verify_note_kvk
+
+  - label: verify_rsin
     value: "863825655"
-  - key: "Registered office"
+
+  - label: verify_office
     value: "Maanweg 174, 2516 AB Den Haag, Netherlands"
-  - key: "Telephone"
+
+  - label: verify_telephone
     value: "+31 70 41 90 309"
-  - key: "Tax status"
-    value: "ANBI (Dutch public benefit organisation)"
+
+  - label: verify_tax_status
+    valueKey: verify_tax_status_value
     url: "/about/anbi/"
-    note: "published accounts"
-  - key: "Disclosure policy"
-    value: "Coordinated Vulnerability Disclosure via Zerocopter"
+    noteKey: verify_note_accounts
+
+  - label: verify_disclosure
+    valueKey: verify_disclosure_value
     url: "https://app.zerocopter.com/en/cvd/8b2fbf09-539f-4b09-bee0-2ec875cb3321"
-  - key: "security.txt"
+
+  # The label is a filename, not a word, so it stays literal in every language.
+  - literalLabel: "security.txt"
     value: "csirt.global/.well-known/security.txt"
     url: "/.well-known/security.txt"
-    note: "RFC 9116"
-  - key: "Case register"
-    value: "Every case we open is published"
+    noteKey: verify_note_rfc
+
+  - label: verify_case_register
+    valueKey: verify_case_register_value
     url: "/cases/"
-  - key: "Sister organisation"
-    value: "Dutch Institute for Vulnerability Disclosure"
+
+  - label: verify_sister
+    valueKey: verify_sister_value
     url: "https://www.divd.nl"
