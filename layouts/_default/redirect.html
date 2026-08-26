@@ -6,5 +6,5 @@
 <meta http-equiv="refresh" content="0; url={{ .Params.redirectTo | absURL }}">
 <meta name="robots" content="noindex">
 </head><body>
-<p>Please follow <a href="{{ .Params.redirectTo | absURL }}">this link</a>.</p>
+<p>{{ i18n "redirect_moved" }} <a href="{{ .Params.redirectTo | absURL }}">{{ i18n "redirect_link" }}</a></p>
 </body></html>

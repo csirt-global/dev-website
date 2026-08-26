@@ -61,5 +61,8 @@ params:
   # deployment, a fork's Pages URL, a local build — marks itself as not
   # production: noindex, robots disallow, and a banner on every page.
   productionHost: "csirt.global"
+  # The language everything is written in first. Pages in any other language are
+  # translations, and say so until a native speaker signs them off.
+  sourceLanguage: "en"
   description: "CSIRT.global is a global, volunteer-led, not-for-profit organization, aiming to make the world more secure by going after vulnerabilities no-one else cares for."
   ogImage: "/android-chrome-512x512.png"

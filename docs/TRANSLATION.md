@@ -90,6 +90,33 @@ Stale pages count as failures for any language at 100%.
 
 ---
 
+## Reviewed, or not
+
+Every translation on this site was written without a native speaker to check it. Any page not in the
+source language therefore carries a visible notice saying so, in that language.
+
+It is opt-in. A reviewer who has read a page adds one line to its front matter:
+
+```yaml
+reviewed: true
+```
+
+and the notice disappears from that page. Nothing has to be added to the pages nobody has read yet,
+which is what makes it fail safe: a new translation is unreviewed by default.
+
+`translation-status.py` counts unreviewed pages per language so the debt stays visible.
+
+## English left inside a translated file
+
+`untranslated: true` is a manual flag, so it only catches the honest mistake. `translation-status.py`
+also compares each translated body against its English source and fails the language when a body is
+85% or more the same words.
+
+Identifiers, URLs, code spans and numbers are stripped before comparing, because those are supposed
+to be identical in every language. For calibration: a file copied straight from English scores 100%,
+while the genuine Dutch translations score between 0% and 23%, the highest being case pages, which
+share technical vocabulary with their source.
+
 ## Machine translation
 
 Acceptable as a first pass. Not acceptable as the last step.
