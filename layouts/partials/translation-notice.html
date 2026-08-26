@@ -15,7 +15,10 @@
   <p class="notice">{{ i18n "translation_missing" }}</p>
 </div>
 {{- else if and (ne .Lang site.Params.sourceLanguage) (not .Params.reviewed) }}
+{{- $source := "" }}
+{{- range .AllTranslations }}{{ if eq .Lang site.Params.sourceLanguage }}{{ $source = .RelPermalink }}{{ end }}{{ end }}
 <div class="max-w-3xl mx-auto px-4 pt-6">
-  <p class="notice">{{ i18n "translation_unreviewed" }}</p>
+  <p class="notice">{{ i18n "translation_unreviewed" }}
+    {{- with $source }} <a href="{{ . }}" class="underline underline-offset-2">{{ i18n "translation_read_source" }}</a>{{ end }}</p>
 </div>
 {{- end }}

@@ -106,6 +106,7 @@ verify_note_kvk: "KvK-register"
 verify_note_accounts: "gepubliceerde jaarrekeningen"
 verify_note_rfc: "RFC 9116"
 
-translation_unreviewed: "Deze vertaling is nog niet nagekeken door een moedertaalspreker. De Engelse versie is de bron."
+translation_unreviewed: "Deze pagina is vertaald, maar nog niet nagekeken door een moedertaalspreker."
 redirect_moved: "Deze pagina is verplaatst."
 redirect_link: "Ga verder"
+translation_read_source: "Lees de Engelse versie"

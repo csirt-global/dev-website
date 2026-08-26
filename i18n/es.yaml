@@ -106,6 +106,7 @@ verify_note_kvk: "KvK register"
 verify_note_accounts: "published accounts"
 verify_note_rfc: "RFC 9116"
 
-translation_unreviewed: "Esta traducción aún no ha sido revisada por una persona nativa. La versión en inglés es la fuente."
+translation_unreviewed: "Esta página está traducida, pero aún no la ha revisado una persona nativa."
 redirect_moved: "Esta página se ha movido."
 redirect_link: "Continuar"
+translation_read_source: "Leer la versión en inglés"
