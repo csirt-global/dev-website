@@ -226,7 +226,12 @@
   .logo-word-tld { color: var(--color-signal); }
 
   /* ----------------------------------------------------------------- NAV -- */
-  .nav-link { font-size: 0.9375rem; color: var(--color-text); }
+  /* Never wrap. A nav item that breaks onto a second line inside a fixed-height
+     header spills over it, and the longer translations do exactly that: French
+     "Ce que nous faisons" took three lines at 1100px. Not wrapping means the
+     menu either fits or visibly overflows, and overflowing is something a check
+     can see. */
+  .nav-link { font-size: 0.9375rem; color: var(--color-text); white-space: nowrap; }
   .nav-link:hover, .nav-link[aria-current="page"] { color: var(--color-signal); }
   .nav-link-block {
     display: block; padding: 0.6rem 0.75rem; border-radius: var(--radius-brand);
