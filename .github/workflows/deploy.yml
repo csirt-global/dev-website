@@ -83,9 +83,16 @@ jobs:
               echo "Deploying to https://$host/ (CNAME written)"
               ;;
           esac
+      # include-hidden-files is required from v4 onwards, which stopped putting
+      # dotfiles in the artifact. This site publishes two that matter:
+      # /.well-known/security.txt, which is our RFC 9116 reporting route and is
+      # linked from SECURITY.md and the footer, and .nojekyll. Without this the
+      # build passes every check, the deploy succeeds, and security.txt quietly
+      # starts returning 404 - the checks read ./public, not the artifact.
       - uses: actions/upload-pages-artifact@v5
         with:
           path: ./public
+          include-hidden-files: true
 
   deploy:
     needs: build
