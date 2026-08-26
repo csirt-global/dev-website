@@ -60,7 +60,8 @@ page would be a poor answer. All four files together are 116 KB.
 
 ## The yellow is a signal, and there is a paper surface
 
-The brand is fixed: near-black `#1d1d1b` and the yellow `#f6e714`. What changed is how they are
+The brand is fixed: near-black `#1d1d1b` and the gold `#e1cd03`, taken from the logo mark rather
+than the brighter `#f6e714` the old site used and the mark never matched. What changed is how they are
 used. The yellow is now reserved for actions, case status and the organisation record, never for
 large fields of colour.
 
@@ -68,6 +69,20 @@ The departure is `--paper`, a light surface used for governance, ANBI and verifi
 old site was black end to end, which reads as hacker aesthetic at exactly the moment our most common
 visitor is asking "is this a scam?". On paper, that material reads as a document rather than a
 landing page.
+
+## The mark has one source
+
+`assets/images/logo-mark.svg` is the logo, and every favicon is rendered from it
+by `npm run favicons`: 16, 32, 180, 192, 270, 512 and a `.ico` carrying 16/32/48.
+
+The icons that were here before used `#fffb00`, a brighter yellow than the
+palette and than the mark itself, so the browser tab never matched the site.
+That is the kind of drift a single source prevents: change the SVG, run the
+script, everything follows.
+
+The header wordmark is type, not an image, so it scales and translates. The
+Safari pinned-tab icon stays a separate monochrome mask, because Safari fills
+it with one colour and the mark's fine globe lines would disappear at 16 pixels.
 
 ## Internal links resolve through one partial
 

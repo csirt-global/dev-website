@@ -94,7 +94,8 @@ template should read from `data/` instead. Say so rather than hard-coding it.
 
 ## Design system
 
-Brand colours are fixed: near-black `#1d1d1b` and yellow `#f6e714`.
+Brand colours are fixed: near-black `#1d1d1b` and the gold `#e1cd03`, which
+is the gold in the logo mark itself.
 
 - **The yellow is a signal**, not a wash: actions, case status, the support
   band. Never a large field of colour except that one band, which is the only

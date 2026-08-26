@@ -5,7 +5,8 @@
   "type": "module",
   "description": "Browser checks for the CSIRT.global website. Not part of the site build: Hugo and Tailwind need none of this, and nothing here is deployed.",
   "scripts": {
-    "sweep": "node scripts/sweep.mjs"
+    "sweep": "node scripts/sweep.mjs",
+    "favicons": "node scripts/make-favicons.mjs"
   },
   "devDependencies": {
     "playwright": "1.62.1"
