@@ -1,0 +1,16 @@
+{{- /* Resolve an internal path for the current language.
+
+       If the target has a translation in this language, link to it. Otherwise
+       link to the English original: the visitor still reaches the content, and
+       translation-notice.html tells them it is not translated. Emitting
+       /de/cases/ when no German cases page exists would 404 instead.
+
+       Used by the nav, the footer and the markdown render hook, so a link
+       cannot bypass the rule by being written somewhere new. */ -}}
+{{- $url := . -}}
+{{- if hasPrefix $url "/#" -}}
+  {{- if eq site.Language.Lang "en" }}{{ $url }}{{ else }}/{{ site.Language.Lang }}/{{ strings.TrimPrefix "/" $url }}{{ end -}}
+{{- else -}}
+  {{- $p := site.GetPage $url -}}
+  {{- if $p }}{{ $p.RelPermalink }}{{ else }}{{ $url }}{{ end -}}
+{{- end -}}

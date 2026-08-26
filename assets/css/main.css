@@ -1,0 +1,356 @@
+@import "tailwindcss";
+
+@source "../../layouts";
+@source "../../content";
+
+/* ===========================================================================
+   FONTS — self-hosted
+
+   Not Google Fonts. Embedding it transmits visitor IPs to a third party, which
+   German courts have found to breach GDPR. Our primary audience is EU
+   organisations deciding whether we are trustworthy; a surveillance request on
+   that page would be a poor answer.
+   =========================================================================== */
+@font-face {
+  font-family: "Archivo";
+  src: url("../fonts/archivo-variable.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Plex Sans";
+  src: url("../fonts/plex-sans-variable.woff2") format("woff2-variations");
+  font-weight: 100 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Plex Mono";
+  src: url("../fonts/plex-mono-400.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Plex Mono";
+  src: url("../fonts/plex-mono-600.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
+}
+
+/* ===========================================================================
+   TOKENS
+
+   Every colour and type decision resolves here. A future identity refresh
+   edits this block, not the templates.
+
+   The brand is fixed: near-black and the yellow, carried from the logo. What
+   changed is how they are used. The yellow is now a signal — actions, case
+   status, the verification block — never a large field of colour.
+
+   --paper is the departure. The old site was black end to end, which reads as
+   hacker aesthetic at exactly the moment our main visitor is asking "is this a
+   scam?". Governance and verification content sits on paper so it reads as a
+   document rather than a landing page.
+   =========================================================================== */
+@theme {
+  --color-ink:        #1d1d1b;
+  --color-ink-raised: #262624;
+  --color-ink-line:   #3a3a36;
+  --color-signal:     #f6e714;
+  --color-signal-dim: #b0a403;
+
+  --color-paper:      #f4f4f0;
+  --color-paper-line: #d8d8d0;
+  --color-paper-ink:  #1d1d1b;
+  --color-paper-mute: #5d5d55;
+
+  --color-text:        #d6d6d1;
+  --color-text-strong: #ffffff;
+  --color-muted:       #8a8a83;
+
+  --font-display: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-sans:    "Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono:    "Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --radius-brand: 0.375rem;
+}
+
+@layer base {
+  html { overflow-x: clip; scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Keyboard users get a visible target. The old site had no focus styles. */
+  :focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection { background: var(--color-signal); color: var(--color-ink); }
+
+  /* Until Alpine initialises, x-show has not run yet. Without this the mobile
+     panel (fixed inset-0) and every dropdown paint over the page on first load. */
+  [x-cloak] { display: none !important; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* ---------------------------------------------------------------- TYPE -- */
+  .t-display {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+  .t-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--color-signal);
+  }
+  .t-mono { font-family: var(--font-mono); font-size: 0.9375rem; }
+
+  /* --------------------------------------------------------------- PROSE -- */
+  .prose-body { font-size: 1.125rem; line-height: 1.7; }
+  .prose-body > * + * { margin-top: 1.1em; }
+  .prose-body h2 {
+    font-family: var(--font-display); font-weight: 800; font-size: 2rem;
+    letter-spacing: -0.02em; line-height: 1.1;
+    margin-top: 3rem; scroll-margin-top: 6rem; color: var(--color-text-strong);
+  }
+  .prose-body h3 {
+    font-family: var(--font-display); font-weight: 700; font-size: 1.375rem;
+    margin-top: 2.25rem; color: var(--color-text-strong);
+  }
+  .prose-body h4 { font-weight: 600; margin-top: 1.5rem; color: var(--color-text-strong); }
+  .prose-body a { color: var(--color-signal); text-decoration: underline; text-underline-offset: 3px; }
+  .prose-body a:hover { color: var(--color-text-strong); }
+  .prose-body ul { list-style: disc; padding-left: 1.4em; }
+  .prose-body ol { list-style: decimal; padding-left: 1.4em; }
+  .prose-body li + li { margin-top: 0.5em; }
+  .prose-body code { font-family: var(--font-mono); font-size: 0.9em; overflow-wrap: anywhere; }
+  .prose-body strong { color: var(--color-text-strong); font-weight: 600; }
+
+  /* Paper inversion, for governance and verification content. */
+  .on-paper { background: var(--color-paper); color: var(--color-paper-ink); }
+  .on-paper .prose-body h2,
+  .on-paper .prose-body h3,
+  .on-paper .prose-body h4,
+  .on-paper .prose-body strong { color: var(--color-paper-ink); }
+  .on-paper .prose-body a { color: var(--color-paper-ink); text-decoration-color: var(--color-signal-dim); }
+  .on-paper .prose-body a:hover { background: var(--color-signal); color: var(--color-paper-ink); }
+  .on-paper .t-eyebrow { color: var(--color-paper-mute); }
+
+  /* ------------------------------------------------- THE VERIFICATION BLOCK --
+     The signature element. A document, not a card.
+
+     Built from this organisation's own vernacular: the case-record definition
+     list (Case: / Case lead: / CVE: / Published:) is how vulnerability
+     disclosure states verified fact. Here the same form states facts about the
+     organisation itself, so someone who just got an unexpected email can check
+     them in seconds.
+     -------------------------------------------------------------------------- */
+  .verify {
+    font-family: var(--font-mono); font-size: 0.9375rem;
+    border: 1px solid var(--color-paper-line);
+    background: var(--color-paper); color: var(--color-paper-ink);
+    /* Sized against its own container, not the viewport: this block sits full
+       width on the homepage and in a 26rem sidebar on /notified/, and a media
+       query gave the sidebar a 13rem label column with 9rem left for the value,
+       wrapping every URL over four lines. */
+    container-type: inline-size;
+  }
+  .verify-head {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+    padding: 0.75rem 1.25rem; border-bottom: 1px solid var(--color-paper-line);
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--color-paper-mute);
+  }
+  .verify-row {
+    display: grid; grid-template-columns: 1fr; gap: 0.15rem;
+    padding: 0.7rem 1.25rem; border-bottom: 1px solid var(--color-paper-line);
+  }
+  .verify-row:last-child { border-bottom: 0; }
+  @container (min-width: 34rem) {
+    .verify-row { grid-template-columns: 11rem 1fr; gap: 1.5rem; align-items: baseline; }
+  }
+  .verify-key { color: var(--color-paper-mute); }
+  .verify-val { color: var(--color-paper-ink); word-break: break-word; }
+  .verify-val a { text-decoration: underline; text-decoration-color: var(--color-signal-dim); text-underline-offset: 3px; }
+  .verify-val a:hover { background: var(--color-signal); }
+
+  /* ------------------------------------------------------------- ACTIONS -- */
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    white-space: nowrap;
+    padding: 0.7rem 1.15rem;
+    font-family: var(--font-mono); font-size: 0.875rem; font-weight: 600;
+    border-radius: var(--radius-brand);
+    transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .btn-primary { background: var(--color-signal); color: var(--color-ink); }
+  .btn-primary:hover { background: var(--color-text-strong); }
+  .btn-secondary { border: 1px solid var(--color-ink-line); color: var(--color-text); }
+  .btn-secondary:hover { border-color: var(--color-signal); color: var(--color-signal); }
+  .on-paper .btn-secondary { border-color: var(--color-paper-line); color: var(--color-paper-ink); }
+  .on-paper .btn-secondary:hover { border-color: var(--color-paper-ink); }
+
+  /* ----------------------------------------------------------------- NAV -- */
+  .nav-link { font-size: 0.9375rem; color: var(--color-text); }
+  .nav-link:hover, .nav-link[aria-current="page"] { color: var(--color-signal); }
+  .nav-link-block {
+    display: block; padding: 0.6rem 0.75rem; border-radius: var(--radius-brand);
+    font-size: 1.0625rem; color: var(--color-text);
+  }
+  .nav-link-block:hover { background: var(--color-ink-raised); color: var(--color-signal); }
+
+  /* The hero watermark. Sized against the viewport so it always bleeds off the
+     right edge, and masked so it fades out well before the headline: the words
+     have to stay the only thing competing for attention. Decorative, so it is
+     aria-hidden in the markup and simply absent on narrow screens, where the
+     text runs the full width and there is nothing to sit behind. */
+  .hero-mark {
+    position: absolute;
+    right: clamp(1rem, 4vw, 4rem);
+    top: 52%;
+    translate: 0 -50%;
+    width: min(31rem, 40vw);
+    height: auto;
+    opacity: 0.085;
+    pointer-events: none;
+    user-select: none;
+    -webkit-mask-image: linear-gradient(to left, #000 58%, transparent 100%);
+            mask-image: linear-gradient(to left, #000 58%, transparent 100%);
+  }
+  @media (max-width: 63.9375rem) {
+    .hero-mark { display: none; }
+  }
+
+  /* Dropdown entries. A title, and the section's own one-line summary where it
+     has one, so the menu tells you what a page is rather than only naming it. */
+  .nav-drop {
+    display: block;
+    padding: 0.55rem 0.8rem;
+    border-radius: calc(var(--radius-brand) - 0.125rem);
+    transition: background-color .12s ease;
+  }
+  .nav-drop:hover, .nav-drop:focus-visible { background: var(--color-ink-line); }
+  .nav-drop-title {
+    display: block;
+    font-size: 0.9375rem; color: var(--color-text-strong);
+    transition: color .12s ease;
+  }
+  .nav-drop:hover .nav-drop-title { color: var(--color-signal); }
+  .nav-drop-desc {
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-top: 0.15rem;
+    font-size: 0.8125rem; line-height: 1.45; color: var(--color-muted);
+  }
+
+  /* A build that is not the live site says so, on every page. Ink on signal
+     like the support band, but a thin strip: it is a label, not a section. */
+  .staging-banner {
+    background: var(--color-signal);
+    color: var(--color-ink);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    text-align: center;
+    padding: 0.5rem 1rem;
+  }
+  .staging-banner a { text-decoration: underline; text-underline-offset: 2px; }
+
+  /* ------------------------------------------------------------- SUPPORT --
+     Its own surface, and the only one of its kind: ink on signal, full bleed.
+     Nothing else on the site inverts this way, which is what makes it findable
+     without a second call to action competing with the hero.
+     ------------------------------------------------------------------------ */
+  .support {
+    background: var(--color-signal);
+    color: var(--color-ink);
+  }
+  .support-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: color-mix(in srgb, var(--color-ink) 62%, transparent);
+  }
+  .support-title {
+    font-family: var(--font-display); font-weight: 800;
+    font-size: clamp(1.75rem, 3.4vw, 2.5rem);
+    letter-spacing: -0.02em; line-height: 1.05;
+    text-wrap: balance;
+    max-width: 22ch;
+  }
+  .support-lede {
+    margin-top: 0.85rem;
+    max-width: 46ch;
+    font-size: 1.0625rem; line-height: 1.6;
+    color: color-mix(in srgb, var(--color-ink) 78%, transparent);
+  }
+  .support-cta {
+    flex: none;
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    padding: 0.85rem 1.5rem;
+    background: var(--color-ink); color: var(--color-signal);
+    font-family: var(--font-mono); font-size: 0.9375rem; font-weight: 600;
+    border-radius: var(--radius-brand);
+    transition: transform .15s ease, background-color .15s ease;
+  }
+  .support-cta:hover { background: #000; transform: translateY(-1px); }
+  .support-cta:focus-visible { outline-color: var(--color-ink); }
+
+  /* --------------------------------------------------------- CASE RECORD --
+     The same definition-list form as the verification block, in ink. A case is
+     a record of fact: identifier, lead, CVE, published date. It should read
+     like one. */
+  .record { font-family: var(--font-mono); font-size: 0.9375rem; }
+  .record-row {
+    display: grid; grid-template-columns: 1fr; gap: 0.15rem;
+    padding: 0.55rem 0; border-bottom: 1px solid var(--color-ink-line);
+  }
+  @media (min-width: 40rem) {
+    .record-row { grid-template-columns: 12rem 1fr; gap: 1.5rem; align-items: baseline; }
+  }
+  .record-key { color: var(--color-muted); }
+  .record-val { color: var(--color-text); word-break: break-word; }
+  .record-val a { color: var(--color-signal); text-decoration: underline; text-underline-offset: 3px; }
+
+  /* Case status. The dot is the only place a colour carries meaning on its own,
+     so the word is always there too. */
+  .status {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .status::before { content: ""; width: 0.5rem; height: 0.5rem; border-radius: 50%; }
+  .status-current { color: var(--color-signal); }
+  .status-current::before { background: var(--color-signal); }
+  .status-closed { color: var(--color-muted); }
+  .status-closed::before { background: var(--color-muted); }
+
+  /* A standing notice about the page you are on. Used by the translation
+     banner and by the donate page while its settings are unset. */
+  .notice {
+    border: 1px solid var(--color-signal-dim);
+    background: color-mix(in srgb, var(--color-signal) 10%, transparent);
+    color: var(--color-text-strong);
+    padding: 0.75rem 1rem; border-radius: var(--radius-brand);
+    font-size: 0.9375rem;
+  }
+}

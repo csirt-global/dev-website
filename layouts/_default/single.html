@@ -1,0 +1,6 @@
+{{ define "main" }}
+{{ partial "page-head.html" (dict "title" .Title "eyebrow" (or .Params.eyebrow (i18n (printf "nav_%s" (replace .Section "-" "_")))) "lede" .Params.lede) }}
+<div class="mx-auto max-w-6xl px-5 sm:px-8 py-12 sm:py-16">
+  <div class="prose-body max-w-3xl">{{ .Content }}</div>
+</div>
+{{ end }}

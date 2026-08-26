@@ -1,0 +1,12 @@
+{{- /* Renders on a published copy that is not the live site, and nowhere else.
+
+       Not on the live site, obviously, and not on localhost either: the person
+       running a local server knows what they are looking at, and a strip of
+       yellow across every page would sit in the middle of every design review.
+       A copy published on a hostname other people can reach is the case that
+       needs the label. */ -}}
+{{- $host := (urls.Parse site.BaseURL).Host -}}
+{{- $local := or (hasPrefix $host "localhost") (hasPrefix $host "127.0.0.1") (hasPrefix $host "0.0.0.0") -}}
+{{- if and (not (partial "is-production.html" .)) (not $local) -}}
+<p class="staging-banner">{{ i18n "staging_banner" }} <a href="https://{{ site.Params.productionHost }}/">https://{{ site.Params.productionHost }}/</a></p>
+{{- end -}}

@@ -1,0 +1,8 @@
+{{/* Consistent page opener: eyebrow + display title + optional lede. */}}
+<section class="border-b border-ink-line">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8 py-12 sm:py-16">
+    {{- with .eyebrow }}<p class="t-eyebrow">{{ . }}</p>{{ end }}
+    <h1 class="t-display mt-4 text-[clamp(2rem,5vw,3.25rem)] text-text-strong max-w-3xl">{{ .title }}</h1>
+    {{- with .lede }}<p class="mt-5 max-w-2xl text-xl leading-relaxed text-text">{{ . }}</p>{{ end }}
+  </div>
+</section>

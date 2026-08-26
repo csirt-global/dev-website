@@ -1,0 +1,19 @@
+# Every account that is officially ours.
+#
+# Listed as a set rather than scattered as icons, because on this site the list
+# itself does a job: the most common visitor is checking whether something
+# claiming to be CSIRT.global is genuine. If an account is not on this list, it
+# is not us.
+#
+# Written out rather than drawn as logos — two of these have no mark anyone
+# would recognise, and a row of icons where some are guessed is worse than none.
+- label: "LinkedIn"
+  url: "https://www.linkedin.com/company/csirt-global/"
+- label: "GitHub"
+  url: "https://github.com/csirt-global"
+- label: "X"
+  url: "https://x.com/csirt_global"
+- label: "Substack"
+  url: "https://csirt.substack.com/"
+- label: "TheOrg"
+  url: "https://theorg.com/org/csirt-global"

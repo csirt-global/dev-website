@@ -1,0 +1,7 @@
+{{- /* True only on the real site.
+
+       A staging copy of a security organisation's website is a lookalike of
+       that organisation, so everywhere this is false the build marks itself:
+       noindex, robots disallow, and a banner on every page. Derived from the
+       baseURL the build was given, so nothing has to be remembered. */ -}}
+{{- return (eq (urls.Parse site.BaseURL).Host site.Params.productionHost) -}}

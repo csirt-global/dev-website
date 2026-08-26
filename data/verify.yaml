@@ -1,0 +1,34 @@
+# Facts a suspicious recipient can check independently.
+#
+# This is the site's signature element. Someone who just received an unexpected
+# email saying their system is vulnerable needs to establish, in seconds, that
+# we are a real registered foundation and not a phishing attempt. Every row is
+# something they can verify on a third-party source, not a claim we make.
+rows:
+  - key: "Legal entity"
+    value: "Stichting CSIRT.global"
+    url: "https://openkvk.nl/company/stichting-stichting-csirtglobal-85998265"
+    note: "KvK register"
+  - key: "RSIN"
+    value: "863825655"
+  - key: "Registered office"
+    value: "Maanweg 174, 2516 AB Den Haag, Netherlands"
+  - key: "Telephone"
+    value: "+31 70 41 90 309"
+  - key: "Tax status"
+    value: "ANBI (Dutch public benefit organisation)"
+    url: "/about/anbi/"
+    note: "published accounts"
+  - key: "Disclosure policy"
+    value: "Coordinated Vulnerability Disclosure via Zerocopter"
+    url: "https://app.zerocopter.com/en/cvd/8b2fbf09-539f-4b09-bee0-2ec875cb3321"
+  - key: "security.txt"
+    value: "csirt.global/.well-known/security.txt"
+    url: "/.well-known/security.txt"
+    note: "RFC 9116"
+  - key: "Case register"
+    value: "Every case we open is published"
+    url: "/cases/"
+  - key: "Sister organisation"
+    value: "Dutch Institute for Vulnerability Disclosure"
+    url: "https://www.divd.nl"

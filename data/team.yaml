@@ -1,0 +1,89 @@
+# The team, defined once.
+#
+# On the current site each person is a hand-pasted ~33-line HTML card with an
+# inlined LinkedIn SVG, repeated 16 times across 3 pages in 3 inconsistent
+# schemas (the NGO project page has no `role` field at all). Adding someone
+# means copying a card and hoping. Here a person is a few lines of YAML.
+#
+# `role` is an i18n key, not literal text, so job titles translate with the
+# rest of the site. Names and photos are language-neutral.
+#
+# `social` entries are {kind, url}. Dead placeholder links are simply omitted:
+# Victor confirmed on 2026-08-25 that "useless icons can be removed", which is
+# why Marielle and Juliette have no X entry (they had href="#" in production).
+
+groups:
+  - id: supervisory
+    label: group_supervisory
+    intro: team_intro_supervisory
+    members:
+      - name: "Michiel Prins"
+        role: role_cofounder
+        photo: images/michiel.jpg
+        social:
+          - { kind: x, url: "https://twitter.com/michielprins" }
+          - { kind: linkedin, url: "https://www.linkedin.com/in/michiel3/" }
+
+  - id: board
+    label: group_board
+    intro: team_intro_board
+    members:
+      - name: "Eward Driehuis"
+        role: role_chair
+        photo: images/eward.jpg
+        social:
+          - { kind: x, url: "https://twitter.com/e3huis" }
+          - { kind: linkedin, url: "https://www.linkedin.com/in/ewarddriehuis/" }
+      - name: "Victor Gevers"
+        role: role_vicechair
+        photo: images/victor.jpg
+        social:
+          - { kind: x, url: "https://twitter.com/0xdude" }
+          - { kind: linkedin, url: "https://www.linkedin.com/in/vgevers/" }
+      - name: "Lennaert Oudshoorn"
+        role: role_secretary
+        photo: images/lennaert.jpg
+        anchor: lennaert          # linked from Code of Conduct item 23
+        social:
+          - { kind: x, url: "https://twitter.com/lennaert89" }
+          - { kind: linkedin, url: "https://www.linkedin.com/in/lennaertoudshoorn/" }
+      - name: "Shairesh Algoe"
+        role: role_treasurer
+        photo: images/shairesh.jpg
+        social:
+          - { kind: x, url: "https://twitter.com/shaireshalgoe" }
+          - { kind: linkedin, url: "https://www.linkedin.com/in/shaireshalgoe/" }
+
+  - id: management
+    label: group_management
+    intro: team_intro_management
+    members:
+      - name: "Vincent Thiele"
+        role: role_advisor
+        photo: images/vincent.jpg
+        social:
+          - { kind: x, url: "https://twitter.com/kipenzo" }
+          - { kind: linkedin, url: "https://www.linkedin.com/in/thielev" }
+      - name: "Marielle Nigg-Droog"
+        role: role_ciso
+        photo: images/marielle.jpg
+        social:
+          - { kind: linkedin, url: "https://www.linkedin.com/in/marielle-nigg-droog-4909913/" }
+      - name: "Juliette van Balen"
+        role: role_dpo
+        photo: images/juliette.jpg
+        social:
+          - { kind: linkedin, url: "https://www.linkedin.com/in/juliette-van-balen-25b96a2/" }
+      - name: "Soufian El Yadmani"
+        role: role_head_research
+        photo: images/soufian.jpg
+        anchor: soufian           # linked from all three case pages
+        social:
+          - { kind: email, url: "mailto:soufianelyadmani@csirt.global" }
+          - { kind: linkedin, url: "https://www.linkedin.com/in/soufianelyadmani/" }
+      - name: "Chris Heald"
+        role: role_bugbounty_manager
+        photo: images/chris.jpg
+        social:
+          - { kind: mastodon, url: "https://infosec.exchange/@ketumbra" }
+          - { kind: email, url: "mailto:chris@csirt.global" }

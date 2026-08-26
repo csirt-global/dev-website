@@ -1,0 +1,19 @@
+{{/* Native <details> accordion, same as the current site uses for the three
+     strands. No JS. Unlike the original, the summary contains no link, so
+     clicking a link inside it cannot also toggle the accordion. */}}
+<details class="group border-b border-ink-line py-4">
+  <summary class="cursor-pointer list-none flex items-center justify-between gap-4
+                  text-xl font-semibold text-signal marker:hidden">
+    <span>{{ .Get "summary" }}</span>
+    <svg class="w-5 h-5 shrink-0 transition-transform group-open:rotate-180"
+         fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+      <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.19l3.71-3.96a.75.75 0 111.08 1.04l-4.25 4.53a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/>
+    </svg>
+  </summary>
+  <div class="mt-4 space-y-4 text-text
+              [&_dt]:text-signal [&_dt]:font-semibold [&_dt]:mt-4
+              [&_dd]:ml-0 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:space-y-2
+              [&_a]:text-signal [&_a:hover]:underline">
+    {{ .Inner | markdownify }}
+  </div>
+</details>

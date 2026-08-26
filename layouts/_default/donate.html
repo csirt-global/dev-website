@@ -1,0 +1,85 @@
+{{ define "main" }}
+{{- $d := hugo.Data.donate -}}
+{{ partial "page-head.html" (dict "title" .Title "eyebrow" (i18n "nav_get_involved") "lede" .Params.lede) }}
+<div class="mx-auto max-w-6xl px-5 sm:px-8 py-12 sm:py-16">
+
+  {{- if not $d.enabled }}
+  {{/* Visible in review, never a surprise in production: the page is also
+       noindex and absent from the nav while this is showing. */}}
+  <p class="notice max-w-2xl mb-10">{{ i18n "donate_not_live" }}</p>
+  {{- else if $d.sample }}
+  {{/* Switched on for review with routes that go nowhere. Saying so on the page
+       matters more than saying it in a config file: whoever is looking at this
+       is the person who would otherwise try to donate. */}}
+  <p class="notice max-w-2xl mb-10">{{ i18n "donate_sample" }}</p>
+  {{- end }}
+
+  <div class="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:gap-16 lg:items-start">
+    <div>
+      <div class="prose-body max-w-2xl">{{ .Content }}</div>
+
+      {{- with $d.usage }}
+      <section class="mt-10">
+        <h2 class="t-display text-xl text-text-strong">{{ i18n "donate_usage_heading" }}</h2>
+        <ul class="mt-4 max-w-2xl space-y-2 text-muted">
+          {{- range . }}
+          <li class="flex gap-3"><span class="text-signal" aria-hidden="true">&rarr;</span><span>{{ . }}</span></li>
+          {{- end }}
+        </ul>
+      </section>
+      {{- end }}
+
+      {{/* Primary route. Renders only with a URL, so a half-configured page
+           cannot ship a button that goes nowhere. */}}
+      {{- with $d.provider.url }}
+      {{- $url := . }}
+      <section class="mt-12">
+        <h2 class="t-display text-xl text-text-strong">{{ i18n "donate_amount_heading" }}</h2>
+        <div class="mt-5 flex flex-wrap items-center gap-3">
+          {{- range $d.amounts }}
+          <a href="{{ replace $url "{amount}" (string .) }}" target="_blank" rel="noopener noreferrer"
+             class="btn btn-primary">&euro;{{ . }}</a>
+          {{- end }}
+          <a href="{{ replace $url "{amount}" "" }}" target="_blank" rel="noopener noreferrer"
+             class="btn btn-secondary">{{ i18n "donate_amount_other" }}</a>
+        </div>
+        {{- with $d.provider.methods }}
+        <p class="t-mono mt-4 text-[0.8125rem] text-muted">{{ . }}</p>
+        {{- end }}
+      </section>
+      {{- end }}
+
+      {{- with $d.paypal.url }}
+      <section class="mt-10">
+        <h2 class="t-display text-xl text-text-strong">{{ i18n "donate_paypal_heading" }}</h2>
+        <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary mt-4">
+          {{ i18n "donate_paypal_cta" }}
+        </a>
+      </section>
+      {{- end }}
+
+      <section class="mt-10">
+        <h2 class="t-display text-xl text-text-strong">{{ i18n "donate_bank_heading" }}</h2>
+        {{- if $d.bank.iban }}
+        <dl class="record mt-5 border-t border-ink-line max-w-xl">
+          <div class="record-row"><dt class="record-key">{{ i18n "donate_bank_holder" }}</dt><dd class="record-val">{{ $d.bank.holder }}</dd></div>
+          <div class="record-row"><dt class="record-key">IBAN</dt><dd class="record-val">{{ $d.bank.iban }}</dd></div>
+          {{- with $d.bank.bic }}
+          <div class="record-row"><dt class="record-key">BIC</dt><dd class="record-val">{{ . }}</dd></div>
+          {{- end }}
+        </dl>
+        {{- else }}
+        <p class="mt-4 max-w-2xl text-muted leading-relaxed">
+          {{ i18n "donate_bank_ask" }}
+          <a href="mailto:{{ $d.bank.email }}" class="text-signal underline underline-offset-[3px]">{{ $d.bank.email }}</a>.
+        </p>
+        {{- end }}
+      </section>
+    </div>
+
+    {{/* The reason to trust us with money is the same one the rest of the site
+         rests on: it is all checkable. Same record, same paper surface. */}}
+    <div class="lg:sticky lg:top-8">{{ partial "verify.html" . }}</div>
+  </div>
+</div>
+{{ end }}

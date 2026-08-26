@@ -1,0 +1,33 @@
+{{- /* The child pages of one nav item, as a slice of {url, label, key}.
+
+       Derived from the section's own pages when the item opts in with
+       `expand: true`, so adding a page under /what-we-do/ puts it in the menu
+       without anyone editing the nav. Sections that grow without limit (Cases,
+       News) do not opt in: a menu is not a place to paginate. data/nav.yaml can
+       also add entries that are not child pages, via its own `children:` list.
+
+       A page with `hidden: true` in its front matter is left out: that is how
+       the donate page stays out of the menu until its settings are filled in.
+
+       Everything resolves through href.html, so a menu entry never points at a
+       translation that does not exist. */ -}}
+{{- $item := .item -}}
+{{- $out := slice -}}
+{{- if $item.expand -}}
+  {{- with site.GetPage $item.url -}}
+    {{- range where .Pages "Params.hidden" "!=" true -}}
+      {{- $out = $out | append (dict
+          "url" .RelPermalink
+          "label" .Title
+          "desc" (or .Params.summary "")) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- range $item.children -}}
+  {{- $c := . -}}
+  {{- $label := "" -}}
+  {{- with site.GetPage $c.url }}{{ $label = .Title }}{{ end -}}
+  {{- with $c.key }}{{ $label = i18n . }}{{ end -}}
+  {{- $out = $out | append (dict "url" (partial "href.html" $c.url) "label" $label "desc" "") -}}
+{{- end -}}
+{{- return $out -}}

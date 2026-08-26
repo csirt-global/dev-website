@@ -1,0 +1,16 @@
+{{ define "main" }}
+<div class="on-paper">
+  <section class="border-b border-paper-line">
+    <div class="mx-auto max-w-6xl px-5 sm:px-8 py-12 sm:py-16">
+      <p class="t-eyebrow">{{ i18n "nav_notified" }}</p>
+      <h1 class="t-display mt-4 text-[clamp(2rem,5vw,3.5rem)] text-paper-ink max-w-3xl">{{ .Title }}</h1>
+    </div>
+  </section>
+  <div class="mx-auto max-w-6xl px-5 sm:px-8 py-12 sm:py-16">
+    <div class="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] lg:gap-16 lg:items-start">
+      <div class="prose-body max-w-2xl">{{ .Content }}</div>
+      <div class="lg:sticky lg:top-8">{{ partial "verify.html" . }}</div>
+    </div>
+  </div>
+</div>
+{{ end }}

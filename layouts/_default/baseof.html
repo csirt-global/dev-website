@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="{{ .Site.Language.Lang }}"{{ with .Site.Language.Direction }} dir="{{ . }}"{{ end }}>
+<head>
+    {{ partial "head.html" . }}
+</head>
+<body class="bg-ink text-text font-sans antialiased">
+    {{ partial "staging-banner.html" . }}
+  {{ partial "nav.html" . }}
+    <main id="main" class="flex-1">
+        {{ partial "translation-notice.html" . }}
+        {{ block "main" . }}{{ end }}
+    </main>
+    {{ partial "footer.html" . }}
+    {{ partial "analytics.html" . }}
+</body>
+</html>

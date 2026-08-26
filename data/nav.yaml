@@ -1,0 +1,38 @@
+# The navigation, defined once, rendered into the desktop menu, its dropdowns
+# and the mobile panel.
+#
+# "Notified" is the primary action rather than a nav item: the most common
+# inbound visit is someone who received an unexpected email and wants to know
+# whether it is genuine. DIVD, doing identical work, reached the same conclusion.
+#
+# `expand: true` gives an item a dropdown built from that section's own pages,
+# so adding a page under /what-we-do/ puts it in the menu with no edit here. It
+# is opt-in on purpose: Cases and News grow without limit, and a menu is not a
+# place to paginate. `children:` adds entries that are not child pages.
+- key: nav_notified
+  url: "/notified/"
+  cta: true
+
+- key: nav_about
+  url: "/about/"
+  expand: true
+
+- key: nav_what_we_do
+  url: "/what-we-do/"
+  expand: true
+
+- key: nav_cases
+  url: "/cases/"
+
+- key: nav_projects
+  url: "/projects/"
+  expand: true
+
+- key: nav_get_involved
+  url: "/get-involved/"
+  expand: true
+  children:
+    - url: "/join/"       # label comes from the page's own title, so it translates
+
+- key: nav_news
+  url: "/news/"

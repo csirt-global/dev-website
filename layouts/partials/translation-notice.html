@@ -1,0 +1,9 @@
+{{/* Shown when the visitor is reading a language this page has not been
+     translated into. Hugo would otherwise fall back silently, which is how a
+     five-language site quietly becomes a one-language site: DIVD has full i18n
+     machinery, .en.md on all 66 content files, and zero translated pages. */}}
+{{- if .Params.untranslated }}
+<div class="max-w-3xl mx-auto px-4 pt-6">
+  <p class="notice">{{ i18n "translation_missing" }}</p>
+</div>
+{{- end }}

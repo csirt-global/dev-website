@@ -1,0 +1,37 @@
+{{ define "main" }}
+{{- $c := .Params.case }}
+<section class="border-b border-ink-line">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8 py-12 sm:py-16">
+    <div class="flex flex-wrap items-center gap-4">
+      <p class="t-eyebrow">{{ $c.id }}</p>
+      <span class="status status-{{ $c.status }}">{{ i18n (printf "cases_%s" $c.status) }}</span>
+    </div>
+    <h1 class="t-display mt-4 text-[clamp(1.9rem,4.5vw,3rem)] text-text-strong max-w-4xl">{{ .Title }}</h1>
+  </div>
+</section>
+
+<div class="mx-auto max-w-6xl px-5 sm:px-8 py-12 sm:py-16">
+  <div class="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] lg:gap-16 lg:items-start">
+    <div class="prose-body max-w-2xl order-2 lg:order-1">{{ .Content }}</div>
+
+    {{/* The record. This is how the field states verified fact, and it is the
+         form the whole site's visual language is built from. */}}
+    <aside class="record order-1 lg:order-2 lg:sticky lg:top-8">
+      <h2 class="t-eyebrow mb-3">{{ i18n "case_record" }}</h2>
+      <div class="border-t border-ink-line">
+        {{- with $c.ref }}<div class="record-row"><span class="record-key">{{ i18n "case_ref" }}</span><span class="record-val">{{ . }}</span></div>{{ end }}
+        {{- with $c.lead }}<div class="record-row"><span class="record-key">{{ i18n "case_lead" }}</span><span class="record-val"><a href="{{ partial "href.html" "/about/team/" }}#{{ $c.leadAnchor | default "team" }}">{{ . }}</a></span></div>{{ end }}
+        {{- with $c.researchers }}<div class="record-row"><span class="record-key">{{ i18n "case_researchers" }}</span><span class="record-val">{{ delimit . ", " }}</span></div>{{ end }}
+        {{- with $c.cve }}<div class="record-row"><span class="record-key">CVE</span><span class="record-val">{{ range $i, $v := . }}{{ if $i }}, {{ end }}<a href="https://www.cve.org/CVERecord?id={{ $v }}" target="_blank" rel="noopener noreferrer">{{ $v }}</a>{{ end }}</span></div>{{ end }}
+        {{- with $c.cwe }}<div class="record-row"><span class="record-key">CWE</span><span class="record-val">{{ range $i, $v := . }}{{ if $i }}<br>{{ end }}<a href="{{ $v.url }}" target="_blank" rel="noopener noreferrer">{{ $v.label }}</a>{{ end }}</span></div>{{ end }}
+        {{- with $c.product }}<div class="record-row"><span class="record-key">{{ i18n "case_product" }}</span><span class="record-val">{{ with $c.productUrl }}<a href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ $c.product }}</a>{{ else }}{{ $c.product }}{{ end }}</span></div>{{ end }}
+        {{- with $c.cpe }}<div class="record-row"><span class="record-key">CPE</span><span class="record-val">{{ . }}</span></div>{{ end }}
+        {{- with $c.vulnerableVersions }}<div class="record-row"><span class="record-key">{{ i18n "case_versions" }}</span><span class="record-val">{{ . }}</span></div>{{ end }}
+        {{- with $c.vendorStatement }}<div class="record-row"><span class="record-key">{{ i18n "case_vendor" }}</span><span class="record-val"><a href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ i18n "case_vendor_link" }}</a></span></div>{{ end }}
+        <div class="record-row"><span class="record-key">{{ i18n "case_published" }}</span><span class="record-val">{{ .Date.Format "2 January 2006" }}</span></div>
+        {{- if ne .Lastmod .Date }}<div class="record-row"><span class="record-key">{{ i18n "case_updated" }}</span><span class="record-val">{{ .Lastmod.Format "2 January 2006" }}</span></div>{{ end }}
+      </div>
+    </aside>
+  </div>
+</div>
+{{ end }}

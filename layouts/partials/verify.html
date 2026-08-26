@@ -1,0 +1,25 @@
+{{/* The verification block.
+
+     Deliberately shaped like a case record: the same key/value form this field
+     uses to state verified fact about a vulnerability, turned on the
+     organisation itself. On paper rather than ink, because the question it
+     answers is "are you real", and a black panel is the wrong answer. */}}
+<section class="verify rounded-brand overflow-hidden">
+  <header class="verify-head">
+    <span>{{ i18n "verify_title" }}</span>
+  </header>
+  {{- range hugo.Data.verify.rows }}
+  {{- $row := . }}
+  <div class="verify-row">
+    <span class="verify-key">{{ $row.key }}</span>
+    <span class="verify-val">
+      {{- if $row.url -}}
+        <a href="{{ $row.url }}"{{ if hasPrefix $row.url "http" }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ $row.value }}</a>
+      {{- else -}}
+        {{ $row.value }}
+      {{- end -}}
+      {{- with $row.note }} <span class="opacity-60">&middot; {{ . }}</span>{{ end -}}
+    </span>
+  </div>
+  {{- end }}
+</section>

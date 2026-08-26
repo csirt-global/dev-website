@@ -1,0 +1,5 @@
+<ul>
+  {{- range hugo.Data.anbi_documents }}
+  <li><a href="{{ .url }}" target="_blank" rel="noopener noreferrer">{{ .label }}</a></li>
+  {{- end }}
+</ul>

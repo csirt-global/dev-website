@@ -1,0 +1,12 @@
+# The site has no npm or Go dependencies on purpose: Hugo and Tailwind are two
+# pinned binaries, fetched at build time. What is left to watch is the Actions
+# used by the workflows, which run with access to the repository.
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "ci"

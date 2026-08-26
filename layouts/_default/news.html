@@ -1,0 +1,8 @@
+{{ define "main" }}
+{{ partial "page-head.html" (dict "title" .Title) }}
+<div class="mx-auto max-w-6xl px-5 sm:px-8 py-12 sm:py-16">
+  <div data-supascribe-embed-id="647470008182" data-supascribe-feed></div>
+  <script async src="https://js.supascribe.com/v1/loader/58PJqyYEOOc4eknzStFxgdV4vg82.js"></script>
+  <noscript><p class="text-muted">{{ i18n "news_noscript" }}</p></noscript>
+</div>
+{{ end }}

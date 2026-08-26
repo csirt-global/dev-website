@@ -1,0 +1,40 @@
+name: Wording or content change
+description: Text, a team member, a document, a case, a translation
+labels: ["content"]
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Which page
+      placeholder: https://csirt.global/about/team/
+    validations:
+      required: true
+
+  - type: textarea
+    id: current
+    attributes:
+      label: What it says now
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed
+    attributes:
+      label: What it should say
+      description: Exact wording if you have it.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: approval
+    attributes:
+      label: Does this need someone's sign-off?
+      description: |
+        The Code of Conduct, the ANBI block and its documents, and case records
+        are not ordinary copy. The ANBI material is a legal obligation.
+      options:
+        - "No, it is a typo or a plain wording fix"
+        - "Yes, it changes what the organisation is committing to"
+        - "Not sure"
+    validations:
+      required: true

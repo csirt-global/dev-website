@@ -1,0 +1,94 @@
+name: Deploy to GitHub Pages
+
+# Only runs on main. The site is built here rather than committed, which is the
+# main structural difference from the old repo, where dist/styles.css was a
+# committed artifact that went 2.5 years without a rebuild.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  HUGO_VERSION: "0.165.0"
+  TAILWIND_VERSION: "4.3.3"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+        id: pages
+      - name: Install Hugo
+        run: |
+          curl -sSL -o /tmp/hugo.deb \
+            "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb"
+          sudo dpkg -i /tmp/hugo.deb
+      - name: Install Tailwind
+        run: |
+          mkdir -p bin
+          curl -sSL -o bin/tailwindcss \
+            "https://github.com/tailwindlabs/tailwindcss/releases/download/v${TAILWIND_VERSION}/tailwindcss-linux-x64"
+          chmod +x bin/tailwindcss
+      - name: Build
+        run: |
+          make css
+          hugo --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
+      # The same checks CI runs, against the artifact that is about to be
+      # published. A deploy that skips them is the gap the checks exist to close,
+      # and check-donate reads robots.txt, so it only fails for real on the live
+      # domain.
+      - name: Check the build before publishing it
+        run: |
+          python3 scripts/check-urls.py
+          python3 scripts/check-links.py
+          python3 scripts/check-css.py
+          python3 scripts/check-security-txt.py
+          python3 scripts/check-donate.py
+
+      # The custom domain is a repository setting, not a file. A committed CNAME
+      # would make a staging deploy claim the live domain, so it is written here
+      # from whatever domain this repository actually has configured — which is
+      # also what the site was just built against. A *.github.io URL means no
+      # custom domain is set, and then there is nothing to write.
+      - name: Write CNAME for this repository's configured domain
+        env:
+          BASE_URL: ${{ steps.pages.outputs.base_url }}
+        run: |
+          host="$(printf '%s' "$BASE_URL" | sed -E 's#^https?://##; s#/.*##')"
+          if [ -z "$host" ]; then
+            echo "::error::configure-pages returned no base_url"
+            exit 1
+          fi
+          case "$host" in
+            *.github.io)
+              echo "No custom domain configured for this repository; skipping CNAME."
+              ;;
+            *)
+              printf '%s\n' "$host" > public/CNAME
+              echo "Deploying to https://$host/ (CNAME written)"
+              ;;
+          esac
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

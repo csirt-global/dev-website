@@ -1,0 +1,17 @@
+{{ define "main" }}
+{{ partial "page-head.html" (dict "title" .Title "lede" .Params.lede) }}
+<div class="mx-auto max-w-6xl px-5 sm:px-8 py-12 sm:py-16">
+  <div class="prose-body max-w-3xl">{{ .Content }}</div>
+  {{- with .Pages }}
+  <ul class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {{- range where . "Params.hidden" "!=" true }}
+    <li><a href="{{ .RelPermalink }}" class="group flex flex-col h-full bg-ink-raised rounded-brand p-7 hover:bg-ink-line/40 transition-colors">
+      <h2 class="t-display text-xl text-text-strong group-hover:text-signal transition-colors">{{ .Title }}</h2>
+      {{- with or .Params.summary .Description }}<p class="mt-3 text-[0.9375rem] leading-relaxed text-muted">{{ . }}</p>{{ end }}
+      <span class="t-mono text-[0.8125rem] text-signal mt-auto pt-5">{{ i18n "read_more" }} &rarr;</span>
+    </a></li>
+    {{- end }}
+  </ul>
+  {{- end }}
+</div>
+{{ end }}
