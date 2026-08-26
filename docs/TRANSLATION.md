@@ -60,6 +60,26 @@ everywhere. That is why `data/team.yaml` stores `role: role_advisor` rather than
 
 ---
 
+## Changing one language changes all of them
+
+If a pull request edits a page in one language, it edits that page in every language it exists in.
+`scripts/check-translation-sync.py` enforces it, and a correction to a case record is a correction in
+seven files.
+
+It reads the **diff**, not the state of the repository. Comparing file timestamps was the obvious
+approach and does not work: every language here was written in its own pull request, so timestamps
+say Spanish is the newest version of every page on the site. True, and useless.
+
+Adding a translation is not editing one, so a new file never triggers it. That is how a language gets
+written in the first place.
+
+When a change genuinely does not apply elsewhere, write the reason in the commit message rather than
+making six no-op edits:
+
+```
+Translation-sync: not-required, fixes a Dutch-only typo
+```
+
 ## Coverage thresholds
 
 A threshold is per language and says one thing: **this language is complete, keep it that way.**

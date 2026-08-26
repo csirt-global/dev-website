@@ -112,6 +112,27 @@
 }
 
 @layer components {
+  /* Han script. :lang(zh) matches lang="zh-Hans", because :lang() matches subtags.
+
+     The display styles are set for Latin: negative tracking tightens letters
+     drawn to sit apart, and uppercasing means nothing in a script with no case.
+     Han glyphs already sit on a fixed square body, so tracking them apart reads
+     as damage rather than emphasis.
+
+     No font is loaded. Our three faces are Latin-only and 116 KB self-hosted; a
+     Han face is 4 to 10 MB, forty times the whole font budget for one language.
+     Chinese falls through ui-sans-serif to the reader's own CJK font, which
+     every platform ships: PingFang on Apple, Noto Sans CJK on Android,
+     Microsoft YaHei on Windows. */
+  :lang(zh) .t-display,
+  :lang(zh) .support-title,
+  :lang(zh) .logo-word { letter-spacing: normal; }
+
+  :lang(zh) .t-eyebrow,
+  :lang(zh) .status,
+  :lang(zh) .verify-head,
+  :lang(zh) .support-eyebrow { letter-spacing: 0.05em; text-transform: none; }
+
   /* ---------------------------------------------------------------- TYPE -- */
   .t-display {
     font-family: var(--font-display);

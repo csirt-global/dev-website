@@ -28,6 +28,8 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0   # check-translation-sync.py diffs against the base
 
       - name: Verify Hugo pin matches .hugo_version
         run: |
@@ -70,6 +72,11 @@ jobs:
 
       - name: Check for broken internal links
         run: python3 scripts/check-links.py
+
+      # A page edited in one language and not the others leaves the site with
+      # versions that quietly disagree. Reads the diff, so it needs the base.
+      - name: Check translations were changed together
+        run: python3 scripts/check-translation-sync.py "origin/${{ github.base_ref || 'main' }}"
 
       # A component class used in a layout but deleted from the stylesheet
       # renders as plain text, silently. It has already happened once.
