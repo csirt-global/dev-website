@@ -12,8 +12,9 @@
 # language-neutral.
 #
 # `social` entries are {kind, url}. Dead placeholder links are simply omitted:
-# Victor confirmed on 2026-08-25 that "useless icons can be removed", which is
-# why Marielle and Juliette have no X entry (they had href="#" in production).
+# Victor confirmed on 2026-08-25 that "useless icons can be removed", so an
+# icon that pointed at href="#" in production is left out rather than carried
+# over.
 
 groups:
   - id: supervisory
@@ -67,16 +68,6 @@ groups:
         social:
           - { kind: x, url: "https://twitter.com/kipenzo" }
           - { kind: linkedin, url: "https://www.linkedin.com/in/thielev" }
-      - name: "Marielle Nigg-Droog"
-        role: role_ciso
-        photo: images/marielle.jpg
-        social:
-          - { kind: linkedin, url: "https://www.linkedin.com/in/marielle-nigg-droog-4909913/" }
-      - name: "Juliette van Balen"
-        role: role_dpo
-        photo: images/juliette.jpg
-        social:
-          - { kind: linkedin, url: "https://www.linkedin.com/in/juliette-van-balen-25b96a2/" }
       - name: "Soufian El Yadmani"
         role: role_head_research
         photo: images/soufian.jpg
@@ -84,9 +75,3 @@ groups:
         social:
           - { kind: email, url: "mailto:soufianelyadmani@csirt.global" }
           - { kind: linkedin, url: "https://www.linkedin.com/in/soufianelyadmani/" }
-      - name: "Chris Heald"
-        role: role_bugbounty_manager
-        photo: images/chris.jpg
-        social:
-          - { kind: mastodon, url: "https://infosec.exchange/@ketumbra" }
-          - { kind: email, url: "mailto:chris@csirt.global" }
