@@ -28,6 +28,7 @@ Build site                                ← hugo --gc --minify --printPathWarn
 Check required URLs still resolve         ← check-urls.py
 Check translation coverage                ← translation-status.py
 Check for broken internal links           ← check-links.py
+Check translations were changed together  ← check-translation-sync.py
 Check every component class has a rule    ← check-css.py
 Check security.txt has not lapsed         ← check-security-txt.py
 Check the donate page matches its settings← check-donate.py
@@ -73,8 +74,10 @@ npm run sweep                    # terminal 2
 
 `sweep.mjs` drives 20 pages at 390/768/1440 and checks for horizontal scroll,
 failed requests, external links opening in the same tab, blocked pinch-zoom, and
-a visible keyboard focus ring. `BASE_URL` overrides the target, which is how CI
-points it at a static server over the built artifact.
+a visible keyboard focus ring. It then measures the header in all seven
+languages at 1280 and 1440 and prints the spare room, which is what stops a new
+language quietly breaking the menu. `BASE_URL` overrides the target, which is
+how CI points it at a static server over the built artifact.
 
 Playwright is the repository's only npm dependency and it never reaches the
 site: Hugo and Tailwind build the pages, this only looks at them. Editing
@@ -97,11 +100,16 @@ general-purpose tool has no way to know:
 They are also the reason `make check` and CI test the same thing. A check that
 only exists inside a workflow cannot be run before pushing.
 
-The trade is real: roughly 900 lines of Python with no tests of their own, and a
-buggy check gives false confidence. One already did — `check-donate.py` read
+The trade is real: about 1,100 lines of Python with no tests of their own, and a
+buggy check gives false confidence. Two already have. `check-donate.py` read
 `hidden: true` out of a comment that explained how to restore `hidden: true`.
+`translation-status.py` split words on a character class containing no Han, so a
+correct Chinese page scored 100% English and failed the build.
+
 When you add a check, prove it fails on the thing it is meant to catch before
-trusting that it passes.
+trusting that it passes. And know what it cannot see: `check-content-parity.py`
+only inspects text blocks over 30 characters, so it says nothing about a name
+being removed from the team page.
 
 ---
 
@@ -113,8 +121,10 @@ trusting that it passes.
    the diff. Exit non-zero.
 3. Break the thing on purpose and confirm it fails. Then fix it and confirm it
    passes.
-4. Add it to `check:` in the `Makefile` and to `ci.yml`.
-5. Add a row to the table in `README.md` saying what it guards against.
+4. Add it to `check:` in the `Makefile` and to `ci.yml`. Both, or it is a check
+   that cannot be run before pushing.
+5. Add a row to the table in `README.md` saying where it runs and what it guards
+   against, and to the shorter table in `CONTRIBUTING.md`.
 
 ---
 

@@ -65,8 +65,9 @@ jobs:
       - name: Check required URLs still resolve
         run: python3 scripts/check-urls.py
 
-      # Five languages fail quietly. This makes the gap countable so the site
-      # cannot become English-only by drift.
+      # A missing translation fails quietly: Hugo serves English instead. This
+      # makes the gap countable so the site cannot become English-only by drift,
+      # and fails a language whose body is still English.
       - name: Check translation coverage
         run: python3 scripts/translation-status.py
 
@@ -137,6 +138,8 @@ jobs:
 
       # 20 pages x 390/768/1440: horizontal scroll, failed requests, external
       # links opening in the same tab, blocked pinch-zoom, keyboard focus ring.
+      # Then the header in all seven languages, which is what stops a new
+      # language breaking the menu.
       - name: Responsive and accessibility sweep
         env:
           BASE_URL: http://127.0.0.1:1313

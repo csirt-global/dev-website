@@ -81,9 +81,13 @@ ships one, and the alternative would have been either a multi-megabyte download 
 request, which is the thing self-hosting exists to avoid.
 
 The consequence is visible and worth knowing: Chinese pages are set in a different typeface from the
-other six. `assets/css/main.css` also turns off the Latin display tuning under `:lang(zh)`, because
-negative tracking and uppercasing are wrong for a script with no case whose glyphs already sit on a
-fixed square body.
+other six. `assets/css/main.css` also turns off the Latin display tracking under `:lang(zh)`, because
+Han glyphs already sit on a fixed square body and tracking them apart reads as damage.
+
+It deliberately leaves `text-transform` alone. Uppercasing is a no-op on a script with no case, so
+overriding it changes nothing for Han and only un-uppercases the Latin strings that remain on the
+page. The rule did override it at first, and the result was a hero eyebrow set in mixed case on the
+Chinese site and uppercase on the other six.
 
 ## The mark has one source
 

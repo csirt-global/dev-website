@@ -3,7 +3,7 @@
 
 Why this exists
 ---------------
-A five-language site fails quietly. Hugo falls back to the default language
+A multi-language site fails quietly. Hugo falls back to the default language
 when a translation is absent, so a page that was never translated looks fine
 to anyone who does not read that language. DIVD's site shows where that ends
 up: full i18n machinery, `.en.md` on all 66 content files, a language switcher

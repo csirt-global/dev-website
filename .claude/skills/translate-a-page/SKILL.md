@@ -1,6 +1,6 @@
 ---
 name: translate-a-page
-description: Translate a page or interface string into Dutch, German, French or Spanish, following this repository's English-first rule. Use when adding or updating any non-English content.
+description: Translate a page or interface string into any of this site's six non-English languages (Dutch, German, French, Spanish, Brazilian Portuguese, Simplified Chinese), following the English-first rule. Use when adding or updating any non-English content.
 ---
 
 # Translating a page
@@ -30,12 +30,18 @@ untranslated: true
 | What | Where |
 |---|---|
 | Page prose | `content/<page>/index.<lang>.md` |
-| Headings, labels, buttons | `i18n/<lang>.yaml` — the same key in all five files |
-| Team roles | `i18n/<lang>.yaml`; `data/team.yaml` holds the key, not the text |
-| Names, photos, case facts | Not translated |
+| Headings, labels, buttons | `i18n/<lang>.yaml` — the same key in all seven files |
+| Group names on the team page | `i18n/<lang>.yaml` |
+| **Job titles** | `i18n/en.yaml` **only.** English in every language, on purpose |
+| Names, photos, case facts, project teams | Not translated. They live in `data/` |
 
-Adding an interface string means adding the key to **all five** `i18n` files.
-English in the other four is the failure mode above, in a smaller box.
+Adding an interface string means adding the key to **all seven** `i18n` files.
+English in the other six is the failure mode above, in a smaller box.
+
+Job titles are the one exception, and it runs the other way: `i18n/en.yaml` is
+the only file with `role_` keys and the rest fall back to it. Do not add them
+elsewhere. Translating a job title means picking a grammatical gender for a
+named colleague, which is a guess about a real person.
 
 ## Links
 
@@ -51,7 +57,14 @@ make check
 ```
 
 `translation-status.py` prints per-language coverage and lists what is missing
-or marked untranslated. `check-links.py` catches links that now point nowhere.
+or marked untranslated. It also fails a page whose body is still 85% or more
+the same words as the English, which is what catches a file that was copied and
+not translated. `check-links.py` catches links that now point nowhere.
+
+**Editing one language means editing all of them.** `check-translation-sync.py`
+reads the diff and fails a page changed in some languages and not others. If a
+change genuinely does not apply elsewhere, put `Translation-sync: not-required,
+<reason>` in the commit message rather than making six no-op edits.
 
 Then open the page in that language and read it. Machine-shaped Dutch is
 noticeable to Dutch readers, and this organisation is Dutch.

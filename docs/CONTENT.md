@@ -37,10 +37,38 @@ so there is no need to shrink it first. A 7 MB photo becomes about 4 KB.
 
 ---
 
-## Cases — `content/cases/<id>/index.<lang>.md`
+## Cases
 
-One folder per case. The folder name is lowercase; `slug` sets the public URL and **must keep the
-original capitalisation**, because case URLs are cited externally and are case-sensitive.
+A case is **two files**, and the second one is the part people forget.
+
+### 1. The facts — `data/cases/<slug>.yaml`
+
+```yaml
+id: "CG-2024-00001"
+ref: "CG-2024-00001-teamcity"            # optional internal reference
+status: closed                           # closed | current -> which list it appears in
+lead: "Soufian El Yadmani"
+leadAnchor: soufian                      # their anchor on /about/team/
+researchers: ["Name One", "Name Two"]
+cve: ["CVE-2024-23917"]                  # auto-linked to cve.org
+cwe:                                     # use instead of cve where relevant
+  - { id: "CWE-538", label: "CWE-538: ...", url: "https://cwe.mitre.org/..." }
+product: "JetBrains TeamCity"
+productUrl: "https://www.jetbrains.com/teamcity/"
+cpe: "cpe:2.3:a:jetbrains:teamcity:*:*:*:*:*:*:*:*"
+vulnerableVersions: "23.9.7 and prior"
+vendorStatement: "https://..."
+```
+
+None of this is language-dependent. A CVE, a CPE string and a researcher's name are the same in
+every language, so they exist once here rather than seven times. **The build fails with an error
+naming this file if it is missing**, so a case cannot ship without its facts.
+
+### 2. The prose — `content/cases/<id>/index.<lang>.md`
+
+One folder per case, one file per language. The folder name sets `slug`, which sets the public URL,
+and it **must keep the original capitalisation**, because case URLs are cited externally and are
+case-sensitive.
 
 ```yaml
 ---
@@ -48,21 +76,6 @@ title: "JetBrains TeamCity Authentication Bypass"
 slug: "CG-2024-00001"                    # the URL: /cases/CG-2024-00001/
 date: 2024-02-16                         # "Published"
 lastmod: 2024-02-20                      # "Last updated", optional
-case:
-  id: "CG-2024-00001"
-  status: closed                         # closed | current -> which list it appears in
-  ref: "CG-2024-00001-teamcity"          # optional internal reference
-  lead: "Soufian El Yadmani"
-  leadAnchor: soufian                    # links to /#soufian
-  researchers: ["Name One", "Name Two"]
-  cve: ["CVE-2024-23917"]                # auto-linked to cve.org
-  cwe:                                   # use instead of cve where relevant
-    - { id: "CWE-538", label: "CWE-538: ...", url: "https://cwe.mitre.org/..." }
-  product: "JetBrains TeamCity"
-  productUrl: "https://www.jetbrains.com/teamcity/"
-  cpe: "cpe:2.3:a:jetbrains:teamcity:*:*:*:*:*:*:*:*"
-  vulnerableVersions: "23.9.7 and prior"
-  vendorStatement: "https://..."
 ---
 
 ### Summary
@@ -70,9 +83,16 @@ case:
 Body text here.
 ```
 
-Every field except `title`, `slug`, `date` and `case.id` is optional and simply not rendered if
-absent. `status` decides whether the case appears under Current or Closed on `/cases/`; **the index
-builds itself**, there is no link list to maintain.
+Every field in the data file except `id` and `status` is optional and simply not rendered if absent.
+`status` decides whether the case appears under Current or Closed on `/cases/`; **the index builds
+itself**, there is no link list to maintain.
+
+A translation may add a `case:` block to its own front matter to override a single field that
+genuinely carries prose. `vulnerableVersions: "23.9.7 and prior"` has an English tail, and the Dutch
+page rightly says "en ouder". Everything not named in that block still comes from the one data file.
+
+`hugo new cases/CG-YYYY-NNNNN/index.en.md` writes the prose file with the right `slug`. It cannot
+write the data file; copy an existing one.
 
 Cases with no page of their own, only a CVE record, live in `data/external_cases.yaml`.
 
@@ -80,7 +100,10 @@ Cases with no page of their own, only a CVE record, live in `data/external_cases
 
 ## Projects — `content/projects/<slug>/index.<lang>.md`
 
+Like a case, a project is two files: the people in `data/`, the words in `content/`.
+
 ```yaml
+# content/projects/pgu/index.<lang>.md
 ---
 title: "Global Universities (PGU)"
 slug: "pgu"
@@ -91,14 +114,27 @@ project:
   timeline:
     - year: "2025"
       body: "What happened. Markdown links work here."
-  team:
-    - { name: "...", role: "Project Lead", photo: "images/x.jpg", social: [ ... ] }
+  teamHeading: "The team"
+  teamIntro: |
+    Prose above the team cards.
 ---
 
 Body prose, then `## The Project` and so on.
 ```
 
-Project team `role` is plain text, not an i18n key, because these titles are project-specific.
+```yaml
+# data/projects/pgu.yaml
+team:
+  - name: "Jane Doe"
+    role: role_project_lead              # an i18n key, same as data/team.yaml
+    photo: "images/jane.jpg"
+    social:
+      - { kind: linkedin, url: "https://www.linkedin.com/in/janedoe/" }
+```
+
+The team is in `data/` for the same reason the case facts are: a name, a photo and a LinkedIn URL
+are identical in every language, and repeating the block in seven files is how one of those URLs
+quietly ends up wrong. `timeline` and `teamIntro` stay in the front matter because they are prose.
 
 Partners are shared between projects and live in `data/partners.yaml`.
 
@@ -111,7 +147,7 @@ Partners are shared between projects and live in `data/partners.yaml`.
   url: "/cases/"
 ```
 
-One list. It renders into both the desktop and mobile menus, in all five languages. A link whose
+One list. It renders into both the desktop and mobile menus, in all seven languages. A link whose
 target has no translation in the current language falls back to English rather than 404ing.
 
 ---
@@ -152,19 +188,24 @@ belong here — that is the whole point of the block.
 ## Donations — `data/donate.yaml`
 
 The page at `/get-involved/donate/` (short URL `/donate/`) is built entirely from
-this file, and ships switched off. Issue #18 asked for a donate button; the one
-thing nobody could supply was the provider and the URL.
+this file. Issue #18 asked for a donate button; the one thing nobody could
+supply was the provider and the URL.
 
-To turn it on:
+It is currently **switched on with sample settings**, so the design can be
+reviewed before anyone picks a provider. Every route on it points at
+`example.invalid`, a reserved domain that cannot resolve, and the page says so.
+
+To hand it over:
 
 1. Fill in `provider.url` (put `{amount}` where the preset amount goes, if the
    provider accepts one), and whatever else applies — `paypal.url`, `bank.iban`,
    `usage`.
-2. Delete `hidden`, `noindex` and the `sitemap` block from
-   `content/get-involved/donate/index.en.md`.
+2. Set `sample: false` in the same file.
 
-Both steps, or neither. `scripts/check-donate.py` fails the build on half of it,
-because a live donate page with dead buttons is worse than no donate page.
+`scripts/check-donate.py` warns about sample settings everywhere and refuses
+them in exactly one place: a deploy whose target is the live host. It also
+refuses `sample: false` while the values are still placeholders. See
+[CI.md](CI.md) for the full table.
 
 A field left empty removes its section rather than rendering an empty one, so the
 page never publishes a payment route that does not work.

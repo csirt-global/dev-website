@@ -35,7 +35,14 @@ node scripts/sweep.mjs
 ```
 
 20 pages at 390/768/1440: horizontal scroll, failed requests, external links
-opening in the same tab, blocked pinch-zoom, visible keyboard focus ring.
+opening in the same tab, blocked pinch-zoom, visible keyboard focus ring. Then
+the header in all seven languages at 1280 and 1440, printing the spare room.
+Read those numbers: a language with single-digit headroom is one label away from
+a wrapped menu, which is how French shipped broken.
+
+It needs a running server. Do **not** run `make build` while `make serve` is up:
+the build clears `public/` underneath the server and the site comes back looking
+broken for reasons that have nothing to do with your change.
 
 Playwright drives the installed Google Chrome via `channel: "chrome"`, because
 its own cached browsers are stale. If `playwright` is not resolvable from the

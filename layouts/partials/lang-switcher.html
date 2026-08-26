@@ -1,6 +1,6 @@
 {{- $cur := .Site.Language.Lang -}}
 {{- $page := . -}}
-{{/* Compact dropdown rather than five inline codes: with five languages an
+{{/* Compact dropdown rather than inline codes: with seven languages an
      inline list eats enough horizontal room to wrap the main nav onto two lines. */}}
 <div class="relative" x-data="{ langOpen: false }" @click.away="langOpen = false">
   <button type="button" @click="langOpen = !langOpen"
