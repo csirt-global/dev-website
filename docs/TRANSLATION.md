@@ -62,13 +62,18 @@ everywhere. That is why `data/team.yaml` stores `role: role_advisor` rather than
 
 ## Coverage thresholds
 
-All five languages are complete and all five are enforced at 100%. Adding an English page without its
-four translations fails the build.
+A threshold is per language and says one thing: **this language is complete, keep it that way.**
 
-That is deliberate and it is the whole point of having done this: the gap closed once, and a hard
-threshold is what stops it reopening one page at a time. If a page genuinely cannot be translated
-yet, add the file with `untranslated: true` rather than lowering a threshold. It will render with a
-notice telling readers why they are seeing English, and it will count as missing until it is real.
+The five configured today are all at 100%, so all five are enforced. Adding an English page without
+its translations fails the build, which is what stops the gap reopening one page at a time.
+
+A language still being written sits at `0.00` and is only reported. That is how English, and then
+each of the other four, got here. **Raising a threshold is the last step of adding a language, not a
+precondition for starting one**, so a new language does not fail CI on the day it is configured.
+
+If a single page genuinely cannot be translated yet in a finished language, add the file with
+`untranslated: true` rather than lowering that language's threshold. It renders with a notice telling
+readers why they are seeing English, and it counts as missing until it is real.
 
 
 

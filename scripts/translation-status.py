@@ -22,8 +22,10 @@ Exit codes
 0  every language meets its required coverage
 1  a language below its threshold, or a missing/stale page in a strict language
 
-Thresholds live in LANGUAGES below. All five are at 100% and all five are
-enforced, so adding an English page without its translations fails the build.
+Thresholds live in LANGUAGES below, one per language. A language at 1.00 is
+finished and enforced: adding an English page without it fails the build. A
+language still being written sits at 0.00 and is only reported. Raise it when the
+language is complete.
 
 Two things are counted but never block. `unreviewed` is how many translated
 pages no native speaker has signed off, which will never be zero in a volunteer
@@ -40,9 +42,12 @@ CONTENT = ROOT / "content"
 DEFAULT_LANG = "en"
 
 # lang: minimum fraction of pages that must be translated for the build to pass
-# All five are complete, so all five are now enforced. Adding an English page
-# without its four translations fails the build, which is the point: the gap
-# closed once, and this is what stops it reopening a page at a time.
+# A threshold is per language and says one thing: this language is complete, keep
+# it that way. A language still being filled in sits at 0.00 and is only reported,
+# which is how English, then Dutch, German, French and Spanish each got here.
+#
+# So a new language starts at 0.00, gets written, and is raised when it is done.
+# Raising it is the last step of adding a language, not a precondition.
 LANGUAGES = {
     "en": 1.00,
     "nl": 1.00,
