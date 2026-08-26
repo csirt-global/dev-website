@@ -22,9 +22,10 @@ The team page is generated from this file. Three groups: `supervisory`, `board`,
 
 `kind` must be one of `x`, `linkedin`, `mastodon`, `email`. Each renders an icon at the same size.
 
-**`role` is a translation key, not text.** Add it to every file in `i18n/` so the job title
-translates. If a role does not exist yet, add for example `role_advisor: "Advisor"` to `i18n/en.yaml`
-and the equivalent in the other languages.
+**`role` is a translation key, not text.** If a role does not exist yet, add for example
+`role_advisor: "Advisor"` to `i18n/en.yaml`. Job titles stay in English in every language, so
+`i18n/en.yaml` is the only file that carries `role_` keys: do not add them to the others, and do not
+translate the ones that are there.
 
 **Do not add a social entry with a placeholder URL.** The previous site had two `href="#"` X icons
 that looked like links and went nowhere. A missing icon is better than a dead one.

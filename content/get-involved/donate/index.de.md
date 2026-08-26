@@ -4,7 +4,7 @@ description: "Unterstütze CSIRT.global. Wir sind eine ehrenamtlich geführte, g
 layout: "donate"
 lede: "Wir sind ehrenamtlich geführt und gemeinnützig. Spenden bezahlen die Arbeit, nicht Gehälter."
 weight: 2
-aliases: ["/de/donate/"]
+aliases: ["/donate/"]
 ---
 
 Jeder Fall, den wir eröffnen, wird veröffentlicht, unsere Jahresabschlüsse werden öffentlich

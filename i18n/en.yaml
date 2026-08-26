@@ -54,6 +54,15 @@ group_management: "Management"
 team_intro_supervisory: "The supervisory board acts as a “senate”, and can steer important decisions within CSIRT.global. We are incredibly happy these veteran hackers and entrepreneurs share their experience and wisdom with us:"
 team_intro_board: "The board steers the direction and makes major decisions impacting the organization."
 team_intro_management: "The management is responsible for day to day operations."
+
+# Job titles. These stay in English in every language, so they are defined here
+# and here only: the other i18n files carry no role_ keys and Hugo falls back
+# to this file for them.
+#
+# Translating them means choosing a grammatical gender for a named colleague in
+# languages that have one, which is a guess about a real person that a website
+# has no business making. English titles are also what these people use on
+# LinkedIn and in the register, so they stay searchable.
 role_cofounder: "Co-founder, Head of Professional Services HackerOne"
 role_chair: "Chair of the board"
 role_vicechair: "Vice chair"
@@ -64,6 +73,8 @@ role_ciso: "CISO"
 role_dpo: "Data Protection Officer"
 role_head_research: "Head of Research"
 role_bugbounty_manager: "Bug Bounty Program Manager"
+role_project_lead: "Project Lead"
+role_volunteer: "Volunteer"
 
 # Projects
 project_timeline: "Timeline"
@@ -124,5 +135,8 @@ verify_note_rfc: "RFC 9116"
 
 redirect_moved: "This page has moved."
 redirect_link: "Continue"
-role_project_lead: "Project Lead"
-role_volunteer: "Volunteer"
+
+# How a long date is written. A Go time layout, not prose: "January"
+# and "2006" are reference tokens that become the month name and year in
+# this language, everything else is passed through literally.
+date_long: "2 January 2006"

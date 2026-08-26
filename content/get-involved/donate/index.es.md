@@ -4,7 +4,7 @@ description: "Apoya a CSIRT.global. Somos una fundación sin ánimo de lucro dir
 layout: "donate"
 lede: "Somos una organización de voluntarios y sin ánimo de lucro. Las donaciones pagan el trabajo, no los sueldos."
 weight: 2
-aliases: ["/es/donate/"]
+aliases: ["/donate/"]
 ---
 
 Cada caso que abrimos se publica, nuestras cuentas anuales se depositan públicamente y la fundación

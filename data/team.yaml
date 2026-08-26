@@ -5,8 +5,11 @@
 # schemas (the NGO project page has no `role` field at all). Adding someone
 # means copying a card and hoping. Here a person is a few lines of YAML.
 #
-# `role` is an i18n key, not literal text, so job titles translate with the
-# rest of the site. Names and photos are language-neutral.
+# `role` is an i18n key, not literal text. Job titles are deliberately not
+# translated: they are defined once in i18n/en.yaml and every language falls
+# back to it, so a named colleague is not assigned a grammatical gender by a
+# translator. Group names above them do translate. Names and photos are
+# language-neutral.
 #
 # `social` entries are {kind, url}. Dead placeholder links are simply omitted:
 # Victor confirmed on 2026-08-25 that "useless icons can be removed", which is
