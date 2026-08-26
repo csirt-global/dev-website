@@ -1,0 +1,33 @@
+{{- /* One person, one card. Used by the team page and by project pages, so a
+       roster looks the same wherever it appears.
+
+       Laid out as a directory row rather than a centred marketing card: the job
+       of these pages is to show that real, named, checkable people do this work.
+       Photo left, name and role right, contact icons under them. */ -}}
+{{- $p := .person -}}
+<li{{ with $p.anchor }} id="{{ . }}"{{ end }} class="bg-ink-raised rounded-brand p-6 flex items-start gap-4 scroll-mt-28">
+  {{- with resources.Get $p.photo }}
+    {{/* Resized and converted at build time. The current site ships
+         soufian.jpg at 6.98 MB to fill a 224px avatar. */}}
+    {{- $img := .Resize "224x224 webp q80" }}
+    <img class="w-16 h-16 shrink-0 rounded-full object-cover bg-ink-raised"
+         src="{{ $img.RelPermalink }}" width="224" height="224" loading="lazy" alt="{{ $p.name }}">
+  {{- else }}
+    <span class="w-16 h-16 shrink-0 rounded-full bg-ink-raised" aria-hidden="true"></span>
+  {{- end }}
+  <div class="min-w-0">
+    <h4 class="font-display font-bold text-text-strong leading-tight">{{ $p.name }}</h4>
+    {{- with $p.role }}
+    <p class="t-mono text-[0.8125rem] text-signal mt-1 leading-snug">{{ if $.i18nRole }}{{ i18n . }}{{ else }}{{ . }}{{ end }}</p>
+    {{- end }}
+    {{- with $p.social }}
+    <ul role="list" class="flex gap-4 mt-3">
+      {{- range . }}
+      <li><a href="{{ .url }}"{{ if not (hasPrefix .url "mailto:") }} target="_blank" rel="noopener noreferrer"{{ end }}
+             class="block text-muted hover:text-signal transition-colors">
+        <span class="sr-only">{{ $p.name }} on {{ .kind | title }}</span>{{ partial "icon.html" (dict "kind" .kind) }}</a></li>
+      {{- end }}
+    </ul>
+    {{- end }}
+  </div>
+</li>

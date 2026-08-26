@@ -1,0 +1,13 @@
+{
+  "name": "csirt-global-website",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Browser checks for the CSIRT.global website. Not part of the site build: Hugo and Tailwind need none of this, and nothing here is deployed.",
+  "scripts": {
+    "sweep": "node scripts/sweep.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

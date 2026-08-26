@@ -1,0 +1,43 @@
+name: Something on the site is broken
+description: A page, link, image or layout that does not work
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For a security vulnerability, use the disclosure form instead — see SECURITY.md.
+
+  - type: input
+    id: url
+    attributes:
+      label: Where
+      description: The full URL of the page.
+      placeholder: https://csirt.global/cases/
+    validations:
+      required: true
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What happens
+      description: What you see, and what you expected instead.
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Screenshot
+      description: |
+        Please attach one if it is visual. Half the bugs in this repo's history
+        were diagnosed wrongly at first because nobody opened the screenshot.
+    validations:
+      required: false
+
+  - type: input
+    id: environment
+    attributes:
+      label: Browser and device
+      placeholder: Safari 18 on iPhone 14 / Firefox 130 on Windows 11
+    validations:
+      required: false

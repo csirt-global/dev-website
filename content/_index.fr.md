@@ -1,0 +1,154 @@
+---
+# English body shown deliberately: this page has no translation yet.
+# The banner tells the reader, and the coverage check counts it as missing.
+untranslated: true
+title: "CSIRT.global"
+description: "CSIRT.global is a global, volunteer-led, not-for-profit organization, aiming to make the world more secure by going after vulnerabilities no-one else cares for."
+---
+
+## Our mission {#mission}
+
+We build a global community, bound by a passion for solving security problems such as
+vulnerabilities. We find owners and disclose to prevent incidents, making the world more secure. We
+love the internet and aim to understand its weaknesses. We love personal growth, and help our
+community to grow as individuals and as a group. We are non-partisan, a-political, inclusive and
+open. We maintain a sense of realism, we're protective of sensitive data and understand its impact.
+
+Our work consists of 3 major strands:
+
+{{< details summary="Bug Bounties" >}}
+We run fully funded Bug Bounty programs to help charities and NGOs find and fix vulnerabilities in
+their infrastructure. This entails a few stages:
+
+<dl>
+  <dt>Preliminary Research</dt>
+  <dd>our skilled team of internal, vetted researchers will analyse your infrastructure to securely
+  inform you of any easy-wins such as outdated software</dd>
+
+  <dt>Bug Bounty Program</dt>
+  <dd>The next stage invites external, vetted researchers to find additional vulnerabilities. To
+  incentivise their support, they will be financially compensated based on the severity of the
+  findings. All of the prize money is paid by CSIRT.Global.</dd>
+
+  <dt>Remediation</dt>
+  <dd>We will work with your IT/Security team(s) to help you resolve all the findings and secure
+  your systems.</dd>
+
+  <dt>Optional Promotion</dt>
+  <dd>Congratulations, your organisation is more secure than it was yesterday. Some organisations
+  are instinctively ashamed that they weren't always totally secure. Don't be, everyone has
+  problems, not everyone finds and fixes them :) We will assist in promoting your success and the
+  skills of the associated researchers.</dd>
+</dl>
+
+To nominate your organisation as a beneficiary please
+[contact our Bug Bounty team](mailto:inquiries@csirt.global?subject=Bug%20Bounty).
+{{< /details >}}
+
+{{< details summary="Exploit Research" >}}
+We have a team of skilled Exploit Researchers who look for previously unknown vulnerabilities
+(zero-days) in public infrastructure so they can be responsibly reported and fixed, leaving the
+community safer.
+
+We have 3 tiers of researchers with a mentoring and training system to reduce the global shortage of
+skilled Cyber practitioners. See our current and former [cases](/cases/).
+
+For more info, see our
+[Opportunities](https://theorg.com/org/csirt-global/jobs/researcher-d5326620).
+{{< /details >}}
+
+{{< details summary="Incident Response (CSIRT)" >}}
+We have a team of experienced incident responders who can:
+
+- Identify systems vulnerable to widespread exploitation, contact their owners and assist them in
+  fixing the problem. We cooperate with National Cyber Security Centers (NCSCs) in various countries
+  to help with this.
+- Assist charities and NGOs that have been compromised and require expert assistance.
+
+To find out more, please see our
+[Opportunities](https://theorg.com/org/csirt-global/jobs/response-team-lead-11212914) or
+[contact the IR team](mailto:inquiries@csirt.global?subject=CSIRT).
+{{< /details >}}
+
+## News {#news}
+
+{{< news >}}
+
+## Organisation {#organisation}
+
+CSIRT.global is a global, volunteer-led, not-for-profit organization, aiming to make the world more
+secure by going after vulnerabilities no-one else cares for.
+
+We are a sister organization to the Dutch Institute for Vulnerability
+Disclosure ([DIVD](https://www.divd.nl)). In 2022, international CSIRT activities were moved to CSIRT.global,
+as a first step to build an international network of like-minded people.
+
+
+{{< team >}}
+
+## Code of Conduct {#code}
+
+All CSIRT.global volunteers adhere to our Code of Conduct:
+
+1. CSIRT.global is a global Computer Security Incident Response Team. We are led by volunteers, and work with volunteers who aim to make the digital world safer.
+2. CSIRT.global aims to disclose vulnerabilities and report findings to those who can fix them.
+3. CSIRT.global performs the last steps in an extensive process, performed by associated organisations, individual researchers and third parties. We are aware of the importance of these last steps and take the CSIRT process very seriously.
+4. CSIRT.global is tied (by articles of association) to the Dutch Institute for Vulnerability Disclosure. That said, they are two separate organisations and separate legal entities. Functionally, whereas the DIVD is the primary source of vulnerability information and scanning information, CSIRT.global aims to have the issues fixed.
+5. CSIRT.global uses information provided by third parties. We are aware this information is generated by activities such as:
+   - Scanning the internet for vulnerabilities, mostly Common Vulnerabilities and Exposures (CVEs), and reporting our findings and possible solutions to the owners of these systems.
+   - Analysing online systems for new vulnerabilities (zero-days), reporting our findings to the makers, and try to help them in fixing the vulnerabilities.
+   - Analysing databases with leaked credentials and reporting to the organisations or people who are compromised to take appropriate measures.
+6. As we work with sensitive data, gathered without informed consent, we established this Code of Conduct to provide an ethical base for the work we do.
+7. While performing incident responses, we aim to work both with trusted partners to extend our reach, as well as notifying as many individual organisations and people as possible.
+8. We are aware that we work with information acquired by operating at the edges of what is legally allowed, so we proceed by these three criteria commonly used in court cases on vulnerability disclosures:
+   - Societal need: we do vulnerability disclosure to prevent online damage to as many internet users as possible and don’t serve any particular financial, political or individual interests.
+   - Principle of Proportionality: we serve this need with appropriate means. Our research should increase and not decrease the integrity and availability of online systems.
+   - Principle of Subsidiarity: if several means are available to meet the need, we opt for the one which has the least impact.
+9. We trust third party findings when we can, but validate findings when needed. We aim to prevent reporting false positives or miss false negatives and sometimes need to verify if a vulnerability is actually present. We use custom-made scripts based on publicly available proof of concepts or non-weaponized exploit code and take good care that we don’t damage systems, download too much personal data, or create backdoors.
+10. Our findings typically consist of lists with several to millions of IP addresses, the type of vulnerability found, contact information, and metadata (e.g. timestamps, scripts, researchers working on the data). This is sensitive data, so we take all precautions necessary to protect the confidentiality of this data.
+11. We disclose zero-day vulnerabilities to the vendor first, then request CVE numbers and negotiate a reasonable time span for disclosing it to our Trusted Information Sharing Partners and the broader public. Ideally, the disclosure is preceded by a patch. If a vendor is obviously slow in providing the patch and it is likely others may discover and abuse the vulnerability, we may consider disclosure to warn potential victims and advise them on mitigation measures.
+12. We report the CVEs we find to the owners of the systems, mostly by generating email addresses based on their domain name, such as info@, security@ or abuse@ and to the listed abuse addresses of IP owners. If owners can’t be found in automated ways, we may search for them by leveraging (open) sources.
+13. We may also send them our findings through our Trusted Information Sharing Partners, who are, for example, Computer Emergency Response Teams, Computer Security Incident Response Teams, Internet Service Providers, governmental organisations or other research institutes.
+14. While doing our work, we focus on our mission of making the internet and the connected world more secure. We don’t serve the needs of governments, law enforcement, enterprise organisations, individuals or anyone else.
+15. Due diligence in our CSIRT process requires following our disclosures up. Therefore, we need to store data and log our activities. We may also need this data in case of a dispute. We minimize the amount of personal data we gather and store and are aware that an IP address can also be perceived as information relating to an identified or identifiable natural person. We believe that our processing of this data is proportional to our goals of making the internet and the connected world more secure.
+16. Depending on the incident, we might inform the broader security community and/or the media about our findings. We only use aggregated statistics and/or trend information. We don’t use personal identifiable information (PII).
+17. Any reporting we do, is available from our website https://csirt.global.
+18. Our reports are available under the Creative Commons License.
+19. We report vulnerable systems. While we might channel 3rd party remediation information on a best-effort base, remediation is solely the responsibility of the systems owner.
+20. CSIRT.global is responsible for making members aware of these rules. It is the responsibility of each member to comply. If they don’t, the board will take appropriate measures, for instance by revoking their account.
+21. We are aware of geographical differences, with regard to culture, law and customs. We provide escalation paths, if conflicts arise due to the differences in multiple geographical regions we operate in. Members are encouraged to use these.
+22. On an interpersonal level, we are an open, welcoming, learning and teaching organisation. We believe in diversity.
+23. We encourage members to challenge other members’ behaviour if they feel it’s not appropriate, whilst also providing escalation paths for those that choose not to address issues directly. We understand there might be very good reasons for not addressing issues directly.
+24. Suggestions and feedback are welcome. Contact our Secretary [Lennaert Oudshoorn](#lennaert).
+
+## How you can help {#help}
+
+If you want to make a difference, you might want to consider volunteering. We offer a meaningful
+experience, fantastic colleagues, an international network, and work experience in research, CSIRT,
+comms, and other related activities. Becoming a volunteer requires a few formalities, including
+adhering to the Code of Conduct and signing a volunteer agreement.
+
+[Become a volunteer](/join/)
+
+If you want to get in touch, [email us](mailto:inquiries@csirt.global) or get in touch with one of
+the team via social media.
+
+### Opportunities at CSIRT.Global
+
+- [Researcher](https://theorg.com/org/csirt-global/jobs/researcher-d5326620)
+- [Response Team Lead](https://theorg.com/org/csirt-global/jobs/response-team-lead-11212914)
+- [Head of People and Culture (P&C)](https://theorg.com/org/csirt-global/jobs/head-of-people-and-cultur-c15acc85)
+
+## ANBI {#anbi}
+
+<img src="/images/ANBI_FC.png" width="100" alt="ANBI">
+
+- [Stichting CSIRT.global](https://openkvk.nl/company/stichting-stichting-csirtglobal-85998265)
+- RSIN: 863825655
+- Kantoor: Maanweg 174, 2516 AB Den Haag, Tel.: (+31) 70 41 90 309
+
+### Documents {#documents}
+
+{{< anbi-documents >}}
+
+{{< figure src="images/divd_split.png" alt="CSIRT.global and DIVD" >}}

@@ -1,0 +1,11 @@
+# Shared across project pages. On the current site this block is duplicated
+# byte-for-byte between pgu and pgngo.
+- name: "DIVD Academy"
+  url: "https://divd.academy"
+  logo: "images/DIVD.Academy_logo.png"
+- name: "DIVD Works"
+  url: "https://divd.works"
+  logo: "images/DIVD.works_logo.png"
+- name: "basisbeveiliging.nl"
+  url: "https://basisbeveiliging.nl"
+  logo: "images/basisbeveiliging_logo.png"

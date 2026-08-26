@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="{{ .Site.Language.Lang }}"><head>
+<meta charset="utf-8">
+<title>{{ .Title }}</title>
+<link rel="canonical" href="{{ .Params.redirectTo | absURL }}">
+<meta http-equiv="refresh" content="0; url={{ .Params.redirectTo | absURL }}">
+<meta name="robots" content="noindex">
+</head><body>
+<p>Please follow <a href="{{ .Params.redirectTo | absURL }}">this link</a>.</p>
+</body></html>

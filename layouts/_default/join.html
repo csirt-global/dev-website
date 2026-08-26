@@ -1,0 +1,38 @@
+{{ define "main" }}
+{{ partial "page-head.html" (dict "title" .Title "eyebrow" (i18n "nav_get_involved") "lede" .Params.lede) }}
+<div class="mx-auto max-w-4xl px-5 sm:px-8 py-12 sm:py-16">
+  <div class="prose-body max-w-2xl">{{ .Content }}</div>
+
+  {{/* JotForm, as on the current site. The form's own colours live in the
+       JotForm account, not in this repo, so it cannot be themed from here.
+       Rather than pretend, it is framed as what it is: an embedded document,
+       on the same paper surface the ANBI filings use, and labelled with who
+       hosts it — this page asks people for their name and email, and the
+       audience we care most about is the one checking whether we are real. */}}
+  <div class="mt-10 rounded-brand border border-paper-line bg-paper overflow-hidden">
+    <p class="t-mono flex items-baseline justify-between gap-4 border-b border-paper-line px-5 py-3 text-[0.75rem] font-semibold uppercase tracking-[0.14em] text-paper-mute">
+      <span>{{ i18n "form_heading" }}</span>
+      <span class="normal-case tracking-normal font-normal">{{ i18n "form_hosted_by" }}</span>
+    </p>
+    <iframe id="volunteer-form" title="{{ .Title }}"
+            src="https://form.jotform.com/221683399450362"
+            class="w-full border-0 block" style="height:1100px"
+            loading="lazy" allow="geolocation; microphone; camera"></iframe>
+  </div>
+  <noscript><p class="mt-4 text-muted">{{ i18n "form_noscript" }}</p></noscript>
+</div>
+
+{{/* JotForm posts "setHeight:<px>:<formID>" to the parent as the form grows.
+     Listening for it ourselves means the whole form is visible with no inner
+     scrollbar, without loading a third-party embed script. Origin-checked, and
+     the inline height above is the fallback if the message never arrives. */}}
+<script>
+  addEventListener("message", function (e) {
+    if (e.origin !== "https://form.jotform.com") return;
+    var m = /^setHeight:(\d+)(?::|$)/.exec(String(e.data));
+    if (!m) return;
+    var f = document.getElementById("volunteer-form");
+    if (f) f.style.height = Math.min(parseInt(m[1], 10), 20000) + "px";
+  });
+</script>
+{{ end }}

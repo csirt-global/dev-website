@@ -1,0 +1,31 @@
+{{ define "main" }}
+<div class="on-paper">
+  <section class="border-b border-paper-line">
+    <div class="mx-auto max-w-6xl px-5 sm:px-8 py-12 sm:py-16">
+      <p class="t-eyebrow">{{ i18n "nav_about" }}</p>
+      <div class="mt-4 flex flex-wrap items-center gap-6">
+        <h1 class="t-display text-[clamp(2rem,5vw,3.25rem)] text-paper-ink">{{ .Title }}</h1>
+        <img src="/images/ANBI_FC.png" width="88" height="70" alt="ANBI" class="h-16 w-auto">
+      </div>
+    </div>
+  </section>
+  <div class="mx-auto max-w-6xl px-5 sm:px-8 py-12 sm:py-16 space-y-12">
+    <div class="prose-body max-w-2xl">{{ .Content }}</div>
+    {{ partial "verify.html" . }}
+    <div>
+      <h2 class="t-display text-2xl text-paper-ink">{{ i18n "anbi_documents" }}</h2>
+      <ul class="mt-5 record">
+        {{- range hugo.Data.anbi_documents }}
+        <li class="border-b border-paper-line last:border-0">
+          <a href="{{ .url }}" target="_blank" rel="noopener noreferrer"
+             class="flex flex-wrap items-baseline justify-between gap-3 py-3 hover:bg-signal transition-colors">
+            <span class="text-paper-ink">{{ .label }}</span>
+            <span class="text-paper-mute text-[0.8125rem]">{{ if .external }}Google Docs{{ else }}PDF{{ end }} &rarr;</span>
+          </a>
+        </li>
+        {{- end }}
+      </ul>
+    </div>
+  </div>
+</div>
+{{ end }}

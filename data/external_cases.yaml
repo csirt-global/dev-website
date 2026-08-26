@@ -1,0 +1,8 @@
+# Closed cases that have no page here, only a CVE record. Listed on /cases/
+# exactly as the current site does.
+- label: "CVE-2023-41256"
+  url: "https://www.cve.org/CVERecord?id=CVE-2023-41256"
+- label: "CVE-2023-38256"
+  url: "https://www.cve.org/CVERecord?id=CVE-2023-38256"
+- label: "CVE-2023-36497"
+  url: "https://www.cve.org/CVERecord?id=CVE-2023-36497"

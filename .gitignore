@@ -1,0 +1,13 @@
+# Build output. Everything here is produced by `make build` and never committed.
+/public/
+/resources/
+/assets/css/build.css
+.hugo_build.lock
+
+# Pinned toolchain, fetched by `make` on first run (~76 MB).
+/bin/
+
+# Playwright, used only by the browser sweep. The site build needs none of it.
+/node_modules/
+
+.DS_Store

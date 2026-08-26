@@ -1,0 +1,44 @@
+{{ define "main" }}
+{{ partial "page-head.html" (dict "title" .Title "eyebrow" (i18n "cases_eyebrow") "lede" (i18n "cases_register_lede")) }}
+<div class="mx-auto max-w-6xl px-5 sm:px-8 py-12 sm:py-16">
+  {{- $groups := slice (dict "k" "current" "pages" (where .Pages "Params.case.status" "current")) (dict "k" "closed" "pages" (where .Pages "Params.case.status" "closed")) }}
+  {{- range $groups }}
+  {{- $g := . }}
+  {{- with .pages }}
+  <section class="mb-14 last:mb-0">
+    <h2 class="status status-{{ $g.k }}">{{ i18n (printf "cases_%s" $g.k) }}</h2>
+    <p class="mt-2 mb-5 text-muted">{{ i18n (printf "cases_%s_intro" $g.k) }}</p>
+    <ul class="record border-t border-ink-line">
+      {{- range . }}
+      <li class="border-b border-ink-line">
+        <a href="{{ .RelPermalink }}" class="group grid gap-1 py-5 sm:grid-cols-[10rem_1fr] sm:gap-6 sm:items-baseline">
+          <span class="record-key">{{ .Params.case.id }}</span>
+          <span>
+            <span class="font-sans text-lg text-text-strong group-hover:text-signal transition-colors">{{ .Title }}</span>
+            {{- with .Params.case.cve }}<span class="record-key block mt-1 text-[0.8125rem]">{{ delimit . ", " }}</span>{{ end }}
+          </span>
+        </a>
+      </li>
+      {{- end }}
+    </ul>
+  </section>
+  {{- end }}
+  {{- end }}
+
+  {{- with hugo.Data.external_cases }}
+  <section>
+    <h2 class="status status-closed mb-5">{{ i18n "cases_cve_only" }}</h2>
+    <ul class="record border-t border-ink-line">
+      {{- range . }}
+      <li class="border-b border-ink-line">
+        <a href="{{ .url }}" target="_blank" rel="noopener noreferrer"
+           class="flex items-baseline justify-between gap-4 py-4 hover:text-signal transition-colors">
+          <span>{{ .label }}</span><span class="record-key">cve.org &rarr;</span>
+        </a>
+      </li>
+      {{- end }}
+    </ul>
+  </section>
+  {{- end }}
+</div>
+{{ end }}

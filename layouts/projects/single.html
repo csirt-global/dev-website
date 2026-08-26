@@ -1,0 +1,66 @@
+{{ define "main" }}
+<section class="border-b border-ink-line">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8 py-12 sm:py-16">
+    <p class="t-eyebrow">{{ i18n "nav_projects" }}</p>
+    <div class="mt-4 flex flex-wrap items-center gap-6">
+      {{- with resources.Get .Params.logo }}
+        {{- if eq .MediaType.SubType "svg" }}<img src="{{ .RelPermalink }}" alt="" class="h-20 w-auto">
+        {{- else }}{{ $i := .Resize "400x webp q85" }}<img src="{{ $i.RelPermalink }}" alt="" class="h-20 w-auto object-contain">{{ end }}
+      {{- end }}
+      <h1 class="t-display text-[clamp(2rem,5vw,3.25rem)] text-text-strong">{{ .Title }}</h1>
+    </div>
+    {{- with .Params.summary }}<p class="mt-5 max-w-2xl text-xl leading-relaxed text-text">{{ . }}</p>{{ end }}
+  </div>
+</section>
+
+<div class="mx-auto max-w-6xl px-5 sm:px-8 py-12 sm:py-16">
+  <div class="prose-body max-w-3xl">{{ .Content }}</div>
+
+  {{- with .Params.project.timeline }}
+  <section class="mt-16">
+    <h2 class="t-display text-2xl text-text-strong">{{ i18n "project_timeline" }}</h2>
+    <ol class="mt-6 record border-t border-ink-line">
+      {{- range . }}
+      <li class="record-row">
+        <span class="record-key">{{ .year }}</span>
+        <span class="record-val font-sans leading-relaxed">{{ .body | markdownify }}</span>
+      </li>
+      {{- end }}
+    </ol>
+  </section>
+  {{- end }}
+
+  {{- with .Params.project.team }}
+  <section class="mt-16">
+    <h2 class="t-display text-2xl text-text-strong">{{ $.Params.project.teamHeading | default (i18n "project_team") }}</h2>
+    {{- with $.Params.project.teamIntro }}<div class="mt-3 max-w-2xl text-muted leading-relaxed">{{ . | markdownify }}</div>{{ end }}
+    <ul role="list" class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {{- range . }}{{ partial "person-card.html" (dict "person" . "i18nRole" false) }}{{ end }}
+    </ul>
+  </section>
+  {{- end }}
+
+  <section id="partners" class="mt-16">
+    <h2 class="t-display text-2xl text-text-strong">{{ i18n "project_partners" }}</h2>
+    <ul role="list" class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {{- range hugo.Data.partners }}
+      {{- $p := . }}
+      <li class="bg-ink-raised rounded-brand p-6 text-center">
+        <div class="flex h-24 items-center justify-center rounded-brand bg-paper px-6">
+          {{- with resources.Get $p.logo }}{{ $i := .Resize "320x webp q85" }}
+          <img src="{{ $i.RelPermalink }}" alt="{{ $p.name }}" loading="lazy" class="max-h-16 max-w-full object-contain">
+          {{- end }}
+        </div>
+        <h3 class="mt-4 text-[0.9375rem]"><a href="{{ $p.url }}" target="_blank" rel="noopener noreferrer" class="text-text hover:text-signal">{{ $p.name }}</a></h3>
+      </li>
+      {{- end }}
+      <li class="bg-ink-raised rounded-brand p-6 text-center">
+        <div class="flex h-24 items-center justify-center rounded-brand border border-dashed border-ink-line">
+          <span class="t-mono text-[0.8125rem] text-muted">{{ i18n "partners_your_logo" }}</span>
+        </div>
+        <h3 class="mt-4 text-[0.9375rem] text-muted">{{ i18n "partners_room" }}</h3>
+      </li>
+    </ul>
+  </section>
+</div>
+{{ end }}

@@ -1,0 +1,7 @@
+{{ define "main" }}
+{{ partial "page-head.html" (dict "title" .Title "eyebrow" (i18n "nav_about")) }}
+<div class="mx-auto max-w-6xl px-5 sm:px-8 py-12 sm:py-16">
+  <div class="prose-body max-w-3xl">{{ .Content }}</div>
+  {{ partial "team.html" . }}
+</div>
+{{ end }}

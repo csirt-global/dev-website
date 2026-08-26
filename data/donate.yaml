@@ -1,0 +1,58 @@
+# Donations. Everything on /get-involved/donate/ comes from this file.
+#
+# Issue #18 asked for a donate button; the one thing nobody could supply was the
+# provider and the URL. So the page is built and the settings are not: fill these
+# in and it goes live. Nothing here is invented — a field left empty simply does
+# not render, so the page can never publish a payment route that does not work or
+# a claim nobody has checked.
+#
+# `enabled` is the master switch. While it is false the page carries a notice,
+# is marked noindex and does not appear in the navigation. scripts/check-donate.py
+# fails the build if it is switched on while any required field is still blank.
+
+enabled: true
+
+# SAMPLE DATA — switched on so the page can be reviewed, with routes that go
+# nowhere on purpose. example.invalid is a reserved domain that cannot resolve
+# (RFC 2606), so none of these can take a payment even by accident.
+#
+# scripts/check-donate.py fails while this is true, and fails hard in CI, so a
+# sample donate page cannot be deployed. Set it to false and replace the values
+# below with the real ones.
+sample: true
+
+# --- Where the money goes --------------------------------------------------
+# Shown as a short list. Leave empty until someone can state it accurately; an
+# empty list removes the section rather than shipping a guess.
+usage:
+  - "SAMPLE — infrastructure for internet-wide scanning"
+  - "SAMPLE — fully funded bug bounty programmes for charities and NGOs"
+#  - "Infrastructure for internet-wide scanning"
+#  - "Fully funded bug bounty programmes for charities and NGOs"
+
+# --- Primary provider ------------------------------------------------------
+# DIVD use SUPP (iDEAL, SOFORT, Bancontact, KBC/CBC). PayPal and Donorbox were
+# the two named in the issue. Whichever is chosen, this is the checkout URL.
+# If the provider accepts a preset amount in the URL, put {amount} where the
+# number goes and the buttons will fill it in; if not, every button opens the
+# same page and the donor types the amount there.
+provider:
+  name: "SAMPLE provider"
+  url: "https://example.invalid/sample-donate?amount={amount}"
+  methods: "SAMPLE — iDEAL, Bancontact, SEPA direct debit"
+
+amounts: [10, 25, 50]
+
+# --- PayPal ----------------------------------------------------------------
+# Optional second route. Empty url removes the whole block.
+paypal:
+  url: "https://example.invalid/sample-paypal"
+
+# --- Bank transfer ---------------------------------------------------------
+# With an IBAN this renders as a record people can copy. Without one it falls
+# back to asking by email, which is what DIVD do.
+bank:
+  holder: "Stichting CSIRT.global"
+  iban: "NL00 SAMPLE 0000 0000 00"
+  bic: ""
+  email: "inquiries@csirt.global"

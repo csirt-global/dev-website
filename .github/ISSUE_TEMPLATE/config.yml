@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security vulnerability in this website
+    url: https://app.zerocopter.com/en/cvd/8b2fbf09-539f-4b09-bee0-2ec875cb3321
+    about: Report it through our disclosure form, not as a public issue. See SECURITY.md.
+  - name: You received an email from CSIRT.global
+    url: https://csirt.global/notified/
+    about: If we contacted you about a vulnerability, start here.
+  - name: General questions
+    url: mailto:inquiries@csirt.global
+    about: Anything that is not about the website itself.

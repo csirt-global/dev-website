@@ -1,0 +1,24 @@
+{{/* The previous site put everything on one page and linked to it with
+     fragments. Those links exist in the wild — in notification emails, in the
+     Code of Conduct's own cross-references, and on third-party sites. A server
+     redirect cannot see a fragment, so this maps them client-side, once, on
+     the homepage only. */}}
+<script>
+(function () {
+  var moved = {
+    "#mission": "/what-we-do/",
+    "#news": "/news/",
+    "#organisation": "/about/",
+    "#team": "/about/team/",
+    "#board": "/about/team/",
+    "#code": "/about/code-of-conduct/",
+    "#help": "/get-involved/",
+    "#anbi": "/about/anbi/",
+    "#documents": "/about/anbi/",
+    "#soufian": "/about/team/#soufian",
+    "#lennaert": "/about/team/#lennaert"
+  };
+  var target = moved[window.location.hash];
+  if (target) window.location.replace(target);
+})();
+</script>

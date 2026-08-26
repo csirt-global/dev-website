@@ -1,0 +1,23 @@
+{{- $u := urls.Parse .Destination -}}
+{{- $external := or $u.IsAbs (hasPrefix .Destination "//") -}}
+{{- $mailto := hasPrefix .Destination "mailto:" -}}
+{{- /* Every external link opens in a new tab with rel="noopener noreferrer".
+       Doing this in a render hook means it cannot be forgotten on a new link,
+       which is how the old site ended up with three job links that silently
+       opened in the same tab.
+
+       Internal links go through href.html so a link written in a translated
+       page resolves to that translation when it exists and to the English page
+       when it does not, rather than being hand-prefixed with /nl/.
+
+       Every action here trims its whitespace, and the file ends without a
+       newline. An untrimmed one is emitted verbatim into the sentence, which
+       is what put a space inside "(DIVD)" and before the comma after a link. */ -}}
+{{- $dest := .Destination -}}
+{{- if and (not $external) (not $mailto) (hasPrefix $dest "/") -}}
+  {{- $dest = partial "href.html" $dest -}}
+{{- end -}}
+<a href="{{ $dest | safeURL }}"
+   {{- with .Title }} title="{{ . }}"{{ end }}
+   {{- if and $external (not $mailto) }} target="_blank" rel="noopener noreferrer"{{ end -}}
+>{{ .Text | safeHTML }}</a>

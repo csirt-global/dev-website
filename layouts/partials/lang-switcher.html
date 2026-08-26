@@ -1,0 +1,49 @@
+{{- $cur := .Site.Language.Lang -}}
+{{- $page := . -}}
+{{/* Compact dropdown rather than five inline codes: with five languages an
+     inline list eats enough horizontal room to wrap the main nav onto two lines. */}}
+<div class="relative" x-data="{ langOpen: false }" @click.away="langOpen = false">
+  <button type="button" @click="langOpen = !langOpen"
+          class="inline-flex items-center gap-1 px-2 py-1 rounded text-sm font-medium
+                 text-muted hover:text-signal"
+          :aria-expanded="langOpen.toString()" aria-expanded="false" aria-haspopup="true">
+    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.75"
+         stroke="currentColor" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round"
+            d="M12 21a9 9 0 100-18 9 9 0 000 18zm0 0c2.5-2.5 3.5-5.5 3.5-9S14.5 5.5 12 3m0 18c-2.5-2.5-3.5-5.5-3.5-9S9.5 5.5 12 3M3.6 9h16.8M3.6 15h16.8"/>
+    </svg>
+    <span class="uppercase">{{ $cur }}</span>
+    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+      <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.19l3.71-3.96a.75.75 0 111.08 1.04l-4.25 4.53a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/>
+    </svg>
+    <span class="sr-only">{{ i18n "lang_choose" }}</span>
+  </button>
+
+  <ul x-show="langOpen" x-cloak x-transition.opacity
+      class="absolute right-0 z-60 mt-1 min-w-40 rounded-brand bg-ink-raised ring-1 ring-black/20 shadow-lg py-1 text-sm"
+      role="menu">
+    {{- range hugo.Sites }}
+      {{- $lang := .Language.Lang -}}
+      {{- $label := .Language.Label -}}
+      {{- $target := "" -}}
+      {{- if eq $lang $cur }}{{ $target = $page.RelPermalink }}{{ end -}}
+      {{- range $page.AllTranslations }}{{ if eq .Site.Language.Lang $lang }}{{ $target = .RelPermalink }}{{ end }}{{ end -}}
+      <li role="none">
+        {{- if eq $lang $cur -}}
+          <span class="flex items-center justify-between gap-3 px-3 py-1.5 text-signal font-semibold" aria-current="true" role="menuitem">
+            {{ $label }}<span class="uppercase text-xs opacity-70">{{ $lang }}</span></span>
+        {{- else if $target -}}
+          <a href="{{ $target }}" role="menuitem"
+             class="flex items-center justify-between gap-3 px-3 py-1.5 text-text hover:bg-ink-raised hover:text-signal">
+            {{ $label }}<span class="uppercase text-xs opacity-70">{{ $lang }}</span></a>
+        {{- else -}}
+          {{/* No translation of THIS page: link to that language's home rather
+               than pretend, and label it, instead of silently serving English. */}}
+          <a href="{{ if eq $lang "en" }}/{{ else }}/{{ $lang }}/{{ end }}" role="menuitem" title="{{ i18n "lang_not_translated" }}"
+             class="flex items-center justify-between gap-3 px-3 py-1.5 text-muted hover:bg-ink-raised">
+            {{ $label }}<span class="text-xs opacity-70">{{ i18n "lang_short_missing" }}</span></a>
+        {{- end -}}
+      </li>
+    {{- end }}
+  </ul>
+</div>

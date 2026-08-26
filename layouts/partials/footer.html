@@ -1,0 +1,28 @@
+<footer class="border-t border-ink-line mt-auto">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8 py-10 text-[0.875rem] text-muted">
+
+    {{- with hugo.Data.social }}
+    <div class="flex flex-wrap items-baseline gap-x-6 gap-y-2 pb-8">
+      <p class="t-eyebrow">{{ i18n "footer_accounts" }}</p>
+      <nav class="flex flex-wrap gap-x-5 gap-y-2" aria-label="{{ i18n "footer_accounts" }}">
+        {{- range . }}
+        <a href="{{ .url }}" target="_blank" rel="noopener noreferrer" class="hover:text-signal">{{ .label }}</a>
+        {{- end }}
+      </nav>
+    </div>
+    {{- end }}
+
+    <div class="flex flex-wrap gap-x-8 gap-y-3 justify-between border-t border-ink-line pt-8">
+      <p class="t-mono">&copy; {{ now.Year }} Stichting CSIRT.global &middot; RSIN 863825655</p>
+      <nav class="flex flex-wrap gap-x-6 gap-y-2" aria-label="{{ i18n "nav_main" }}">
+        <a href="{{ partial "href.html" "/about/anbi/" }}" class="hover:text-signal">ANBI</a>
+        <a href="{{ partial "href.html" "/about/code-of-conduct/" }}" class="hover:text-signal">{{ i18n "nav_code" }}</a>
+        <a href="/.well-known/security.txt" class="hover:text-signal">security.txt</a>
+        <a href="{{ partial "href.html" "/notified/" }}" class="hover:text-signal">{{ i18n "nav_notified" }}</a>
+        {{- if hugo.Data.donate.enabled }}
+        <a href="{{ partial "href.html" "/get-involved/donate/" }}" class="hover:text-signal">{{ i18n "nav_donate" }}</a>
+        {{- end }}
+      </nav>
+    </div>
+  </div>
+</footer>

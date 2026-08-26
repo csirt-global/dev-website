@@ -1,0 +1,132 @@
+{{ define "main" }}
+{{ partial "legacy-anchors.html" . }}
+
+{{/* ---------------------------------------------------------------- HERO --
+     The old homepage opened with "We build a global community, bound by a
+     passion for..." — inward-facing mission copy. Our two audiences arrive
+     asking something else: "who are you, and why did you contact me?" and
+     "are you legitimate?". The hero answers those first. */}}
+<section class="relative overflow-hidden border-b border-ink-line">
+  {{/* The globe from the logo, at scale and almost out of sight. It is the one
+       piece of the identity this rebuild had nowhere to put: the header mark is
+       tiny and the palette deliberately keeps the yellow for signals. Held at
+       8% and masked away before it reaches the headline, so it reads as the
+       texture of the page rather than as a second thing to look at. */}}
+  {{- with resources.Get "images/csirt_global_logo.png" }}
+    {{- $mark := .Resize "1100x webp q80" }}
+    <img class="hero-mark" src="{{ $mark.RelPermalink }}" alt="" aria-hidden="true"
+         width="{{ $mark.Width }}" height="{{ $mark.Height }}" loading="lazy" decoding="async">
+  {{- end }}
+  <div class="relative mx-auto max-w-6xl px-5 sm:px-8 py-16 sm:py-24">
+    <p class="t-eyebrow">{{ i18n "hero_eyebrow" }}</p>
+    <h1 class="t-display mt-5 text-[clamp(2.5rem,7vw,4.75rem)] text-text-strong max-w-4xl">
+      {{ i18n "hero_title" }}
+    </h1>
+    <p class="mt-6 max-w-2xl text-xl leading-relaxed text-text">{{ i18n "hero_lede" }}</p>
+
+    <div class="mt-9 flex flex-wrap gap-3">
+      <a href="{{ partial "href.html" "/notified/" }}" class="btn btn-primary">{{ i18n "hero_cta_notified" }}</a>
+      <a href="{{ partial "href.html" "/what-we-do/" }}" class="btn btn-secondary">{{ i18n "hero_cta_what" }}</a>
+    </div>
+  </div>
+</section>
+
+{{/* ------------------------------------------------------- VERIFICATION --
+     Placed high, not buried. On the old site the equivalent material (ANBI,
+     KvK, RSIN) sat at the bottom of an eleven-screen scroll. */}}
+<section class="on-paper border-b border-ink-line">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8 py-14 sm:py-20">
+    <div class="grid gap-10 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] lg:gap-16">
+      <div>
+        <p class="t-eyebrow">{{ i18n "verify_eyebrow" }}</p>
+        <h2 class="t-display mt-4 text-3xl sm:text-4xl text-paper-ink">{{ i18n "verify_heading" }}</h2>
+        <p class="mt-4 text-paper-mute leading-relaxed">{{ i18n "verify_lede" }}</p>
+      </div>
+      {{ partial "verify.html" . }}
+    </div>
+  </div>
+</section>
+
+{{/* ------------------------------------------------------- WHAT WE DO -- */}}
+<section class="border-b border-ink-line">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8 py-14 sm:py-20">
+    <p class="t-eyebrow">{{ i18n "strands_eyebrow" }}</p>
+    <h2 class="t-display mt-4 text-3xl sm:text-4xl text-text-strong">{{ i18n "strands_heading" }}</h2>
+    <div class="mt-10 grid gap-px bg-ink-line sm:grid-cols-3 rounded-brand overflow-hidden">
+      {{- range where (where .Site.RegularPages "Section" "what-we-do") "Params.strand" true }}
+      <a href="{{ .RelPermalink }}" class="group bg-ink p-7 hover:bg-ink-raised transition-colors">
+        <h3 class="t-display text-xl text-text-strong group-hover:text-signal transition-colors">{{ .Title }}</h3>
+        <p class="mt-3 text-[0.9375rem] leading-relaxed text-muted">{{ .Params.summary }}</p>
+        <span class="t-mono mt-5 inline-block text-signal">{{ i18n "read_more" }} &rarr;</span>
+      </a>
+      {{- end }}
+    </div>
+  </div>
+</section>
+
+{{/* ------------------------------------------------------- RECENT CASES --
+     Evidence, for the audience assessing legitimacy. Every case we open is
+     published; that fact is itself the credibility argument. */}}
+{{- with first 3 (where .Site.RegularPages "Section" "cases") }}
+<section class="border-b border-ink-line">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8 py-14 sm:py-20">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <p class="t-eyebrow">{{ i18n "cases_eyebrow" }}</p>
+        <h2 class="t-display mt-4 text-3xl sm:text-4xl text-text-strong">{{ i18n "cases_heading" }}</h2>
+      </div>
+      <a href="{{ partial "href.html" "/cases/" }}" class="btn btn-secondary">{{ i18n "cases_all" }}</a>
+    </div>
+    <ul class="mt-10 record">
+      {{- range . }}
+      <li class="border-b border-ink-line last:border-0">
+        <a href="{{ .RelPermalink }}" class="group grid gap-2 py-5 sm:grid-cols-[10rem_1fr_auto] sm:items-baseline sm:gap-6">
+          <span class="record-key">{{ .Params.case.id }}</span>
+          <span class="font-sans text-lg text-text-strong group-hover:text-signal transition-colors">{{ .Title }}</span>
+          <span class="status status-{{ .Params.case.status }}">{{ i18n (printf "cases_%s" .Params.case.status) }}</span>
+        </a>
+      </li>
+      {{- end }}
+    </ul>
+  </div>
+</section>
+{{- end }}
+
+{{/* ------------------------------------------------------------- SUPPORT --
+     The one place the yellow is a field rather than a signal, used exactly
+     once on the site. It sits directly after the case register on purpose:
+     you have just read what the work produced, and this asks you to fund more
+     of it. Everywhere else the yellow marks a single action; here it marks the
+     whole surface, which is why it can afford to appear only here. */}}
+{{- if hugo.Data.donate.enabled }}
+<section class="support">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8 py-12 sm:py-14">
+    <p class="support-eyebrow">{{ i18n "donate_home_eyebrow" }}</p>
+    <div class="mt-4 flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between lg:gap-12">
+      <div>
+        <h2 class="support-title">{{ i18n "donate_home_heading" }}</h2>
+        <p class="support-lede">{{ i18n "donate_home_line" }}</p>
+      </div>
+      <a href="{{ partial "href.html" "/get-involved/donate/" }}" class="support-cta">
+        {{ i18n "nav_donate" }} <span aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>
+{{- end }}
+
+{{/* ------------------------------------------------------------- MISSION --
+     The mission copy still matters, it just is not the opening line. */}}
+<section>
+  <div class="mx-auto max-w-6xl px-5 sm:px-8 py-14 sm:py-20">
+    <div class="grid gap-10 lg:grid-cols-[minmax(0,18rem)_minmax(0,1fr)] lg:gap-16">
+      <div>
+        <p class="t-eyebrow">{{ i18n "mission_eyebrow" }}</p>
+        <h2 class="t-display mt-4 text-3xl sm:text-4xl text-text-strong">{{ i18n "mission_heading" }}</h2>
+      </div>
+      <div class="prose-body max-w-2xl">{{ .Content }}</div>
+    </div>
+  </div>
+</section>
+
+{{ end }}

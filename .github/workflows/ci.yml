@@ -1,0 +1,136 @@
+name: Build and check
+
+# Pull requests only. Everything here can be known before a merge, and after a
+# merge deploy.yml runs the same checks against the artifact it is about to
+# publish, so running them here on main as well is duplicated work.
+on:
+  pull_request:
+  workflow_dispatch:
+
+# A branch that gets three pushes in a minute does not need three builds.
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+# Versions are pinned on purpose. The old site broke in ways nobody noticed for
+# 2.5 years partly because nothing was reproducible; DIVD's site pins neither
+# Hugo nor Node and can break on someone else's release schedule.
+env:
+  HUGO_VERSION: "0.165.0"
+  TAILWIND_VERSION: "4.3.3"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify Hugo pin matches .hugo_version
+        run: |
+          pinned="$(cat .hugo_version)"
+          if [ "$pinned" != "$HUGO_VERSION" ]; then
+            echo "::error::.hugo_version ($pinned) does not match the workflow ($HUGO_VERSION)"
+            exit 1
+          fi
+
+      - name: Install Hugo ${{ env.HUGO_VERSION }}
+        run: |
+          curl -sSL -o /tmp/hugo.deb \
+            "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb"
+          sudo dpkg -i /tmp/hugo.deb
+          hugo version
+
+      - name: Install Tailwind ${{ env.TAILWIND_VERSION }}
+        run: |
+          mkdir -p bin
+          curl -sSL -o bin/tailwindcss \
+            "https://github.com/tailwindlabs/tailwindcss/releases/download/v${TAILWIND_VERSION}/tailwindcss-linux-x64"
+          chmod +x bin/tailwindcss
+          ./bin/tailwindcss --help | head -1
+
+      - name: Build CSS
+        run: make css
+
+      - name: Build site
+        run: hugo --gc --minify --printPathWarnings
+
+      # Victor named the ANBI contact details and documents as the key
+      # requirement: the Belastingdienst relies on them staying published.
+      - name: Check required URLs still resolve
+        run: python3 scripts/check-urls.py
+
+      # Five languages fail quietly. This makes the gap countable so the site
+      # cannot become English-only by drift.
+      - name: Check translation coverage
+        run: python3 scripts/translation-status.py
+
+      - name: Check for broken internal links
+        run: python3 scripts/check-links.py
+
+      # A component class used in a layout but deleted from the stylesheet
+      # renders as plain text, silently. It has already happened once.
+      - name: Check every component class has a rule
+        run: python3 scripts/check-css.py
+
+      # RFC 9116 makes Expires mandatory and the previous file lapsed for over
+      # a year without anyone noticing (issue #56). Fails 30 days ahead.
+      - name: Check security.txt has not lapsed
+        run: python3 scripts/check-security-txt.py
+
+      # A donate page live with unset payment details, or configured but
+      # unreachable, is worse than not having one.
+      - name: Check the donate page matches its settings
+        run: python3 scripts/check-donate.py
+
+      - name: Upload build
+        uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: public/
+          retention-days: 7
+
+  # The only check that needs a real browser, and until now the only one that
+  # ran nowhere unless someone remembered. It reuses the artifact the build job
+  # produced, so it tests exactly what was built.
+  browser:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: public
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      # Three packages, pinned by the lockfile. None of it reaches the site:
+      # Hugo and Tailwind build the pages, this only looks at them.
+      - name: Install Playwright
+        run: |
+          npm ci --no-audit --no-fund
+          npx playwright install --with-deps chromium
+
+      - name: Serve the build
+        run: |
+          python3 -m http.server 1313 --directory public &
+          for _ in $(seq 1 30); do
+            curl -sf -o /dev/null http://127.0.0.1:1313/ && break
+            sleep 1
+          done
+
+      # 20 pages x 390/768/1440: horizontal scroll, failed requests, external
+      # links opening in the same tab, blocked pinch-zoom, keyboard focus ring.
+      - name: Responsive and accessibility sweep
+        env:
+          BASE_URL: http://127.0.0.1:1313
+        run: node scripts/sweep.mjs

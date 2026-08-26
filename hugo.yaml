@@ -1,0 +1,65 @@
+baseURL: "https://csirt.global/"
+title: "CSIRT.global"
+locale: "en"
+
+# English stays at the site root so existing URLs such as
+# /cases/CG-2024-00001/ keep working. Other languages get a prefix.
+defaultContentLanguage: "en"
+defaultContentLanguageInSubdir: false
+
+# Minimum Hugo this site is known to build with. Keep in step with .hugo_version.
+module:
+  hugoVersion:
+    min: "0.165.0"
+
+languages:
+  en:
+    label: "English"
+    direction: "ltr"
+    weight: 1
+  nl:
+    label: "Nederlands"
+    weight: 2
+  de:
+    label: "Deutsch"
+    weight: 3
+  fr:
+    label: "Français"
+    weight: 4
+  es:
+    label: "Español"
+    weight: 5
+
+# Translations are authored, never machine-guessed at request time.
+# A page with no translation must be visibly absent, not silently English.
+disableLanguages: []
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true          # the ANBI block and case bodies contain real HTML
+  highlight:
+    noClasses: false
+
+# GitHub Pages URLs are case-sensitive and /cases/CG-2024-00001/ is externally
+# citable, so Hugo must not lowercase paths.
+disablePathToLower: true
+
+enableRobotsTXT: true
+enableGitInfo: false
+
+# Keep Hugo from publishing things nobody asked for.
+disableKinds: ["taxonomy", "term"]
+
+outputs:
+  home: ["HTML"]
+  section: ["HTML"]
+  page: ["HTML"]
+
+params:
+  # The one hostname that is the real site. Everything else — a staging
+  # deployment, a fork's Pages URL, a local build — marks itself as not
+  # production: noindex, robots disallow, and a banner on every page.
+  productionHost: "csirt.global"
+  description: "CSIRT.global is a global, volunteer-led, not-for-profit organization, aiming to make the world more secure by going after vulnerabilities no-one else cares for."
+  ogImage: "/android-chrome-512x512.png"

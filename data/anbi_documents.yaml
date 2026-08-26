@@ -1,0 +1,23 @@
+# Statutory ANBI publications. Victor named these as the key requirement for
+# the rebuild: the Dutch tax authority (Belastingdienst) relies on them staying
+# accessible, so the URLs are legally load-bearing.
+#
+# Two filenames contain literal spaces. They are preserved exactly, because
+# renaming them would break links that already exist in the wild.
+- label: "CSIRT.global 2025 financieel verslag"
+  url: "https://docs.google.com/document/d/1Xm-n7synwkx9-mmZHyckMb-zoaBI8Dfjpa6-rLxoXBk/edit?usp=sharing"
+  external: true
+- label: "CSIRT.global 2024 financieel verslag"
+  url: "/uploads/CSIRT financieel verslag 2024.pdf"
+- label: "CSIRT.global 2023 financieel verslag"
+  url: "/uploads/CSIRT financieel verslag 2023.pdf"
+- label: "CSIRT.global 2022 financieel verslag"
+  url: "/uploads/CSIRT financieel verslag 2022.pdf"
+- label: "CSIRT.global 2022 annual overview"
+  url: "/uploads/CSIRT.global annual overview 2022.pdf"
+- label: "Trade Register Extract 2023"
+  url: "/uploads/extract_trade register_CSIRT.global.pdf"
+- label: "Standard Form 2024"
+  url: "/uploads/standaardform-pubplicht-anbi-algemeen-2024.pdf"
+- label: "Standard Form 2022"
+  url: "/uploads/Standard form for publication obligation Fundraising organisations including financials 2022.pdf"

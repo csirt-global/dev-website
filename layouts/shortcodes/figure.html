@@ -1,0 +1,6 @@
+{{- $src := .Get "src" -}}
+{{- with resources.Get $src }}
+  {{- $img := .Resize "1310x webp q85" }}
+  <img src="{{ $img.RelPermalink }}" width="{{ $img.Width }}" height="{{ $img.Height }}"
+       alt="{{ $.Get "alt" }}" loading="lazy" class="w-full h-auto rounded-brand mt-6 {{ $.Get "class" | default "max-w-xl" }}">
+{{- end }}

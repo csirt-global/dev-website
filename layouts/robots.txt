@@ -1,0 +1,10 @@
+{{- if partial "is-production.html" . -}}
+User-agent: *
+Allow: /
+
+Sitemap: {{ "sitemap.xml" | absURL }}
+{{- else -}}
+# Not the live site. The live site is https://{{ site.Params.productionHost }}/
+User-agent: *
+Disallow: /
+{{- end -}}

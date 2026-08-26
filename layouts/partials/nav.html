@@ -1,0 +1,136 @@
+{{- $cur := .RelPermalink -}}
+{{- $items := where hugo.Data.nav "cta" "!=" true -}}
+{{- $ctas := where hugo.Data.nav "cta" true -}}
+<script>
+  // Distance a dropdown must move to stay on screen. Returns 0 when it already fits.
+  function fitPanel(el) {
+    if (!el) return 0;
+    var m = 12, r = el.getBoundingClientRect();
+    if (r.right > innerWidth - m) return Math.round(innerWidth - m - r.right);
+    if (r.left < m) return Math.round(m - r.left);
+    return 0;
+  }
+</script>
+<header class="relative z-50 border-b border-ink-line bg-ink">
+  <div x-data="{ open: false }" @keydown.escape="open = false">
+    <div class="mx-auto max-w-6xl px-5 sm:px-8">
+      {{/* Three columns with equal outer tracks, so the menu is centred on the
+           page rather than pushed against the right edge by the actions. */}}
+      <nav class="grid h-16 grid-cols-[1fr_auto] lg:grid-cols-[auto_1fr_auto] xl:grid-cols-[1fr_auto_1fr] items-center gap-5"
+           aria-label="{{ i18n "nav_main" }}">
+
+        <a href="{{ "/" | relLangURL }}" class="flex items-center gap-3 shrink-0 justify-self-start">
+          <span class="sr-only">CSIRT.global</span>
+          <img src="/images/csirt_global_logo.png" alt="" class="h-9 w-auto" width="140" height="36">
+        </a>
+
+        <div class="hidden lg:flex items-center gap-5 justify-self-end xl:justify-self-center">
+          {{- range $ctas }}
+          <a href="{{ partial "href.html" .url }}" class="btn btn-primary mr-1">{{ i18n .key }}</a>
+          {{- end }}
+          {{- range $items }}
+            {{- $item := . }}
+            {{- $u := partial "href.html" .url }}
+            {{- $kids := partial "nav-children.html" (dict "item" $item) }}
+            {{- if $kids }}
+              {{/* Opens on hover and on focus, closes on Escape, and the parent
+                   link still navigates to the hub page. The panel is a child of
+                   this wrapper, so moving the pointer into it does not close it
+                   (WCAG 2.1 SC 1.4.13: hoverable, dismissible, persistent). */}}
+              {{/* `nudge` keeps a panel inside the viewport. Centring it under its
+                   parent is right until the nav grows: with one more item the
+                   rightmost panels hung off the edge at 1024 and 1152. Measured on
+                   open rather than assumed, so it holds however the nav changes. */}}
+              <div class="relative" x-data="{ sub: false, nudge: 0 }"
+                   @mouseenter="sub = true; $nextTick(() => nudge = fitPanel($refs.panel))"
+                   @mouseleave="sub = false"
+                   @focusin="sub = true; $nextTick(() => nudge = fitPanel($refs.panel))"
+                   @focusout="if (!$el.contains($event.relatedTarget)) sub = false"
+                   @keydown.escape.stop="sub = false; $refs.top.focus()">
+                <a x-ref="top" href="{{ $u }}"
+                   class="nav-link inline-flex items-center gap-1.5"
+                   aria-haspopup="true" aria-expanded="false" :aria-expanded="sub.toString()"
+                   {{ if eq $u $cur }}aria-current="page"{{ end }}>
+                  {{ i18n .key }}
+                  <svg class="h-2.5 w-2.5 shrink-0 transition-transform duration-150"
+                       :class="sub && '-scale-y-100'" viewBox="0 0 10 6" fill="none"
+                       stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                    <path d="M1 1l4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </a>
+                <div x-ref="panel" x-show="sub" x-cloak
+                     x-transition:enter="duration-100 ease-out"
+                     x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                     :style="`transform: translateX(calc(-50% + ${nudge}px))`"
+                     class="absolute left-1/2 top-full z-50 pt-3">
+                  <ul class="w-max min-w-[13rem] max-w-[23rem] rounded-brand border border-ink-line bg-ink-raised p-1.5 shadow-2xl shadow-black/60">
+                    {{- range $kids }}
+                    <li><a href="{{ .url }}" class="nav-drop">
+                      <span class="nav-drop-title">{{ .label }}</span>
+                      {{- with .desc }}<span class="nav-drop-desc">{{ . }}</span>{{ end }}
+                    </a></li>
+                    {{- end }}
+                  </ul>
+                </div>
+              </div>
+            {{- else }}
+              <a href="{{ $u }}" class="nav-link"{{ if eq $u $cur }} aria-current="page"{{ end }}>{{ i18n .key }}</a>
+            {{- end }}
+          {{- end }}
+        </div>
+
+        <div class="flex items-center gap-4 justify-self-end">
+          <div class="hidden lg:block">{{ partial "lang-switcher.html" . }}</div>
+
+          <button type="button" @click="open = true"
+                  class="lg:hidden btn btn-secondary"
+                  :aria-expanded="open.toString()" aria-expanded="false">
+            <span class="sr-only">{{ i18n "nav_open" }}</span>
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/>
+            </svg>
+          </button>
+        </div>
+      </nav>
+    </div>
+
+    {{/* Mobile panel. Fixed and full-height so nothing on the page can paint
+         over it, which is what happened when it shared a stacking context
+         with the hero. Child pages are listed inline: there is no hover on a
+         phone, so the whole map has to be visible at once. */}}
+    <div x-show="open" x-cloak @click.away="open = false"
+         x-transition:enter="duration-150 ease-out"
+         x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+         class="fixed inset-0 z-50 lg:hidden overflow-y-auto bg-ink">
+      <div class="mx-auto max-w-6xl px-5 sm:px-8 pb-12">
+        <div class="flex h-16 items-center justify-between">
+          <img src="/images/csirt_global_logo.png" alt="CSIRT.global" class="h-9 w-auto">
+          <button type="button" @click="open = false" class="btn btn-secondary">
+            <span class="sr-only">{{ i18n "nav_close" }}</span>
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+        <div class="mt-6 space-y-1">
+          {{- range $ctas }}
+          <a href="{{ partial "href.html" .url }}" class="btn btn-primary w-full justify-center mb-4">{{ i18n .key }}</a>
+          {{- end }}
+          {{- range $items }}
+            {{- $u := partial "href.html" .url }}
+            {{- $kids := partial "nav-children.html" (dict "item" .) }}
+            <a href="{{ $u }}" class="nav-link-block">{{ i18n .key }}</a>
+            {{- with $kids }}
+            <ul class="mb-2 ml-3 border-l border-ink-line pl-4">
+              {{- range . }}
+              <li><a href="{{ .url }}" class="nav-link-block text-[0.9375rem] text-muted">{{ .label }}</a></li>
+              {{- end }}
+            </ul>
+            {{- end }}
+          {{- end }}
+        </div>
+        <div class="mt-8 border-t border-ink-line pt-6">{{ partial "lang-switcher.html" . }}</div>
+      </div>
+    </div>
+  </div>
+</header>
