@@ -49,6 +49,10 @@ jobs:
       # and check-donate reads robots.txt, so it only fails for real on the live
       # domain.
       - name: Check the build before publishing it
+        # This is the only place anything is published, so this is where the
+        # checks that only matter on publication are allowed to refuse.
+        env:
+          DEPLOYING: "1"
         run: |
           python3 scripts/check-urls.py
           python3 scripts/check-links.py

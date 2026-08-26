@@ -86,17 +86,20 @@ def main() -> int:
         robots = ROOT / "public" / "robots.txt"
         production = robots.exists() and "Allow: /" in robots.read_text()
         msg = "donate is switched on with SAMPLE data - every payment route is a placeholder"
-        # Locally, a production baseURL is just the default in hugo.yaml, not a
-        # deploy. The boundary that matters is a publish to the live host, which
-        # is CI plus the production domain.
-        if production and os.environ.get("CI"):
+        # What must never happen is sample payment routes reaching the live
+        # site, and only a deploy can do that. A local build and a pull request
+        # both build against hugo.yaml's default baseURL, which is the live
+        # host, but neither publishes anything. So the refusal is deploy plus
+        # the live host; everything else warns. deploy.yml sets DEPLOYING.
+        if production and os.environ.get("DEPLOYING") == "1":
             print(f"  FAIL {msg}")
             print(f"::error::{msg}")
             print("\nFAIL: sample donate settings must not reach the live site")
             return 1
         print(f"  WARN {msg}")
+        print(f"::warning::{msg}")
         if production:
-            print("       a deploy to the live domain will refuse this - set sample: false first")
+            print("       a deploy to the live host will refuse this - set sample: false first")
         else:
             print("       fine on a staging build - set sample: false before this goes live")
 

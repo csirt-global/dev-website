@@ -168,10 +168,18 @@ design can be reviewed before anyone has picked a payment provider. Every route
 on it points at `example.invalid`, a reserved domain that cannot resolve, and
 the page carries a banner saying so.
 
-`check-donate.py` warns about that on every run and refuses it on one specific
-combination: a CI run building against the production host. A local build using
-the default `baseURL` is not a deploy, so it warns rather than failing —
-otherwise `make check` would fail out of the box for everyone.
+`check-donate.py` warns about that everywhere and refuses it in exactly one
+place: a deploy whose target is the live host. Nothing else publishes, so
+nothing else needs to refuse. `deploy.yml` sets `DEPLOYING=1` on its check step;
+a local build and a pull request both build against the default `baseURL`, which
+is the live host, but neither of them publishes anything.
+
+| Where | Sample settings |
+| --- | --- |
+| Local build | Warn |
+| Pull request | Warn, annotated on the diff |
+| Deploy to `staging.csirt.global` | Warn |
+| Deploy to `csirt.global` | **Refused** |
 
 To hand it over: fill in `data/donate.yaml` and set `sample: false`.
 
