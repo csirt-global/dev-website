@@ -16,7 +16,7 @@
     <div class="mx-auto max-w-6xl px-5 sm:px-8">
       {{/* Three columns with equal outer tracks, so the menu is centred on the
            page rather than pushed against the right edge by the actions. */}}
-      <nav class="grid h-16 grid-cols-[1fr_auto] lg:grid-cols-[auto_1fr_auto] xl:grid-cols-[minmax(max-content,1fr)_auto_minmax(max-content,1fr)] items-center gap-5"
+      <nav class="grid h-16 grid-cols-[1fr_auto] xl:grid-cols-[minmax(max-content,1fr)_auto_minmax(max-content,1fr)] items-center gap-5"
            aria-label="{{ i18n "nav_main" }}">
 
         {{/* The mark from the favicon, with the name set in the site's own
@@ -31,7 +31,7 @@
           <span class="logo-word" aria-hidden="true">CSIRT<span class="logo-word-tld">.global</span></span>
         </a>
 
-        <div class="hidden lg:flex items-center gap-5 justify-self-end xl:justify-self-center">
+        <div class="hidden xl:flex items-center gap-5 justify-self-center">
           {{- range $ctas }}
           <a href="{{ partial "href.html" .url }}" class="btn btn-primary mr-1">{{ i18n .key }}</a>
           {{- end }}
@@ -87,10 +87,10 @@
         </div>
 
         <div class="flex items-center gap-4 justify-self-end">
-          <div class="hidden lg:block">{{ partial "lang-switcher.html" . }}</div>
+          <div class="hidden xl:block">{{ partial "lang-switcher.html" . }}</div>
 
           <button type="button" @click="open = true"
-                  class="lg:hidden btn btn-secondary"
+                  class="xl:hidden btn btn-secondary"
                   :aria-expanded="open.toString()" aria-expanded="false">
             <span class="sr-only">{{ i18n "nav_open" }}</span>
             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
@@ -108,7 +108,7 @@
     <div x-show="open" x-cloak @click.away="open = false"
          x-transition:enter="duration-150 ease-out"
          x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-         class="fixed inset-0 z-50 lg:hidden overflow-y-auto bg-ink">
+         class="fixed inset-0 z-50 xl:hidden overflow-y-auto bg-ink">
       <div class="mx-auto max-w-6xl px-5 sm:px-8 pb-12">
         <div class="flex h-16 items-center justify-between">
           <span class="flex items-center gap-2.5">

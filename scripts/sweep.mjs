@@ -14,6 +14,12 @@ import { chromium } from "playwright";
 const BASE = process.env.BASE_URL || "http://127.0.0.1:1313";
 const WIDTHS = [390, 768, 1440];
 
+// Every language the site publishes. The nav is the part that varies most
+// between them: German needs 1,079px of the 1,088 available, and French needed
+// 1,103 before its labels were shortened. This list is what stops a new
+// language quietly breaking the header.
+const LANGS = ["", "nl", "de", "fr", "es"];
+
 const PAGES = [
   "/", "/notified/",
   "/what-we-do/", "/what-we-do/bug-bounties/", "/what-we-do/exploit-research/",
@@ -85,6 +91,49 @@ for (const path of PAGES) {
       });
     }
     await page.close();
+  }
+}
+
+// The header, in every language, at the widths where the desktop menu is shown.
+//
+// This exists because it was missed: French wrapped "Ce que nous faisons" onto
+// three lines inside a fixed-height header, and every language including English
+// overflowed at 1024px, which was the breakpoint at the time. The page sweep
+// above never caught it because it only ever visited English pages, and never at
+// 1024.
+console.log("\nheader fit by language");
+for (const lang of LANGS) {
+  for (const w of [1280, 1440]) {
+    const page = await browser.newPage({ viewport: { width: w, height: 700 } });
+    await page.goto(`${BASE}/${lang ? lang + "/" : ""}`, { waitUntil: "networkidle" });
+    const m = await page.evaluate(() => {
+      const nav = document.querySelector("header nav");
+      const menu = nav.children[1];
+      if (!menu.getBoundingClientRect().width) return null;   // hamburger shown
+      const links = [...menu.children]
+        .map(el => (el.tagName === "A" ? el : el.querySelector("a")))
+        .filter(a => a && !a.className.includes("btn"));      // the CTA is a taller button
+      const kids = [...nav.children];
+      const word = nav.querySelector(".logo-word");
+      return {
+        wrapped: links.filter(a => a.getBoundingClientRect().height > 30)
+                      .map(a => a.textContent.trim().split("\n")[0]),
+        needs: Math.round(kids.reduce((t, c) => t + c.scrollWidth, 0) + 20 * (kids.length - 1)),
+        avail: Math.round(nav.parentElement.getBoundingClientRect().width - 64),
+        clipped: Math.round(word.getBoundingClientRect().right) >
+                 Math.round(kids[0].getBoundingClientRect().right) + 1,
+        hscroll: document.documentElement.scrollWidth > window.innerWidth + 1,
+      };
+    });
+    await page.close();
+    if (!m) continue;
+    const room = m.avail - m.needs;
+    const bad = m.wrapped.length || room < 0 || m.clipped || m.hscroll;
+    console.log(`  ${(lang || "en").padEnd(4)} @${w}  needs ${m.needs} of ${m.avail}` +
+      `  (${room >= 0 ? room + "px spare" : -room + "px OVER"})` +
+      `${m.wrapped.length ? "  wrapped: " + m.wrapped.join(", ") : ""}` +
+      `${m.clipped ? "  LOGO CLIPPED" : ""}${m.hscroll ? "  H-SCROLL" : ""}`);
+    if (bad) problems.push(`header:${lang || "en"}@${w}`);
   }
 }
 
