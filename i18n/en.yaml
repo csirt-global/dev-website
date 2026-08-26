@@ -135,3 +135,8 @@ verify_note_rfc: "RFC 9116"
 
 redirect_moved: "This page has moved."
 redirect_link: "Continue"
+
+# How a long date is written. A Go time layout, not prose: "January"
+# and "2006" are reference tokens that become the month name and year in
+# this language, everything else is passed through literally.
+date_long: "2 January 2006"

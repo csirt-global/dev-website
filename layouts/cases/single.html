@@ -28,8 +28,8 @@
         {{- with $c.cpe }}<div class="record-row"><span class="record-key">CPE</span><span class="record-val">{{ . }}</span></div>{{ end }}
         {{- with $c.vulnerableVersions }}<div class="record-row"><span class="record-key">{{ i18n "case_versions" }}</span><span class="record-val">{{ . }}</span></div>{{ end }}
         {{- with $c.vendorStatement }}<div class="record-row"><span class="record-key">{{ i18n "case_vendor" }}</span><span class="record-val"><a href="{{ . }}" target="_blank" rel="noopener noreferrer">{{ i18n "case_vendor_link" }}</a></span></div>{{ end }}
-        <div class="record-row"><span class="record-key">{{ i18n "case_published" }}</span><span class="record-val">{{ .Date.Format "2 January 2006" }}</span></div>
-        {{- if ne .Lastmod .Date }}<div class="record-row"><span class="record-key">{{ i18n "case_updated" }}</span><span class="record-val">{{ .Lastmod.Format "2 January 2006" }}</span></div>{{ end }}
+        <div class="record-row"><span class="record-key">{{ i18n "case_published" }}</span><span class="record-val">{{ time.Format (i18n "date_long") .Date }}</span></div>
+        {{- if ne .Lastmod .Date }}<div class="record-row"><span class="record-key">{{ i18n "case_updated" }}</span><span class="record-val">{{ time.Format (i18n "date_long") .Lastmod }}</span></div>{{ end }}
       </div>
     </aside>
   </div>
