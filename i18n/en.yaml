@@ -124,3 +124,5 @@ verify_note_rfc: "RFC 9116"
 
 redirect_moved: "This page has moved."
 redirect_link: "Continue"
+role_project_lead: "Project Lead"
+role_volunteer: "Volunteer"

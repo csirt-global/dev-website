@@ -1,0 +1,15 @@
+# Who works on Project Global NGOs. See data/projects/pgu.yaml for why this
+# lives here rather than in the Markdown front matter.
+team:
+  - name: "Victor Gevers"
+    role: role_vicechair
+    photo: "images/victor.jpg"
+    social:
+      - { kind: x, url: "https://twitter.com/0xDUDE" }
+      - { kind: linkedin, url: "https://www.linkedin.com/in/vgevers/" }
+  - name: "Tabitha Vogelaar"
+    role: role_project_lead
+    photo: "images/tabitha.jpg"
+    social:
+      - { kind: x, url: "https://twitter.com/TabithaVogelaar" }
+      - { kind: linkedin, url: "https://www.linkedin.com/in/tabitha-vogelaar/" }

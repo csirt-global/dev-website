@@ -1,10 +1,7 @@
 ---
-# English body shown deliberately: this page has no translation yet.
-# The banner tells the reader, and the coverage check counts it as missing.
-untranslated: true
-title: "Become a volunteer"
+title: "Freiwillige werden"
 layout: "join"
 ---
 
-Becoming a volunteer requires a few formalities, including adhering to the Code of Conduct and
-signing a volunteer agreement.
+Freiwillige zu werden erfordert ein paar Formalitäten, darunter die Anerkennung des Verhaltenskodex
+und die Unterzeichnung einer Freiwilligenvereinbarung.

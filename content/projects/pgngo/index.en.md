@@ -1,4 +1,5 @@
 ---
+
 title: "Global NGOs"
 slug: "pgngo"
 weight: 2
@@ -22,9 +23,6 @@ project:
     DIVD Works. These organisations are part of the DIVD family and work together closely.
 
     We are preparing and onboarding the team at this moment. :-)
-  team:
-    - { name: "Victor Gevers", role: "Vice Chair", photo: "images/victor.jpg", social: [ { kind: x, url: "https://twitter.com/0xDUDE" }, { kind: linkedin, url: "https://www.linkedin.com/in/vgevers/" } ] }
-    - { name: "Tabitha Vogelaar", role: "Project Lead", photo: "images/tabitha.jpg", social: [ { kind: x, url: "https://twitter.com/TabithaVogelaar" }, { kind: linkedin, url: "https://www.linkedin.com/in/tabitha-vogelaar/" } ] }
 ---
 
 Project Global NGO's (pgngo) is an initiative dedicated to identifying and addressing unpatched

@@ -30,12 +30,12 @@
   </section>
   {{- end }}
 
-  {{- with .Params.project.team }}
+  {{- with (index (or hugo.Data.projects dict) .Params.slug).team }}
   <section class="mt-16">
     <h2 class="t-display text-2xl text-text-strong">{{ $.Params.project.teamHeading | default (i18n "project_team") }}</h2>
     {{- with $.Params.project.teamIntro }}<div class="mt-3 max-w-2xl text-muted leading-relaxed">{{ . | markdownify }}</div>{{ end }}
     <ul role="list" class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {{- range . }}{{ partial "person-card.html" (dict "person" . "i18nRole" false) }}{{ end }}
+      {{- range . }}{{ partial "person-card.html" (dict "person" . "i18nRole" true) }}{{ end }}
     </ul>
   </section>
   {{- end }}
