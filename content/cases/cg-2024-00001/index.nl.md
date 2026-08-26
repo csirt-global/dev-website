@@ -1,35 +1,34 @@
 ---
-untranslated: true
-title: "CG-2024-00001 JetBrains TeamCity authenticatie-omzeiling"
+title: "JetBrains TeamCity authenticatie-omzeiling"
 slug: "CG-2024-00001"
 date: 2024-02-16
 ---
 
-### Summary
+### Samenvatting
 
-A significant security vulnerability has been recently uncovered in TeamCity On-Premises. In the
-event of exploitation, this flaw has the potential to empower an unauthorized attacker, who has
-HTTP(S) access to a TeamCity server, to bypass authentication checks successfully. Consequently, such
-an attacker could acquire **administrative** control over the affected TeamCity server, posing a
-serious risk to the integrity and security of the system. It is imperative to address and remediate
-this issue promptly to safeguard the confidentiality and proper functioning of the TeamCity
-On-Premises environment.
+Er is onlangs een ernstige beveiligingskwetsbaarheid ontdekt in TeamCity On-Premises. Bij misbruik
+stelt dit lek een aanvaller zonder toegangsrechten, die wel HTTP(S)-toegang heeft tot een
+TeamCity-server, in staat om de authenticatiecontroles te omzeilen. Zo'n aanvaller kan daardoor
+**beheerdersrechten** krijgen over de betreffende TeamCity-server, wat een serieus risico vormt voor
+de integriteit en de veiligheid van het systeem. Het is noodzakelijk dit probleem snel te verhelpen
+om de vertrouwelijkheid en de goede werking van de TeamCity On-Premises-omgeving te waarborgen.
 
 ### Update
 
-JetBrains recommends that On-Prem users promptly update to the most recent version (2023.11.3) or,
-alternatively, apply the provided security patch to prevent unauthorised access. See their
+JetBrains raadt On-Prem-gebruikers aan direct bij te werken naar de nieuwste versie (2023.11.3) of
+anders de meegeleverde beveiligingspatch toe te passen om ongeautoriseerde toegang te voorkomen. Zie
+hun
 [blog](https://blog.jetbrains.com/teamcity/2024/02/critical-security-issue-affecting-teamcity-on-premises-cve-2024-23917/)
-for more details.
+voor meer details.
 
-### Compromise Assessment
+### Onderzoek naar misbruik
 
-Where possible, you should also conduct a compromise assessment to check if the exploit has already
-been abused by:
+Voer waar mogelijk ook een onderzoek uit om vast te stellen of het lek al is misbruikt, door:
 
-- checking access and audit logs and comparing to real human user behaviours (e.g. "Did you really
-  login in at Midnight Dave?")
-- checking for signs of persistence such as new user accounts (e.g. "Who is Elaine.Ransom?")
+- toegangs- en auditlogs te controleren en te vergelijken met echt menselijk gedrag (bijvoorbeeld:
+  "Heb je om middernacht echt ingelogd, Dave?")
+- te letten op sporen van persistentie, zoals nieuwe gebruikersaccounts (bijvoorbeeld: "Wie is
+  Elaine.Ransom?")
 
-This includes the TeamCity server itself as well as any other servers that can be accessed from it
-such as CI/CD assets.
+Dit geldt voor de TeamCity-server zelf en voor alle andere servers die vanaf die server bereikbaar
+zijn, zoals CI/CD-systemen.
