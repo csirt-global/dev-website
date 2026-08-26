@@ -45,8 +45,13 @@ content/cases/cg-2024-00001/index.en.md
 content/cases/cg-2024-00001/index.nl.md
 ```
 
-Job titles and group names are interface strings, not page content, so they translate once and apply
-everywhere. That is why `data/team.yaml` stores `role: role_advisor` rather than `role: "Advisor"`.
+Group names are interface strings, not page content, so they translate once and apply everywhere.
+That is why `data/team.yaml` stores `role: role_advisor` rather than `role: "Advisor"`.
+
+Job titles are the exception. They are interface strings too, but they stay in English in every
+language: `i18n/en.yaml` is the only file with `role_` keys and the rest fall back to it. Translating
+a job title means picking a grammatical gender for a named colleague, which is a guess about a real
+person, and the English titles are what those people use elsewhere.
 
 ---
 
