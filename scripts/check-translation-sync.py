@@ -3,7 +3,7 @@
 
 The rule: if a pull request edits a page in one language, it edits that page in
 every language it exists in. A correction to a case record is a correction in
-seven files, or the site drifts back to five accurate versions and two that
+seven files, or the site drifts back to a few accurate versions and several that
 quietly disagree.
 
 This reads the *diff*, not the state of the repository, and that distinction is

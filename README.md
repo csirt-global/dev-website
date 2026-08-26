@@ -3,7 +3,8 @@
 The CSIRT.global website. Static site, built with [Hugo](https://gohugo.io), deployed by GitHub
 Actions to GitHub Pages.
 
-Available in English, Dutch, German, French and Spanish.
+Available in English, Dutch, German, French, Spanish, Brazilian Portuguese and Simplified
+Chinese.
 
 ---
 
@@ -27,13 +28,13 @@ If you do not have Hugo, install it with `brew install hugo` (macOS) or see
 ### Commands
 
 | command | what it does |
-|---|---|
+|---|---|---|
 | `make serve` | local preview with live reload |
 | `make build` | production build into `public/` |
 | `make check` | run every check CI runs |
 | `make css` | rebuild the stylesheet only |
 | `make clean` | remove build output |
-| `npm ci && npm run sweep` | browser sweep: 20 pages x 390/768/1440 (needs `make serve` running) |
+| `npm ci && npm run sweep` | browser sweep: 20 pages x 390/768/1440, plus the header in all seven languages (needs `make serve` running) |
 | `npm run favicons` | regenerate every favicon from `assets/images/logo-mark.svg` |
 
 ---
@@ -44,24 +45,24 @@ Everything a person normally changes lives in `content/` (prose) or `data/` (str
 **You do not need to touch HTML.**
 
 - **Add a team member** → edit `data/team.yaml`
-- **Add a case** → add a folder under `content/cases/`
-- **Add a project** → add a folder under `content/projects/`
+- **Add a case** → a facts file in `data/cases/`, then a folder under `content/cases/`
+- **Add a project** → a team file in `data/projects/`, then a folder under `content/projects/`
 - **Change a nav item** → edit `data/nav.yaml` (once, not eight times)
 - **Change an ANBI document** → edit `data/anbi_documents.yaml`
-- **Turn on donations** → fill in `data/donate.yaml`, then remove `hidden`/`noindex`/`sitemap` from `content/get-involved/donate/index.en.md`
+- **Hand over the donate page** → fill in `data/donate.yaml`, then set `sample: false` in it
 - **Change wording on the homepage** → edit `content/_index.<lang>.md`
 
 You can edit these files directly in the GitHub web interface. Opening a pull request runs every
 check automatically.
 
 | Document | What is in it |
-|---|---|
+|---|---|---|
 | [CONTRIBUTING.md](CONTRIBUTING.md) | How to run it, what goes where, pull request standards |
 | [docs/CONTENT.md](docs/CONTENT.md) | The exact fields of every content type |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Why it is built this way, decision by decision |
 | [docs/QUIRKS.md](docs/QUIRKS.md) | Traps that have already caught someone here. Read before editing templates or CSS |
 | [docs/CI.md](docs/CI.md) | The two workflows, what each check guards, how the domain and staging work |
-| [docs/TRANSLATION.md](docs/TRANSLATION.md) | How the five languages work |
+| [docs/TRANSLATION.md](docs/TRANSLATION.md) | How the seven languages work, and how to add another |
 | [CLAUDE.md](CLAUDE.md) | Rules and context for contributors working with Claude Code |
 | [SECURITY.md](SECURITY.md) | Reporting a vulnerability in this site |
 
@@ -125,24 +126,27 @@ being added, so 17 CSS classes used on live pages did not exist in the styleshee
 
 ## Checks
 
-`make check`, and CI on every pull request:
+Ten checks, and not all of them run in the same place. Eight are `make check` and the pull request
+build. One needs a browser and is a second CI job. One can only run after a deploy, because it
+fetches the live URLs.
 
-| check | why it exists |
-|---|---|
-| `scripts/check-urls.py` | The ANBI contact details and documents must stay reachable for the Dutch tax authority (Belastingdienst). Also guards case URLs, which are case-sensitive and cited externally. |
-| `scripts/check-links.py` | The previous site shipped a link with no scheme that 404'd, and a logo pointing at a deleted third-party asset. Both were live for months. Also catches stray whitespace welded to a link, which is what an untrimmed newline in a render hook turns into on the page. |
-| `scripts/translation-status.py` | Five languages fail silently: Hugo falls back to English, so an untranslated page looks fine to anyone who does not read that language. This makes the gap countable. |
-| `scripts/check-security-txt.py` | RFC 9116 makes `Expires` mandatory and says a lapsed file must not be relied on. The previous one expired on 2025-01-01 and stayed published for over a year (issue #56). This fails 30 days ahead. |
-| `scripts/check-translation-sync.py` | A page edited in one language and not the others leaves the site with versions that quietly disagree. Reads the diff against the base branch, so adding a translation never trips it. |
-| `scripts/check-css.py` | Component classes are hand-written, so deleting one while editing leaves every template that uses it silently unstyled. That happened here: a splice removed the case record block and the register rendered as plain text for three commits. |
-| `scripts/check-deployed.py` | Runs after deployment and fetches the real URLs. Every other check reads `./public`; the artifact upload sits between that folder and what visitors get, and it can drop files. It nearly did. |
-| `scripts/check-donate.py` | The donate page ships switched off until someone supplies a provider and a URL (issue #18). Two things have to move together to switch it on, and doing one without the other gives either a live page nobody can reach or a reachable page with buttons that go nowhere. This refuses both. |
-| `scripts/check-content-parity.py` | The redesign moved every page. This asserts that no sentence the old site published was lost on the way. A drop has to be written down in `ALLOWED_DROPS` with a reason, so losing content is a decision rather than an accident. Skips when the reference build is not present. |
-| `scripts/sweep.mjs` | Every page at 390/768/1440: no horizontal scroll, no failed requests, every external link opening in a new tab, pinch-zoom not blocked, a visible keyboard focus ring. Needs a local server and Playwright, so it is run by hand rather than in CI. |
+| check | where | why it exists |
+|---|---|---|
+| `scripts/check-urls.py` | `make check` + CI | The ANBI contact details and documents must stay reachable for the Dutch tax authority (Belastingdienst). Also guards case URLs, which are case-sensitive and cited externally. |
+| `scripts/check-links.py` | `make check` + CI | The previous site shipped a link with no scheme that 404'd, and a logo pointing at a deleted third-party asset. Both were live for months. Also catches stray whitespace welded to a link, which is what an untrimmed newline in a render hook turns into on the page. |
+| `scripts/translation-status.py` | `make check` + CI | Missing translations fail silently: Hugo falls back to English, so an untranslated page looks fine to anyone who does not read that language. This makes the gap countable, and it fails a language whose body is still English. |
+| `scripts/check-security-txt.py` | `make check` + CI | RFC 9116 makes `Expires` mandatory and says a lapsed file must not be relied on. The previous one expired on 2025-01-01 and stayed published for over a year (issue #56). This fails 30 days ahead. |
+| `scripts/check-translation-sync.py` | `make check` + CI | A page edited in one language and not the others leaves the site with versions that quietly disagree. Reads the diff against the base branch, so adding a translation never trips it. |
+| `scripts/check-css.py` | `make check` + CI | Component classes are hand-written, so deleting one while editing leaves every template that uses it silently unstyled. That happened here: a splice removed the case record block and the register rendered as plain text for three commits. |
+| `scripts/check-deployed.py` | after deploy | Runs after deployment and fetches the real URLs. Every other check reads `./public`; the artifact upload sits between that folder and what visitors get, and it can drop files. It nearly did. |
+| `scripts/check-donate.py` | `make check` + CI | The donate page is live with sample settings until someone supplies a provider and a URL (issue #18). Every route points at `example.invalid`. This warns everywhere and refuses one thing: a deploy of sample settings to the live host. |
+| `scripts/check-content-parity.py` | `make check` only | The redesign moved every page. This asserts that no sentence the old site published was lost on the way. A drop has to be written down in `ALLOWED_DROPS` with a reason, so losing content is a decision rather than an accident. Skips when the reference build is not present. |
+| `scripts/sweep.mjs` | CI browser job | Every page at 390/768/1440: no horizontal scroll, no failed requests, every external link opening in a new tab, pinch-zoom not blocked, a visible keyboard focus ring. Then the header in all seven languages, which is what stops a new language breaking the menu. Needs a browser, so it is a separate CI job rather than part of `make check`. |
 
-`check-content-parity.py` runs in `make check` but not in CI: it compares against
-a local build of the previous site, which CI does not have, and skips cleanly
-when that is absent.
+`check-content-parity.py` is local-only because it compares against a build of the previous site,
+which CI has no copy of. It skips cleanly when the reference is absent, so it never fails for the
+wrong reason. It also only inspects text blocks over 30 characters, which means short strings, a
+person's name among them, are outside what it can see.
 
 ---
 
@@ -151,7 +155,8 @@ when that is absent.
 Pushing to `main` builds and deploys to GitHub Pages. The build is reproducible: Hugo and Tailwind
 versions are pinned in `.hugo_version` and the workflow, and CI fails if they disagree.
 
-Do not commit `public/`, `resources/` or `static/css/main.css`. They are generated.
+Do not commit `public/`, `resources/`, `assets/css/build.css` or `bin/tailwindcss`. They are
+generated and gitignored.
 
 ---
 

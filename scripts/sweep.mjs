@@ -15,9 +15,9 @@ const BASE = process.env.BASE_URL || "http://127.0.0.1:1313";
 const WIDTHS = [390, 768, 1440];
 
 // Every language the site publishes. The nav is the part that varies most
-// between them: German needs 1,079px of the 1,088 available, and French needed
-// 1,103 before its labels were shortened. This list is what stops a new
-// language quietly breaking the header.
+// between them: French needed 1,103px of the 1,088 available before its labels
+// were shortened, and shipped a wrapped menu because this only ever visited
+// English. This list is what stops a new language quietly breaking the header.
 const LANGS = ["", "nl", "de", "fr", "es", "pt-br", "zh"];
 
 const PAGES = [

@@ -28,6 +28,39 @@ nothing, because the page has no `name`. The fix is to capture the item first:
 {{ end }}
 ```
 
+### A partial reading global `site` ignores the item it was given
+
+The same trap as `.` inside `range`, one level further out. `layouts/partials/head.html` builds the
+alternate-language links like this:
+
+```go-html-template
+{{- range .AllTranslations }}
+<link rel="alternate" hreflang="{{ partial "lang-tag.html" . }}" href="{{ .Permalink }}">
+{{- end }}
+```
+
+The partial was written as `{{ return ... site.Language.Lang }}`. `site` is the *current* site,
+regardless of what the partial was handed, so every alternate link on every page carried the
+language of the page being rendered: `/pt-br/` advertised all six alternates as `hreflang="pt-BR"`.
+
+Inside a partial, read `.Site`, never `site`. The first follows the argument, the second does not.
+
+### Aliases are prefixed with the page's language
+
+```yaml
+aliases: ["/es/donate/"]      # on content/get-involved/donate/index.es.md
+```
+
+publishes `/es/es/donate/`, and leaves `/es/donate/` a 404. Hugo prefixes an alias with the language
+of the page carrying it, so the alias is written **unprefixed** and the prefix is added for you:
+
+```yaml
+aliases: ["/donate/"]         # publishes /es/donate/ on the Spanish page
+```
+
+This shipped in four languages and nothing caught it. `check-urls.py` only lists URLs someone
+thought to add.
+
 ### `cond` evaluates both branches
 
 `cond` is a function, not a conditional. Both arguments are evaluated before it
@@ -162,6 +195,19 @@ access to the page.
 Fingerprinted filenames change whenever the CSS does, so an incremental build
 accumulates orphaned stylesheets. `make build` removes `public/` first.
 
+### `make build` while `make serve` is running wipes what the server is serving
+
+`make build` starts with `rm -rf public`. If `hugo server` is running in another terminal and has
+rendered to disk, the static assets go with it, and the site in the browser comes back with a broken
+logo and no favicon. Nothing is actually wrong with the repository.
+
+It cost an hour of looking for a bug in the Chinese stylesheet that did not exist. If you need to
+inspect a real build, stop the server first, then serve `public/` with anything static:
+
+```bash
+python3 -m http.server 8901 --directory public
+```
+
 ### The CSS output path is written in one place
 
 `make css`. It used to be repeated in the Makefile and both workflows, and when
@@ -183,6 +229,15 @@ first. A "missing" team photo was this, twice.
 A panel captured mid-transition looks translucent. Wait past the transition
 duration before deciding something is a bug — or read the computed style, which
 does not lie.
+
+### A check can be blind to a whole script, or a whole string length
+
+Two here have been. `translation-status.py` compared bodies by splitting on a character class with
+no Han in it, so a Chinese page yielded no words at all and scored 100% English. `check-content-parity.py`
+only inspects text blocks over 30 characters, so it cannot see a person's name being removed.
+
+Neither was wrong about what it measured. Both were silent about something they were assumed to
+cover. Before citing a green check as evidence, know what it looks at.
 
 ### Reporter evidence beats reasoning
 

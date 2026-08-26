@@ -42,7 +42,7 @@ ALLOWED_DROPS = {
     # The old Dutch homepage labelled the statutory contact block "Kantoor: ...
     # Tel.: ...". Trimming that homepage to match the English one removed the
     # label, not the information: the registered address and the telephone
-    # number are published on /about/anbi/ in all five languages, from
+    # number are published on /about/anbi/ in every language, from
     # data/verify.yaml, under the label that language uses. Verified in every
     # one before allowing this drop.
     "Kantoor: Maanweg": "Dutch label for the statutory contact block; the details themselves moved to /about/anbi/",

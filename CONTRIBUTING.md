@@ -22,8 +22,8 @@ You need **Hugo** and nothing else to build the site or change any of its
 content. No credentials.
 
 ```bash
-git clone https://github.com/csirt-global/website
-cd website
+git clone https://github.com/csirt-global/dev-website
+cd dev-website
 make serve            # http://localhost:1313
 ```
 
@@ -50,12 +50,12 @@ anything a template change broke.
 | Fix wording on a page | `content/<page>/index.<lang>.md` |
 | Change a heading, button or label | `i18n/<lang>.yaml` — not the template |
 | Add or remove a team member | `data/team.yaml` |
-| Add a case | `content/cases/CG-YYYY-NNNNN/` (`hugo new cases/...`) |
+| Add a case | `data/cases/CG-YYYY-NNNNN.yaml` **and** `content/cases/CG-YYYY-NNNNN/` |
 | Add a project | `content/projects/<slug>/` |
 | Change a nav item | `data/nav.yaml` |
 | Change the organisation record | `data/verify.yaml` |
 | Add an ANBI document | `data/anbi_documents.yaml`, PDF in `static/uploads/` |
-| Turn on donations | `data/donate.yaml` — see [docs/CONTENT.md](docs/CONTENT.md) |
+| Hand over the donate page | `data/donate.yaml`, then `sample: false` — see [docs/CONTENT.md](docs/CONTENT.md) |
 | Change colours or type | `assets/css/main.css`, `@theme` block only |
 | Change the logo | `assets/images/logo-mark.svg`, then `npm run favicons` |
 
@@ -110,13 +110,15 @@ went wrong once:
 | `check-donate.py` | A donate page that is live with placeholder payment details |
 | `check-content-parity.py` | Text from the previous site vanishing in a redesign |
 | `translation-status.py` | The site quietly becoming English-only |
+| `check-translation-sync.py` | A page edited in one language and left behind in the other six |
 
 A failing check is telling you something. If you are certain it is wrong, say so
 in the pull request rather than working around it — several of them have
 exceptions lists that take a reason in writing.
 
-`scripts/sweep.mjs` is not in CI, because it needs a running server and a real
-browser. Run it by hand for anything that changes layout:
+`scripts/sweep.mjs` needs a running server and a real browser, so it is a second
+CI job rather than part of `make check`. Run it locally for anything that
+changes layout, and do not wait for CI to tell you:
 
 ```bash
 npm ci                           # once: Playwright, the only npm dependency
@@ -126,7 +128,9 @@ npm run sweep                    # in another
 
 It checks 20 pages at 390/768/1440 for horizontal scroll, failed requests,
 external links opening in the same tab, blocked pinch-zoom, and a visible
-keyboard focus ring. CI runs it too, against the built artifact.
+keyboard focus ring. It then measures the header in **all seven languages** at
+1280 and 1440 and reports the spare room, because the nav is the part that
+varies most between them.
 
 [docs/CI.md](docs/CI.md) explains what CI runs and how deployment works.
 
@@ -138,7 +142,9 @@ keyboard focus ring. CI runs it too, against the built artifact.
 - `/uploads/*.pdf` — statutory ANBI filings the Dutch tax authority relies on
 - `/.well-known/security.txt` — RFC 9116
 - `/code/`, and the old homepage anchors `#mission`, `#team`, `#code`, `#anbi`
-- The Code of Conduct's 24 numbered clauses, which carry governance weight
+- The Code of Conduct's 24 numbered clauses, which carry governance weight. Clause 24 names an
+  office holder and links to their anchor on `/about/team/`; if that person changes, seven files and
+  the anchor change with them
 
 `check-urls.py` enforces the first four.
 
@@ -148,16 +154,19 @@ keyboard focus ring. CI runs it too, against the built artifact.
 
 English first. A page is written in English, reviewed, and only then translated.
 
-**Editing a page in one language means editing it in all of them.** A correction to a case record is
-a correction in seven files. If a change genuinely does not apply elsewhere, put
+**Editing a page in one language means editing it in all of them.** A correction to a page is a
+correction in seven files. If a change genuinely does not apply elsewhere, put
 `Translation-sync: not-required, <reason>` in the commit message rather than making six no-op edits.
+Case *facts* are the exception by design: they live once in `data/cases/`, so correcting a CVE is one
+edit.
 
-**Every language at 100% is enforced by CI.** Today that is all five, so adding an English page means
-adding its Dutch, German, French and Spanish versions in the same pull request, or the build fails.
-A language still being written sits at `0.00` in `scripts/translation-status.py` and is only reported,
-so adding a new language does not fail CI on day one. If a translation
-genuinely cannot be written yet, add the file with `untranslated: true`: it renders with a notice
-explaining why the reader is seeing English, and it counts as missing until it is real.
+**Every language at 100% is enforced by CI.** Today that is all seven, so adding an English page
+means adding its Dutch, German, French, Spanish, Brazilian Portuguese and Simplified Chinese versions
+in the same pull request, or the build fails. A language still being written sits at `0.00` in
+`scripts/translation-status.py` and is only reported, so adding a new language does not fail CI on
+day one. If a translation genuinely cannot be written yet, add the file with `untranslated: true`: it
+renders with a notice explaining why the reader is seeing English, and it counts as missing until it
+is real.
 
 A `.<lang>.md` file that contains English text is worse than no file at all: it
 reports as translated and reads as neglect. Mark it `untranslated: true` in the
