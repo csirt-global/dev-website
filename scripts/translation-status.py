@@ -55,7 +55,7 @@ LANGUAGES = {
     "fr": 1.00,
     "es": 1.00,
     "pt-br": 1.00,
-    "zh": 0.00,      # being written
+    "zh": 1.00,
 }
 
 
@@ -80,8 +80,14 @@ def body_tokens(path: Path) -> set:
     body = re.sub(r"`[^`]*`", " ", body)                   # code spans
     body = re.sub(r"https?://\S+", " ", body)               # bare URLs
     words = re.split(r"[^0-9A-Za-z\u00c0-\u024f]+", body.lower())
-    return {w for w in words
-            if len(w) > 3 and not re.fullmatch(r"(cve|cwe|cpe|cg)?[0-9].*", w)}
+    tokens = {w for w in words
+              if len(w) > 3 and not re.fullmatch(r"(cve|cwe|cpe|cg)?[0-9].*", w)}
+    # Han is not written with spaces, so the split above yields nothing for a
+    # Chinese body and the only tokens left are its Latin identifiers, which
+    # are meant to be identical in every language. A correctly translated page
+    # then reads as 100% English. Count each ideograph as its own token so the
+    # denominator reflects the text that was actually written.
+    return tokens | set(re.findall(r"[\u4e00-\u9fff]", body))
 
 
 def is_reviewed(path: Path) -> bool:
