@@ -60,7 +60,8 @@ page would be a poor answer. All four files together are 116 KB.
 
 ## The yellow is a signal, and there is a paper surface
 
-The brand is fixed: near-black `#1d1d1b` and the yellow `#f6e714`. What changed is how they are
+The brand is fixed: near-black `#1d1d1b` and the gold `#e1cd03`, taken from the logo mark rather
+than the brighter `#f6e714` the old site used and the mark never matched. What changed is how they are
 used. The yellow is now reserved for actions, case status and the organisation record, never for
 large fields of colour.
 
