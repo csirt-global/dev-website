@@ -103,3 +103,17 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+      # Everything before this point reads ./public, the folder Hugo wrote. That
+      # is not what visitors get: the artifact upload sits in between and can
+      # drop files from it. Bumping upload-pages-artifact to v4 would have
+      # removed /.well-known/security.txt from the published site with every
+      # check still green, because the file was present in ./public the whole
+      # time. So this fetches the real URLs over the network.
+      #
+      # It detects rather than prevents: by the time it runs, the site is live.
+      # A red deploy is the alarm, and reverting the commit republishes.
+      - uses: actions/checkout@v7
+
+      - name: Check the published site
+        run: python3 scripts/check-deployed.py "${{ steps.deployment.outputs.page_url }}"

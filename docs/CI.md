@@ -129,6 +129,27 @@ The build is passed `--baseURL` from `configure-pages`, which resolves to
 whatever custom domain that repository has configured. Everything downstream
 follows from it.
 
+### The published site is checked after it is published
+
+Every check in the build job reads `./public`, the folder Hugo wrote. That is
+not the same thing as what visitors get: the artifact upload sits between them
+and can drop files.
+
+That is not hypothetical. `actions/upload-pages-artifact` v4 stopped including
+hidden files, which would have removed `/.well-known/security.txt` from the
+published site. `check-urls.py` would still have passed, because the file was
+there in `./public`. The deploy would still have reported success. Only the live
+URL would have been wrong.
+
+So `check-deployed.py` runs after `deploy-pages` and fetches real URLs over the
+network: the ANBI documents, every citable page, `security.txt` including its
+`Contact:` line, and a lowercased case URL that must **not** resolve. The list is
+imported from `check-urls.py` rather than repeated, so the build and the
+published site are held to the same one.
+
+It detects rather than prevents. By the time it runs the site is live, so a red
+deploy is the alarm and reverting the commit republishes.
+
 ### The domain is a repository setting, not a file
 
 There is deliberately **no `CNAME` file in this repository.** The same source is
