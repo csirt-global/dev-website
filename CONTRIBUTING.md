@@ -148,6 +148,10 @@ keyboard focus ring. CI runs it too, against the built artifact.
 
 English first. A page is written in English, reviewed, and only then translated.
 
+**Editing a page in one language means editing it in all of them.** A correction to a case record is
+a correction in seven files. If a change genuinely does not apply elsewhere, put
+`Translation-sync: not-required, <reason>` in the commit message rather than making six no-op edits.
+
 **Every language at 100% is enforced by CI.** Today that is all five, so adding an English page means
 adding its Dutch, German, French and Spanish versions in the same pull request, or the build fails.
 A language still being written sits at `0.00` in `scripts/translation-status.py` and is only reported,

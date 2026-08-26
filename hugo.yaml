@@ -29,6 +29,13 @@ languages:
   es:
     label: "Español"
     weight: 5
+  # The key is the URL prefix and stays lowercase: /pt-br/, /zh/.
+  pt-br:
+    label: "Português"
+    weight: 6
+  zh:
+    label: "简体中文"
+    weight: 7
 
 # Translations are authored, never machine-guessed at request time.
 # A page with no translation must be visibly absent, not silently English.
@@ -61,6 +68,20 @@ params:
   # deployment, a fork's Pages URL, a local build — marks itself as not
   # production: noindex, robots disallow, and a banner on every page.
   productionHost: "csirt.global"
+
+  # BCP 47 tags for the markup. Separate from the language key because the key
+  # is the URL prefix and stays lowercase, while the tag is cased and carries
+  # more: "zh" alone does not say whether the text is Simplified or Traditional,
+  # and a reader whose browser prefers one gets little help from the other.
+  # Only languages whose tag differs from their key need an entry.
+  languageTags:
+    pt-br: "pt-BR"
+    zh: "zh-Hans"
+
+  # The short code in the language switcher. "PT-BR" is a mouthful in a chip
+  # that is otherwise two letters wide.
+  languageCodes:
+    pt-br: "br"
   # The language everything is written in first. Pages in any other language are
   # translations, and say so until a native speaker signs them off.
   sourceLanguage: "en"

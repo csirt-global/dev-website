@@ -18,7 +18,7 @@ const WIDTHS = [390, 768, 1440];
 // between them: German needs 1,079px of the 1,088 available, and French needed
 // 1,103 before its labels were shortened. This list is what stops a new
 // language quietly breaking the header.
-const LANGS = ["", "nl", "de", "fr", "es"];
+const LANGS = ["", "nl", "de", "fr", "es", "pt-br", "zh"];
 
 const PAGES = [
   "/", "/notified/",

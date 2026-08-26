@@ -54,6 +54,8 @@ LANGUAGES = {
     "de": 1.00,
     "fr": 1.00,
     "es": 1.00,
+    "pt-br": 0.00,   # being written
+    "zh": 0.00,      # being written
 }
 
 

@@ -70,6 +70,21 @@ old site was black end to end, which reads as hacker aesthetic at exactly the mo
 visitor is asking "is this a scam?". On paper, that material reads as a document rather than a
 landing page.
 
+## Chinese sets in the reader's own font
+
+The three faces are Latin-only and 116 KB self-hosted. A Han face carries around
+20,000 glyphs and runs 4 to 10 MB, which is forty times the entire font budget for one language.
+
+So Chinese is not given a webfont. It falls through `ui-sans-serif` to whatever CJK face the reader
+already has: PingFang on Apple, Noto Sans CJK on Android, Microsoft YaHei on Windows. Every platform
+ships one, and the alternative would have been either a multi-megabyte download or a third-party font
+request, which is the thing self-hosting exists to avoid.
+
+The consequence is visible and worth knowing: Chinese pages are set in a different typeface from the
+other six. `assets/css/main.css` also turns off the Latin display tuning under `:lang(zh)`, because
+negative tracking and uppercasing are wrong for a script with no case whose glyphs already sit on a
+fixed square body.
+
 ## The mark has one source
 
 `assets/images/logo-mark.svg` is the logo, and every favicon is rendered from it

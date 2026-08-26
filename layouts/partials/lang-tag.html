@@ -1,0 +1,7 @@
+{{- /* The BCP 47 tag for the current language, for markup rather than URLs.
+
+       The language key is the URL prefix and stays lowercase, giving /zh/ and
+       /pt-br/. The tag is cased differently and, for Chinese, says which
+       script. Languages whose tag equals their key need no entry and fall
+       through to the key. */ -}}
+{{- return (or (index site.Params.languageTags site.Language.Lang) site.Language.Lang) -}}

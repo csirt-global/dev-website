@@ -30,6 +30,7 @@ check: build
 	python3 scripts/translation-status.py
 	python3 scripts/check-urls.py
 	python3 scripts/check-links.py
+	python3 scripts/check-translation-sync.py
 	python3 scripts/check-css.py
 	python3 scripts/check-security-txt.py
 	python3 scripts/check-donate.py

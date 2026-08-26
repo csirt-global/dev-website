@@ -11,13 +11,13 @@
 
 {{/* Every alternate language, so search engines and browsers can find them. */}}
 {{- range .AllTranslations }}
-<link rel="alternate" hreflang="{{ .Site.Language.Lang }}" href="{{ .Permalink }}">
+<link rel="alternate" hreflang="{{ partial "lang-tag.html" . }}" href="{{ .Permalink }}">
 {{- end }}
 <link rel="alternate" hreflang="x-default" href="{{ .Permalink | absLangURL }}">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="CSIRT.global">
-<meta property="og:locale" content="{{ .Site.Language.Lang }}">
+<meta property="og:locale" content="{{ partial "lang-tag.html" . }}">
 <meta property="og:title" content="{{ $title }}">
 <meta property="og:description" content="{{ $desc }}">
 <meta property="og:url" content="{{ .Permalink }}">
