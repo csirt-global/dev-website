@@ -1,24 +1,20 @@
-{{/* Two different admissions, and never both at once.
+{{/* Shown when the visitor is reading a language this page has not been
+     translated into. Hugo would otherwise fall back silently, which is how a
+     five-language site quietly becomes a one-language site: DIVD has full i18n
+     machinery, .en.md on all 66 content files, and zero translated pages.
 
-     `untranslated` means the file exists but still holds English. Hugo would
-     otherwise fall back silently, which is how a five-language site quietly
-     becomes a one-language site: DIVD has full i18n machinery, .en.md on all 66
-     content files, and zero translated pages.
+     There is deliberately no equivalent notice for a translated-but-unreviewed
+     page. This is a volunteer organisation and it will never sustain a native
+     speaker signing off every page in five languages, so that notice would be
+     permanent, and a permanent warning on every non-English page tells the one
+     audience deciding whether to trust us that we are not sure about our own
+     site. The review gap is tracked instead: `reviewed: true` in front matter,
+     counted per language by scripts/translation-status.py, blocking nothing.
 
-     The second is newer. Every translation on this site was written without a
-     native speaker to check it, so any page not in the source language says so
-     until someone signs it off. It is opt-in: a reviewer adds `reviewed: true`
-     to the front matter, and nothing has to be added to the hundred files that
-     have not been reviewed yet. Fails safe. */}}
+     What still fails the build is English left inside a translated file, which
+     is a defect rather than a missing signature. */}}
 {{- if .Params.untranslated }}
 <div class="max-w-3xl mx-auto px-4 pt-6">
   <p class="notice">{{ i18n "translation_missing" }}</p>
-</div>
-{{- else if and (ne .Lang site.Params.sourceLanguage) (not .Params.reviewed) }}
-{{- $source := "" }}
-{{- range .AllTranslations }}{{ if eq .Lang site.Params.sourceLanguage }}{{ $source = .RelPermalink }}{{ end }}{{ end }}
-<div class="max-w-3xl mx-auto px-4 pt-6">
-  <p class="notice">{{ i18n "translation_unreviewed" }}
-    {{- with $source }} <a href="{{ . }}" class="underline underline-offset-2">{{ i18n "translation_read_source" }}</a>{{ end }}</p>
 </div>
 {{- end }}

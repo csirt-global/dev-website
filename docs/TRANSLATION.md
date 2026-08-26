@@ -92,19 +92,40 @@ Stale pages count as failures for any language at 100%.
 
 ## Reviewed, or not
 
-Every translation on this site was written without a native speaker to check it. Any page not in the
-source language therefore carries a visible notice saying so, in that language.
+Every translation here was written without a native speaker to check it, and that is tracked but not
+announced.
 
-It is opt-in. A reviewer who has read a page adds one line to its front matter:
+A reviewer who has read a page adds one line to its front matter:
 
 ```yaml
 reviewed: true
 ```
 
-and the notice disappears from that page. Nothing has to be added to the pages nobody has read yet,
-which is what makes it fail safe: a new translation is unreviewed by default.
+`translation-status.py` counts unreviewed pages per language, so the gap is visible to anyone working
+on the site. It blocks nothing.
 
-`translation-status.py` counts unreviewed pages per language so the debt stays visible.
+**There is deliberately no notice on the page itself.** A volunteer organisation will not sustain a
+native speaker signing off every page in five languages, so that notice would be permanent, and a
+permanent warning on every non-English page tells the one audience deciding whether to trust us that
+we are not sure about our own site. The cure was worse than the disease.
+
+What is announced is the honest, temporary case: a page that has not been translated at all says so,
+because the reader is looking at English and deserves to know why.
+
+## Linking to the English version on purpose
+
+`layouts/partials/href.html` rewrites every internal Markdown link to the current language, which is
+right for navigation and wrong when you mean the English page specifically. A Markdown link to
+`/about/code-of-conduct/` on the Dutch page resolves back to the Dutch page.
+
+Raw HTML skips the render hook, so this works:
+
+```html
+<a href="/about/code-of-conduct/">Engelse tekst</a>
+```
+
+The Code of Conduct uses it for the line stating that the English text governs. The language
+switcher covers the ordinary case, so this is rarely needed.
 
 ## English left inside a translated file
 

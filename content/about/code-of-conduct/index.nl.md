@@ -5,8 +5,8 @@ description: "De ethische basis voor hoe CSIRT.global omgaat met kwetsbaarheidsg
 url: "/nl/about/code-of-conduct/"
 ---
 
-*Dit is een onofficiële vertaling, bedoeld om de tekst leesbaar te maken. De Engelse tekst is de
-geldende versie.*
+*Dit is een onofficiële vertaling, bedoeld om de tekst leesbaar te maken. De
+<a href="/about/code-of-conduct/">Engelse tekst</a> is de geldende versie.*
 
 Alle vrijwilligers van CSIRT.global houden zich aan onze Gedragscode:
 
