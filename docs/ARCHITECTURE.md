@@ -70,6 +70,20 @@ old site was black end to end, which reads as hacker aesthetic at exactly the mo
 visitor is asking "is this a scam?". On paper, that material reads as a document rather than a
 landing page.
 
+## The mark has one source
+
+`assets/images/logo-mark.svg` is the logo, and every favicon is rendered from it
+by `npm run favicons`: 16, 32, 180, 192, 270, 512 and a `.ico` carrying 16/32/48.
+
+The icons that were here before used `#fffb00`, a brighter yellow than the
+palette and than the mark itself, so the browser tab never matched the site.
+That is the kind of drift a single source prevents: change the SVG, run the
+script, everything follows.
+
+The header wordmark is type, not an image, so it scales and translates. The
+Safari pinned-tab icon stays a separate monochrome mask, because Safari fills
+it with one colour and the mark's fine globe lines would disappear at 16 pixels.
+
 ## Internal links resolve through one partial
 
 `layouts/partials/href.html` takes a path and returns the translation of that page when one exists,

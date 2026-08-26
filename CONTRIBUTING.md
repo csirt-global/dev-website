@@ -57,6 +57,7 @@ anything a template change broke.
 | Add an ANBI document | `data/anbi_documents.yaml`, PDF in `static/uploads/` |
 | Turn on donations | `data/donate.yaml` — see [docs/CONTENT.md](docs/CONTENT.md) |
 | Change colours or type | `assets/css/main.css`, `@theme` block only |
+| Change the logo | `assets/images/logo-mark.svg`, then `npm run favicons` |
 
 **You should not need to touch HTML.** If a content change requires editing a
 template, that is usually a sign the template should be reading from `data/`

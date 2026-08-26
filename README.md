@@ -34,6 +34,7 @@ If you do not have Hugo, install it with `brew install hugo` (macOS) or see
 | `make css` | rebuild the stylesheet only |
 | `make clean` | remove build output |
 | `npm ci && npm run sweep` | browser sweep: 20 pages x 390/768/1440 (needs `make serve` running) |
+| `npm run favicons` | regenerate every favicon from `assets/images/logo-mark.svg` |
 
 ---
 
