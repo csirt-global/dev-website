@@ -2,19 +2,6 @@
 title: "JetBrains TeamCity Authentication Bypass"
 slug: "CG-2024-00001"
 date: 2024-02-16
-case:
-  id: "CG-2024-00001"
-  ref: "CG-2024-00001-teamcity"
-  status: closed
-  lead: "Soufian El Yadmani"
-  leadAnchor: soufian
-  researchers: ["Chris Heald", "Gabriel Tarsia", "Michael Rowley", "Soufian El Yadmani", "Tuhin Mukherjee"]
-  cve: ["CVE-2024-23917"]
-  product: "JetBrains TeamCity"
-  productUrl: "https://www.jetbrains.com/teamcity/"
-  cpe: "cpe:2.3:a:jetbrains:teamcity:*:*:*:*:*:*:*:*"
-  vulnerableVersions: "TeamCity on-premise versions spanning from 2017.1 to 2023.11.2"
-  vendorStatement: "https://blog.jetbrains.com/teamcity/2024/02/critical-security-issue-affecting-teamcity-on-premises-cve-2024-23917/"
 ---
 
 ### Summary

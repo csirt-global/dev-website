@@ -3,16 +3,10 @@ title: "Hope: blootgestelde inloggegevens in publieke buckets"
 slug: "CG-2024-00003"
 date: 2024-04-15T09:00:00+02:00
 lastmod: 2024-04-19T00:00:00+02:00
+# Only the fields whose wording is language-dependent. Everything else
+# comes from data/cases/CG-2024-00003.yaml.
 case:
-  id: "CG-2024-00003"
   ref: "CG-2024-00003 Hope: blootgestelde inloggegevens in publieke buckets"
-  status: current
-  lead: "Soufian El Yadmani"
-  leadAnchor: soufian
-  researchers: ["Gabriel Tarsia", "Michael Rowley", "Sophia Guarnotta", "Tyler Kay"]
-  cwe:
-    - { id: "CWE-538", label: "CWE-538: Insertion of Sensitive Information into Externally-Accessible File or Directory", url: "https://cwe.mitre.org/data/definitions/538.html" }
-    - { id: "CWE-522", label: "CWE-522: Insufficiently Protected Credentials", url: "https://cwe.mitre.org/data/definitions/522.html" }
 ---
 
 ### Samenvatting

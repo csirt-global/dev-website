@@ -80,9 +80,10 @@
       {{- range . }}
       <li class="border-b border-ink-line last:border-0">
         <a href="{{ .RelPermalink }}" class="group grid gap-2 py-5 sm:grid-cols-[10rem_1fr_auto] sm:items-baseline sm:gap-6">
-          <span class="record-key">{{ .Params.case.id }}</span>
+          {{- $c := partial "case-facts.html" . }}
+          <span class="record-key">{{ $c.id }}</span>
           <span class="font-sans text-lg text-text-strong group-hover:text-signal transition-colors">{{ .Title }}</span>
-          <span class="status status-{{ .Params.case.status }}">{{ i18n (printf "cases_%s" .Params.case.status) }}</span>
+          <span class="status status-{{ $c.status }}">{{ i18n (printf "cases_%s" $c.status) }}</span>
         </a>
       </li>
       {{- end }}

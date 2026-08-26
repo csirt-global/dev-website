@@ -1,0 +1,22 @@
+{{- /* The facts for one case: data/cases/<slug>.yaml, with any per-language
+       overrides from the page's own front matter merged over the top.
+
+       The facts live in data/ because almost none of them are
+       language-dependent. A CVE, a CPE string, a case id and a researcher's
+       name are the same in every language, and repeating all fifteen in every
+       translation is how one of them quietly ends up wrong.
+
+       A few fields do carry prose. "ScreenConnect 23.9.7 and prior" is a
+       version range with an English tail, and the Dutch page rightly says "en
+       ouder". A translation may therefore set `case:` in its front matter with
+       just the fields it needs to change; everything else still comes from the
+       one data file.
+
+       Fails the build rather than rendering a case with no facts. */ -}}
+{{- $slug := .Params.slug -}}
+{{- $facts := index (or hugo.Data.cases dict) $slug -}}
+{{- if not $facts -}}
+  {{- errorf "case %q has no facts: expected data/cases/%s.yaml" .RelPermalink $slug -}}
+{{- end -}}
+{{- with .Params.case }}{{ $facts = merge $facts . }}{{ end -}}
+{{- return $facts -}}
