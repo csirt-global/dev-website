@@ -22,11 +22,13 @@ Exit codes
 0  every language meets its required coverage
 1  a language below its threshold, or a missing/stale page in a strict language
 
-Thresholds live in LANGUAGES below. Only English is strict for now: the decision is to stabilise the English
-site first and translate afterwards. Every other language is tracked and
-listed on each run, so the gap stays visible, so the
-build stays green while translations are still being produced. Tighten a
-threshold the moment a language has a committed reviewer.
+Thresholds live in LANGUAGES below. All five are at 100% and all five are
+enforced, so adding an English page without its translations fails the build.
+
+Two things are counted but never block. `unreviewed` is how many translated
+pages no native speaker has signed off, which will never be zero in a volunteer
+organisation. `english` is how many translated files still read as English, and
+that one does block, because it is a defect rather than a missing signature.
 """
 import re
 import subprocess
@@ -38,12 +40,15 @@ CONTENT = ROOT / "content"
 DEFAULT_LANG = "en"
 
 # lang: minimum fraction of pages that must be translated for the build to pass
+# All five are complete, so all five are now enforced. Adding an English page
+# without its four translations fails the build, which is the point: the gap
+# closed once, and this is what stops it reopening a page at a time.
 LANGUAGES = {
     "en": 1.00,
-    "nl": 0.00,   # English-first: stabilise EN, then translate
-    "de": 0.00,
-    "fr": 0.00,
-    "es": 0.00,
+    "nl": 1.00,
+    "de": 1.00,
+    "fr": 1.00,
+    "es": 1.00,
 }
 
 

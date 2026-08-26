@@ -62,6 +62,16 @@ everywhere. That is why `data/team.yaml` stores `role: role_advisor` rather than
 
 ## Coverage thresholds
 
+All five languages are complete and all five are enforced at 100%. Adding an English page without its
+four translations fails the build.
+
+That is deliberate and it is the whole point of having done this: the gap closed once, and a hard
+threshold is what stops it reopening one page at a time. If a page genuinely cannot be translated
+yet, add the file with `untranslated: true` rather than lowering a threshold. It will render with a
+notice telling readers why they are seeing English, and it will count as missing until it is real.
+
+
+
 `scripts/translation-status.py` enforces a minimum per language:
 
 ```python
