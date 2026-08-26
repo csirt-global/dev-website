@@ -25,7 +25,7 @@ LAYOUTS = ROOT / "layouts"
 
 # Prefixes of the hand-written component layer. A class matching one of these
 # must have a rule; anything else is a Tailwind utility and is generated.
-COMPONENT = re.compile(r"^(t-|prose-|on-paper|verify|btn|nav-link|nav-drop|record|status|notice|hero-mark|support|staging-)[\w-]*$")
+COMPONENT = re.compile(r"^(t-|prose-|on-paper|verify|btn|nav-link|nav-drop|record|status|notice|hero-mark|support|staging-|logo-word)[\w-]*$")
 
 
 def main() -> int:

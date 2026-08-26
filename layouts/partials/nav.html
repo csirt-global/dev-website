@@ -19,9 +19,16 @@
       <nav class="grid h-16 grid-cols-[1fr_auto] lg:grid-cols-[auto_1fr_auto] xl:grid-cols-[1fr_auto_1fr] items-center gap-5"
            aria-label="{{ i18n "nav_main" }}">
 
-        <a href="{{ "/" | relLangURL }}" class="flex items-center gap-3 shrink-0 justify-self-start">
+        {{/* The mark from the favicon, with the name set in the site's own
+             display face rather than baked into a bitmap. A header that shows
+             only a globe would leave the organisation's name nowhere above the
+             fold, on a site whose job is proving who we are. */}}
+        <a href="{{ "/" | relLangURL }}" class="flex items-center gap-2.5 shrink-0 justify-self-start group">
           <span class="sr-only">CSIRT.global</span>
-          <img src="/images/csirt_global_logo.png" alt="" class="h-9 w-auto" width="140" height="36">
+          {{- with resources.Get "images/logo-mark.svg" }}
+          <img src="{{ .RelPermalink }}" alt="" aria-hidden="true" class="h-9 w-9" width="36" height="36">
+          {{- end }}
+          <span class="logo-word" aria-hidden="true">CSIRT<span class="logo-word-tld">.global</span></span>
         </a>
 
         <div class="hidden lg:flex items-center gap-5 justify-self-end xl:justify-self-center">
@@ -104,7 +111,12 @@
          class="fixed inset-0 z-50 lg:hidden overflow-y-auto bg-ink">
       <div class="mx-auto max-w-6xl px-5 sm:px-8 pb-12">
         <div class="flex h-16 items-center justify-between">
-          <img src="/images/csirt_global_logo.png" alt="CSIRT.global" class="h-9 w-auto">
+          <span class="flex items-center gap-2.5">
+            {{- with resources.Get "images/logo-mark.svg" }}
+            <img src="{{ .RelPermalink }}" alt="" aria-hidden="true" class="h-9 w-9" width="36" height="36">
+            {{- end }}
+            <span class="logo-word" aria-hidden="true">CSIRT<span class="logo-word-tld">.global</span></span>
+          </span>
           <button type="button" @click="open = false" class="btn btn-secondary">
             <span class="sr-only">{{ i18n "nav_close" }}</span>
             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">

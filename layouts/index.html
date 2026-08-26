@@ -12,10 +12,9 @@
        tiny and the palette deliberately keeps the yellow for signals. Held at
        8% and masked away before it reaches the headline, so it reads as the
        texture of the page rather than as a second thing to look at. */}}
-  {{- with resources.Get "images/csirt_global_logo.png" }}
-    {{- $mark := .Resize "1100x webp q80" }}
-    <img class="hero-mark" src="{{ $mark.RelPermalink }}" alt="" aria-hidden="true"
-         width="{{ $mark.Width }}" height="{{ $mark.Height }}" loading="lazy" decoding="async">
+  {{- with resources.Get "images/logo-mark.svg" }}
+    <img class="hero-mark" src="{{ .RelPermalink }}" alt="" aria-hidden="true"
+         width="560" height="560" loading="lazy" decoding="async">
   {{- end }}
   <div class="relative mx-auto max-w-6xl px-5 sm:px-8 py-16 sm:py-24">
     <p class="t-eyebrow">{{ i18n "hero_eyebrow" }}</p>

@@ -55,8 +55,11 @@
   --color-ink:        #1d1d1b;
   --color-ink-raised: #262624;
   --color-ink-line:   #3a3a36;
-  --color-signal:     #f6e714;
-  --color-signal-dim: #b0a403;
+  /* The gold in the logo mark itself (assets/images/logo-mark.svg), rather
+     than the brighter yellow the old site used, which the mark never matched.
+     10.4:1 on ink and the same inverted, so every use stays above AA. */
+  --color-signal:     #e1cd03;
+  --color-signal-dim: #9d8f02;
 
   --color-paper:      #f4f4f0;
   --color-paper-line: #d8d8d0;
@@ -210,6 +213,18 @@
   .on-paper .btn-secondary { border-color: var(--color-paper-line); color: var(--color-paper-ink); }
   .on-paper .btn-secondary:hover { border-color: var(--color-paper-ink); }
 
+  /* The wordmark beside the logo. Set in Archivo rather than shipped as an
+     image, so it scales, translates and stays crisp. */
+  .logo-word {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.125rem;
+    letter-spacing: -0.02em;
+    color: var(--color-text-strong);
+    white-space: nowrap;
+  }
+  .logo-word-tld { color: var(--color-signal); }
+
   /* ----------------------------------------------------------------- NAV -- */
   .nav-link { font-size: 0.9375rem; color: var(--color-text); }
   .nav-link:hover, .nav-link[aria-current="page"] { color: var(--color-signal); }
@@ -226,12 +241,12 @@
      text runs the full width and there is nothing to sit behind. */
   .hero-mark {
     position: absolute;
-    right: clamp(1rem, 4vw, 4rem);
-    top: 52%;
+    right: -6%;
+    top: 50%;
     translate: 0 -50%;
-    width: min(31rem, 40vw);
+    width: min(34rem, 44vw);
     height: auto;
-    opacity: 0.085;
+    opacity: 0.13;
     pointer-events: none;
     user-select: none;
     -webkit-mask-image: linear-gradient(to left, #000 58%, transparent 100%);
