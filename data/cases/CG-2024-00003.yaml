@@ -1,0 +1,18 @@
+# Case facts for CG-2024-00003.
+#
+# These live here rather than in the Markdown front matter because they are not
+# language-dependent. A CVE, a CPE string, a version range and a researcher's
+# name are the same in every language, and repeating them across five files is
+# how one of them quietly ends up wrong.
+#
+# The Markdown files carry the title, the description and the prose. Nothing
+# here is ever translated.
+id: "CG-2024-00003"
+ref: "CG-2024-00003 Hope: Exposed Credentials in Public Buckets"
+status: current
+lead: "Soufian El Yadmani"
+leadAnchor: soufian
+researchers: ["Gabriel Tarsia", "Michael Rowley", "Sophia Guarnotta", "Tyler Kay"]
+cwe:
+  - { id: "CWE-538", label: "CWE-538: Insertion of Sensitive Information into Externally-Accessible File or Directory", url: "https://cwe.mitre.org/data/definitions/538.html" }
+  - { id: "CWE-522", label: "CWE-522: Insufficiently Protected Credentials", url: "https://cwe.mitre.org/data/definitions/522.html" }

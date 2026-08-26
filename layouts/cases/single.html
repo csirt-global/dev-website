@@ -1,5 +1,5 @@
 {{ define "main" }}
-{{- $c := .Params.case }}
+{{- $c := partial "case-facts.html" . }}
 <section class="border-b border-ink-line">
   <div class="mx-auto max-w-6xl px-5 sm:px-8 py-12 sm:py-16">
     <div class="flex flex-wrap items-center gap-4">

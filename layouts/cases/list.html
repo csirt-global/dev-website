@@ -1,21 +1,31 @@
 {{ define "main" }}
 {{ partial "page-head.html" (dict "title" .Title "eyebrow" (i18n "cases_eyebrow") "lede" (i18n "cases_register_lede")) }}
 <div class="mx-auto max-w-6xl px-5 sm:px-8 py-12 sm:py-16">
-  {{- $groups := slice (dict "k" "current" "pages" (where .Pages "Params.case.status" "current")) (dict "k" "closed" "pages" (where .Pages "Params.case.status" "closed")) }}
+  {{/* Status lives in data/cases/, not in front matter, so the grouping is
+       built here rather than with `where`. Each entry carries the page and its
+       facts together, so the loop below never looks either up twice. */}}
+  {{- $rows := slice }}
+  {{- range .Pages }}
+    {{- $rows = $rows | append (dict "page" . "case" (partial "case-facts.html" .)) }}
+  {{- end }}
+  {{- $groups := slice
+        (dict "k" "current" "rows" (where $rows "case.status" "current"))
+        (dict "k" "closed"  "rows" (where $rows "case.status" "closed")) }}
   {{- range $groups }}
   {{- $g := . }}
-  {{- with .pages }}
+  {{- with .rows }}
   <section class="mb-14 last:mb-0">
     <h2 class="status status-{{ $g.k }}">{{ i18n (printf "cases_%s" $g.k) }}</h2>
     <p class="mt-2 mb-5 text-muted">{{ i18n (printf "cases_%s_intro" $g.k) }}</p>
     <ul class="record border-t border-ink-line">
       {{- range . }}
+      {{- $c := .case }}
       <li class="border-b border-ink-line">
-        <a href="{{ .RelPermalink }}" class="group grid gap-1 py-5 sm:grid-cols-[10rem_1fr] sm:gap-6 sm:items-baseline">
-          <span class="record-key">{{ .Params.case.id }}</span>
+        <a href="{{ .page.RelPermalink }}" class="group grid gap-1 py-5 sm:grid-cols-[10rem_1fr] sm:gap-6 sm:items-baseline">
+          <span class="record-key">{{ $c.id }}</span>
           <span>
-            <span class="font-sans text-lg text-text-strong group-hover:text-signal transition-colors">{{ .Title }}</span>
-            {{- with .Params.case.cve }}<span class="record-key block mt-1 text-[0.8125rem]">{{ delimit . ", " }}</span>{{ end }}
+            <span class="font-sans text-lg text-text-strong group-hover:text-signal transition-colors">{{ .page.Title }}</span>
+            {{- with $c.cve }}<span class="record-key block mt-1 text-[0.8125rem]">{{ delimit . ", " }}</span>{{ end }}
           </span>
         </a>
       </li>
