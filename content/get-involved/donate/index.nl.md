@@ -4,7 +4,7 @@ description: "Steun CSIRT.global. Wij zijn een stichting zonder winstoogmerk, ge
 layout: "donate"
 lede: "Wij worden geleid door vrijwilligers en zijn zonder winstoogmerk. Donaties betalen het werk, niet de salarissen."
 weight: 2
-aliases: ["/nl/donate/"]
+aliases: ["/donate/"]
 ---
 
 Elke zaak die we openen wordt gepubliceerd, onze jaarrekeningen worden openbaar gedeponeerd en de

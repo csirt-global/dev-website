@@ -1,7 +1,13 @@
-{{- /* The BCP 47 tag for the current language, for markup rather than URLs.
+{{- /* The BCP 47 tag for a page's language, for markup rather than URLs.
 
        The language key is the URL prefix and stays lowercase, giving /zh/ and
        /pt-br/. The tag is cased differently and, for Chinese, says which
        script. Languages whose tag equals their key need no entry and fall
-       through to the key. */ -}}
-{{- return (or (index site.Params.languageTags site.Language.Lang) site.Language.Lang) -}}
+       through to the key.
+
+       Takes the page, and reads the language off it. It must not read the
+       global `site`: head.html calls this inside `range .AllTranslations`, so
+       every alternate link would otherwise be labelled with the language of
+       the page being rendered instead of the one it points at. */ -}}
+{{- $lang := .Site.Language.Lang -}}
+{{- return (or (index .Site.Params.languageTags $lang) $lang) -}}
