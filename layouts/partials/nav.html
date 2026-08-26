@@ -16,14 +16,14 @@
     <div class="mx-auto max-w-6xl px-5 sm:px-8">
       {{/* Three columns with equal outer tracks, so the menu is centred on the
            page rather than pushed against the right edge by the actions. */}}
-      <nav class="grid h-16 grid-cols-[1fr_auto] lg:grid-cols-[auto_1fr_auto] xl:grid-cols-[1fr_auto_1fr] items-center gap-5"
+      <nav class="grid h-16 grid-cols-[1fr_auto] lg:grid-cols-[auto_1fr_auto] xl:grid-cols-[minmax(max-content,1fr)_auto_minmax(max-content,1fr)] items-center gap-5"
            aria-label="{{ i18n "nav_main" }}">
 
         {{/* The mark from the favicon, with the name set in the site's own
              display face rather than baked into a bitmap. A header that shows
              only a globe would leave the organisation's name nowhere above the
              fold, on a site whose job is proving who we are. */}}
-        <a href="{{ "/" | relLangURL }}" class="flex items-center gap-2.5 shrink-0 justify-self-start group">
+        <a href="{{ "/" | relLangURL }}" class="flex w-max items-center gap-2.5 justify-self-start group">
           <span class="sr-only">CSIRT.global</span>
           {{- with resources.Get "images/logo-mark.svg" }}
           <img src="{{ .RelPermalink }}" alt="" aria-hidden="true" class="h-9 w-9" width="36" height="36">
