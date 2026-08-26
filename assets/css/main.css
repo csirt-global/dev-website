@@ -115,9 +115,13 @@
   /* Han script. :lang(zh) matches lang="zh-Hans", because :lang() matches subtags.
 
      The display styles are set for Latin: negative tracking tightens letters
-     drawn to sit apart, and uppercasing means nothing in a script with no case.
-     Han glyphs already sit on a fixed square body, so tracking them apart reads
-     as damage rather than emphasis.
+     drawn to sit apart. Han glyphs already sit on a fixed square body, so
+     tracking them apart reads as damage rather than emphasis.
+
+     text-transform is deliberately left alone. Uppercasing is a no-op on a
+     script with no case, so overriding it would change nothing for Han and
+     would only un-uppercase the Latin strings that remain on these pages,
+     such as the hero eyebrow, which should look the same in every language.
 
      No font is loaded. Our three faces are Latin-only and 116 KB self-hosted; a
      Han face is 4 to 10 MB, forty times the whole font budget for one language.
@@ -131,7 +135,7 @@
   :lang(zh) .t-eyebrow,
   :lang(zh) .status,
   :lang(zh) .verify-head,
-  :lang(zh) .support-eyebrow { letter-spacing: 0.05em; text-transform: none; }
+  :lang(zh) .support-eyebrow { letter-spacing: 0.05em; }
 
   /* ---------------------------------------------------------------- TYPE -- */
   .t-display {
