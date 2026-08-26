@@ -108,3 +108,5 @@ verify_note_rfc: "RFC 9116"
 
 redirect_moved: "Cette page a été déplacée."
 redirect_link: "Continuer"
+role_project_lead: "Responsable du projet"
+role_volunteer: "Bénévole"

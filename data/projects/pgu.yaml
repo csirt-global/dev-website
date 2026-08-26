@@ -1,0 +1,30 @@
+# Who works on Project Global Universities.
+#
+# Here rather than in the Markdown front matter because none of it is
+# language-dependent: a name, a photo and a LinkedIn URL are the same in every
+# language. `role` is an i18n key, so job titles translate with the rest of the
+# site. Repeating this block in five files is how one of these URLs quietly
+# ends up wrong.
+team:
+  - name: "Victor Gevers"
+    role: role_vicechair
+    photo: "images/victor.jpg"
+    social:
+      - { kind: x, url: "https://twitter.com/0xDUDE" }
+      - { kind: linkedin, url: "https://www.linkedin.com/in/vgevers/" }
+  - name: "Tabitha Vogelaar"
+    role: role_project_lead
+    photo: "images/tabitha.jpg"
+    social:
+      - { kind: x, url: "https://twitter.com/TabithaVogelaar" }
+      - { kind: linkedin, url: "https://www.linkedin.com/in/tabitha-vogelaar/" }
+  - name: "Imre Erciyas"
+    role: role_volunteer
+    photo: "images/stock.jpg"
+    social:
+      - { kind: linkedin, url: "https://www.linkedin.com/in/imre-erciyas-031288a3/" }
+  - name: "Ervin Voisnis"
+    role: role_volunteer
+    photo: "images/ervin.jpg"
+    social:
+      - { kind: linkedin, url: "https://www.linkedin.com/in/ervin-voisnis/" }

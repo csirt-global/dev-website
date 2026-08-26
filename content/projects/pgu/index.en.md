@@ -1,4 +1,5 @@
 ---
+
 title: "Global Universities (PGU)"
 slug: "pgu"
 weight: 1
@@ -20,11 +21,6 @@ project:
     DIVD Works. These organisations are part of the DIVD family and work together closely.
 
     We are expanding and onboarding more people at this moment. :-)
-  team:
-    - { name: "Victor Gevers", role: "Vice Chair", photo: "images/victor.jpg", social: [ { kind: x, url: "https://twitter.com/0xDUDE" }, { kind: linkedin, url: "https://www.linkedin.com/in/vgevers/" } ] }
-    - { name: "Tabitha Vogelaar", role: "Project Lead", photo: "images/tabitha.jpg", social: [ { kind: x, url: "https://twitter.com/TabithaVogelaar" }, { kind: linkedin, url: "https://www.linkedin.com/in/tabitha-vogelaar/" } ] }
-    - { name: "Imre Erciyas", role: "Volunteer", photo: "images/stock.jpg", social: [ { kind: linkedin, url: "https://www.linkedin.com/in/imre-erciyas-031288a3/" } ] }
-    - { name: "Ervin Voisnis", role: "Volunteer", photo: "images/ervin.jpg", social: [ { kind: linkedin, url: "https://www.linkedin.com/in/ervin-voisnis/" } ] }
 ---
 
 Project Global Universities (PGU) is an initiative dedicated to identifying and addressing unpatched
