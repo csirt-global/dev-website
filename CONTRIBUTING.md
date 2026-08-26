@@ -148,6 +148,13 @@ keyboard focus ring. CI runs it too, against the built artifact.
 
 English first. A page is written in English, reviewed, and only then translated.
 
+**Every language at 100% is enforced by CI.** Today that is all five, so adding an English page means
+adding its Dutch, German, French and Spanish versions in the same pull request, or the build fails.
+A language still being written sits at `0.00` in `scripts/translation-status.py` and is only reported,
+so adding a new language does not fail CI on day one. If a translation
+genuinely cannot be written yet, add the file with `untranslated: true`: it renders with a notice
+explaining why the reader is seeing English, and it counts as missing until it is real.
+
 A `.<lang>.md` file that contains English text is worse than no file at all: it
 reports as translated and reads as neglect. Mark it `untranslated: true` in the
 front matter instead, and `translation-status.py` will count it as missing.

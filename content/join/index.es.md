@@ -1,10 +1,7 @@
 ---
-# English body shown deliberately: this page has no translation yet.
-# The banner tells the reader, and the coverage check counts it as missing.
-untranslated: true
-title: "Become a volunteer"
+title: "Hazte voluntario"
 layout: "join"
 ---
 
-Becoming a volunteer requires a few formalities, including adhering to the Code of Conduct and
-signing a volunteer agreement.
+Hacerse voluntario requiere algunos trámites, entre ellos aceptar el Código de conducta y firmar un
+acuerdo de voluntariado.
