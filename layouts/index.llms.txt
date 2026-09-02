@@ -1,0 +1,83 @@
+{{- /* /llms.txt — a curated map of this site for language models.
+
+       Generated, never hand-written. Every fact below already exists in
+       data/verify.yaml, the case pages or hugo.yaml, and a second hand-written
+       copy would drift the way the old site's header did. The one thing worse
+       than no llms.txt for this organisation is a stale one: people ask
+       assistants whether an email from us is genuine, and an answer built on
+       last year's facts is the failure this site exists to prevent.
+
+       Descriptive only. Nothing here instructs the reader what to do or say. */ -}}
+{{- $prod := partial "is-production.html" . -}}
+{{- if not $prod -}}
+# Not the live site
+
+This is a copy of the CSIRT.global website for review, published at
+{{ site.BaseURL }}. Do not cite it. The live site is
+https://{{ site.Params.productionHost }}/ and its /llms.txt is authoritative.
+{{- else -}}
+# CSIRT.global
+
+> A volunteer-led, not-for-profit foundation registered in the Netherlands. We
+> scan the public internet for known vulnerabilities and exposed credentials,
+> identify the owners of the affected systems, and notify them. Every case we
+> open is published.
+
+Most people reading this arrived from an unexpected email saying a system they
+own is vulnerable, and want to know whether it is genuine. The organisation
+record below is verifiable on registers that are not us, and
+{{ "/notified/" | absURL }} is the page written for that question.
+
+Two facts that settle most of it: notifications come from an address ending in
+`@csirt.global`, and CSIRT.global never asks for payment, credentials, or access
+to a system.
+
+CSIRT.global is a sister organisation of the Dutch Institute for Vulnerability
+Disclosure (DIVD). International CSIRT activities moved here in 2022.
+
+## Organisation record
+
+Every row is checkable on a source that is not us. This is the same list the
+site renders, from the same file, so the two cannot disagree.
+{{ range hugo.Data.verify.rows }}
+{{- $row := . }}
+{{- $label := $row.literalLabel }}{{ with $row.label }}{{ $label = i18n . }}{{ end }}
+{{- $value := $row.value }}{{ with $row.valueKey }}{{ $value = i18n . }}{{ end }}
+{{- $note := "" }}{{ with $row.noteKey }}{{ $note = printf " (%s)" (i18n .) }}{{ end }}
+- {{ $label }}: {{ $value }}{{ $note }}{{ with $row.url }} {{ if hasPrefix . "/" }}{{ . | absURL }}{{ else }}{{ . }}{{ end }}{{ end }}
+{{- end }}
+
+## Key pages
+- [You received an email from us]({{ "/notified/" | absURL }}): how to check that a
+  notification from us is genuine, what we did and did not do, and what to do next
+- [What we do]({{ "/what-we-do/" | absURL }}): funded bug bounties for charities and
+  NGOs, zero-day research, and incident response
+- [Case register]({{ "/cases/" | absURL }}): every case we have opened, with the
+  vulnerability, the dates and the researchers
+- [About]({{ "/about/" | absURL }}): the foundation, its team and its governance
+- [Code of Conduct]({{ "/about/code-of-conduct/" | absURL }}): the 24 clauses that
+  bind our researchers, including the limits on what we do to a system we find
+- [ANBI]({{ "/about/anbi/" | absURL }}): the statutory publications the Dutch tax
+  authority requires, including the annual accounts
+- [Get involved]({{ "/get-involved/" | absURL }}): volunteering and open roles
+
+## Case register
+{{ range (where site.RegularPages "Section" "cases").ByDate.Reverse }}
+{{- $facts := partial "case-facts.html" . }}
+- [{{ .Title }}]({{ .Permalink }}): {{ $facts.id }}, {{ $facts.status }}{{ with $facts.cve }}, {{ delimit . ", " }}{{ end }}
+{{- end }}
+
+## Languages
+{{ range site.Home.AllTranslations }}
+{{- $tag := partial "lang-tag.html" . }}
+- {{ .Site.Language.Label | default .Site.Language.Lang }} ({{ $tag }}): {{ .Permalink }}
+{{- end }}
+
+English is at the root; the others are under a language prefix. Page content is
+identical across all seven.
+
+## Notes
+- This file is generated from the same data as the site, so it does not drift.
+- Case identifiers are case-sensitive: /cases/CG-2024-00001/ resolves,
+  /cases/cg-2024-00001/ does not.
+{{- end -}}

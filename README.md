@@ -91,6 +91,7 @@ it. Both are served by the organisation record — legal entity, RSIN, registere
 /about/                 team, code of conduct, ANBI
 /get-involved/          volunteering and open roles
 /news/
+/llms.txt               a generated map of the site for language models
 ```
 
 Every URL the old site served still resolves. Old homepage anchors (`#mission`, `#team`, `#code`,
