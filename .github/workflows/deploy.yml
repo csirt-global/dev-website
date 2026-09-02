@@ -102,7 +102,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
 
       # Everything before this point reads ./public, the folder Hugo wrote. That
       # is not what visitors get: the artifact upload sits in between and can
