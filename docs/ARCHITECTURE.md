@@ -89,6 +89,39 @@ overriding it changes nothing for Han and only un-uppercases the Latin strings t
 page. The rule did override it at first, and the result was a hero eyebrow set in mixed case on the
 Chinese site and uppercase on the other six.
 
+## `/llms.txt` is generated, and a staging copy refuses to be cited
+
+`llms.txt` is the convention for handing a language model a curated map of a site
+instead of leaving it to infer one from the HTML. There is a good reason for this
+organisation to publish one and a good reason to be careful about it, and they are
+the same reason.
+
+People increasingly ask an assistant whether an email is a scam. Our most common
+visitor arrived from exactly that email. So the answer an assistant gives about
+CSIRT.global is part of the verification path this whole site is built around,
+and it should be built on the same facts as `/notified/`.
+
+Which is why it is **generated, never hand-written**. `layouts/index.llms.txt`
+reads `data/verify.yaml`, the case pages and the language list, so the
+organisation record in it cannot disagree with the one on the page. A
+hand-maintained copy would drift the way the old site's eight headers did, and a
+stale set of verification facts is worse than none.
+
+Two consequences worth knowing:
+
+- **English only.** It is a single file at the root by convention, and six more
+  under language prefixes would give six competing answers to "who is
+  CSIRT.global". The file lists the other languages instead.
+- **A copy says so.** On any host that is not `productionHost` the file contains
+  nothing but a statement that it is not the live site and a pointer to the real
+  one. `robots.txt` already disallows crawling there, but an assistant fetching
+  the URL directly does not read `robots.txt`, and a security organisation's
+  lookalike being cited as authoritative is the exact failure the not-production
+  treatment exists to prevent.
+
+`scripts/check-urls.py` lists it, so it is also fetched from the live site after
+every deploy by `check-deployed.py`.
+
 ## The mark has one source
 
 `assets/images/logo-mark.svg` is the logo, and every favicon is rendered from it
