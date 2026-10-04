@@ -39,4 +39,4 @@ Alle Freiwilligen von CSIRT.global halten sich an unseren Verhaltenskodex:
 21. Uns sind geografische Unterschiede in Kultur, Recht und Gepflogenheiten bewusst. Wir bieten Eskalationswege an, falls durch die Unterschiede zwischen den Regionen, in denen wir tätig sind, Konflikte entstehen. Mitglieder sind ausdrücklich eingeladen, sie zu nutzen.
 22. Im zwischenmenschlichen Umgang sind wir eine offene, einladende, lernende und lehrende Organisation. Wir glauben an Vielfalt.
 23. Wir ermutigen Mitglieder, andere auf Verhalten anzusprechen, das sie für unangemessen halten, und bieten daneben Eskalationswege für alle, die das lieber nicht direkt tun. Wir verstehen, dass es sehr gute Gründe geben kann, etwas nicht direkt anzusprechen.
-24. Anregungen und Rückmeldungen sind willkommen. Wenden Sie sich an unseren Sekretär [Lennaert Oudshoorn](#lennaert).
+24. Anregungen und Rückmeldungen sind willkommen. Wenden Sie sich an unseren Sekretär [Eward Driehuis](/about/team/#eward).

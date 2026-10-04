@@ -36,4 +36,4 @@ All CSIRT.global volunteers adhere to our Code of Conduct:
 21. We are aware of geographical differences, with regard to culture, law and customs. We provide escalation paths, if conflicts arise due to the differences in multiple geographical regions we operate in. Members are encouraged to use these.
 22. On an interpersonal level, we are an open, welcoming, learning and teaching organisation. We believe in diversity.
 23. We encourage members to challenge other members’ behaviour if they feel it’s not appropriate, whilst also providing escalation paths for those that choose not to address issues directly. We understand there might be very good reasons for not addressing issues directly.
-24. Suggestions and feedback are welcome. Contact our Secretary [Lennaert Oudshoorn](#lennaert).
+24. Suggestions and feedback are welcome. Contact our Secretary [Eward Driehuis](/about/team/#eward).

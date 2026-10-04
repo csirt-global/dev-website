@@ -8,9 +8,18 @@
        Used by the nav, the footer and the markdown render hook, so a link
        cannot bypass the rule by being written somewhere new. */ -}}
 {{- $url := . -}}
+{{- /* A fragment is not part of the page lookup: GetPage "/about/team/#eward"
+       finds nothing and the link falls back to the English path in every
+       translation. Split it off, resolve the page, put it back. */ -}}
+{{- $frag := "" -}}
+{{- if and (strings.Contains $url "#") (not (hasPrefix $url "/#")) -}}
+  {{- $parts := split $url "#" -}}
+  {{- $url = index $parts 0 -}}
+  {{- $frag = printf "#%s" (index $parts 1) -}}
+{{- end -}}
 {{- if hasPrefix $url "/#" -}}
   {{- if eq site.Language.Lang "en" }}{{ $url }}{{ else }}/{{ site.Language.Lang }}/{{ strings.TrimPrefix "/" $url }}{{ end -}}
 {{- else -}}
   {{- $p := site.GetPage $url -}}
-  {{- if $p }}{{ $p.RelPermalink }}{{ else }}{{ $url }}{{ end -}}
+  {{- if $p }}{{ $p.RelPermalink }}{{ $frag }}{{ else }}{{ $url }}{{ $frag }}{{ end -}}
 {{- end -}}

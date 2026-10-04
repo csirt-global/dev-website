@@ -17,46 +17,23 @@
 # over.
 
 groups:
-  - id: supervisory
-    label: group_supervisory
-    intro: team_intro_supervisory
-    members:
-      - name: "Michiel Prins"
-        role: role_cofounder
-        photo: images/michiel.jpg
-        social:
-          - { kind: x, url: "https://twitter.com/michielprins" }
-          - { kind: linkedin, url: "https://www.linkedin.com/in/michiel3/" }
-
   - id: board
     label: group_board
     intro: team_intro_board
     members:
-      - name: "Eward Driehuis"
-        role: role_chair
-        photo: images/eward.jpg
-        social:
-          - { kind: x, url: "https://twitter.com/e3huis" }
-          - { kind: linkedin, url: "https://www.linkedin.com/in/ewarddriehuis/" }
       - name: "Victor Gevers"
-        role: role_vicechair
+        role: role_chair
         photo: images/victor.jpg
         social:
           - { kind: x, url: "https://twitter.com/0xdude" }
           - { kind: linkedin, url: "https://www.linkedin.com/in/vgevers/" }
-      - name: "Lennaert Oudshoorn"
-        role: role_secretary
-        photo: images/lennaert.jpg
-        anchor: lennaert          # linked from Code of Conduct item 23
+      - name: "Eward Driehuis"
+        role: role_treasurer_secretary
+        photo: images/eward.jpg
+        anchor: eward             # linked from Code of Conduct item 24
         social:
-          - { kind: x, url: "https://twitter.com/lennaert89" }
-          - { kind: linkedin, url: "https://www.linkedin.com/in/lennaertoudshoorn/" }
-      - name: "Shairesh Algoe"
-        role: role_treasurer
-        photo: images/shairesh.jpg
-        social:
-          - { kind: x, url: "https://twitter.com/shaireshalgoe" }
-          - { kind: linkedin, url: "https://www.linkedin.com/in/shaireshalgoe/" }
+          - { kind: x, url: "https://twitter.com/e3huis" }
+          - { kind: linkedin, url: "https://www.linkedin.com/in/ewarddriehuis/" }
 
   - id: management
     label: group_management
