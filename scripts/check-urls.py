@@ -53,6 +53,7 @@ PAGES = [
     "/join/",
     "/code/",
     "/.well-known/security.txt",
+    "/llms.txt",
 ]
 
 # Fragment anchors other pages and external links target. Checked as substrings

@@ -15,6 +15,8 @@ module:
 languages:
   en:
     label: "English"
+    outputs:
+      home: ["HTML", "llms"]
     direction: "ltr"
     weight: 1
   nl:
@@ -57,6 +59,17 @@ enableGitInfo: false
 
 # Keep Hugo from publishing things nobody asked for.
 disableKinds: ["taxonomy", "term"]
+
+# /llms.txt, the convention for giving a language model a curated map of a site
+# rather than leaving it to infer one. English only: it is a single file at the
+# root by convention, and duplicating it under six language prefixes would give
+# six competing answers to "who is CSIRT.global".
+outputFormats:
+  llms:
+    mediaType: "text/plain"
+    baseName: "llms"
+    isPlainText: true
+    notAlternative: true
 
 outputs:
   home: ["HTML"]
