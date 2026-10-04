@@ -39,4 +39,4 @@ Todas las personas voluntarias de CSIRT.global cumplen nuestro Código de conduc
 21. Somos conscientes de las diferencias geográficas en cultura, derecho y costumbres. Ofrecemos vías de escalado por si surgen conflictos derivados de las diferencias entre las regiones en las que operamos. Animamos a los miembros a utilizarlas.
 22. En el trato personal somos una organización abierta, acogedora, que aprende y que enseña. Creemos en la diversidad.
 23. Animamos a los miembros a interpelar a otros sobre conductas que consideren inadecuadas, y ofrecemos además vías de escalado para quienes prefieran no hacerlo directamente. Entendemos que puede haber muy buenas razones para no abordar las cosas de forma directa.
-24. Las sugerencias y los comentarios son bienvenidos. Escribe a nuestro secretario [Eward Driehuis](#eward).
+24. Las sugerencias y los comentarios son bienvenidos. Escribe a nuestro secretario [Eward Driehuis](/about/team/#eward).

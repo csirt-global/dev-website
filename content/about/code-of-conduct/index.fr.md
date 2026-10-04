@@ -39,4 +39,4 @@ Tous les bénévoles de CSIRT.global respectent notre Code de conduite :
 21. Nous avons conscience des différences géographiques de culture, de droit et d'usages. Nous prévoyons des voies d'escalade en cas de conflit lié aux différences entre les régions où nous opérons. Les membres sont encouragés à les utiliser.
 22. Sur le plan humain, nous sommes une organisation ouverte, accueillante, qui apprend et qui transmet. Nous croyons à la diversité.
 23. Nous encourageons les membres à interpeller les autres sur un comportement qu'ils jugent inapproprié, tout en offrant des voies d'escalade à ceux qui préfèrent ne pas aborder les choses directement. Nous comprenons qu'il puisse y avoir de très bonnes raisons de ne pas le faire.
-24. Suggestions et retours sont les bienvenus. Contactez notre secrétaire [Eward Driehuis](#eward).
+24. Suggestions et retours sont les bienvenus. Contactez notre secrétaire [Eward Driehuis](/about/team/#eward).

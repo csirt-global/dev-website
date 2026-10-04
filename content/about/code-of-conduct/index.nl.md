@@ -39,4 +39,4 @@ Alle vrijwilligers van CSIRT.global houden zich aan onze Gedragscode:
 21. We zijn ons bewust van geografische verschillen op het gebied van cultuur, wetgeving en gewoonten. We bieden escalatiepaden als er conflicten ontstaan door de verschillen tussen de regio's waarin we actief zijn. Leden worden aangemoedigd daarvan gebruik te maken.
 22. Op persoonlijk vlak zijn we een open, gastvrije, lerende en onderwijzende organisatie. Wij geloven in diversiteit.
 23. We moedigen leden aan elkaar aan te spreken op gedrag dat zij ongepast vinden, en bieden daarnaast escalatiepaden voor wie dat liever niet rechtstreeks doet. We begrijpen dat er heel goede redenen kunnen zijn om iets niet rechtstreeks aan te kaarten.
-24. Suggesties en feedback zijn welkom. Neem contact op met onze secretaris [Eward Driehuis](#eward).
+24. Suggesties en feedback zijn welkom. Neem contact op met onze secretaris [Eward Driehuis](/about/team/#eward).
