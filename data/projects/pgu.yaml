@@ -7,7 +7,7 @@
 # ends up wrong.
 team:
   - name: "Victor Gevers"
-    role: role_vicechair
+    role: role_chair
     photo: "images/victor.jpg"
     social:
       - { kind: x, url: "https://twitter.com/0xDUDE" }

@@ -6,7 +6,7 @@ Every field below lives in Markdown or YAML. You never need to write HTML.
 
 ## Team members — `data/team.yaml`
 
-The team page is generated from this file. Three groups: `supervisory`, `board`, `management`.
+The team page is generated from this file. Two groups: `board` and `management`.
 
 ```yaml
 - name: "Jane Doe"                       # shown as-is, not translated

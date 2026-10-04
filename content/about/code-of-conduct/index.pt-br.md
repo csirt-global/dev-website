@@ -39,4 +39,4 @@ Todos os voluntários da CSIRT.global seguem nosso Código de Conduta:
 21. Reconhecemos que existem diferenças geográficas de cultura, lei e costumes. Oferecemos caminhos de escalonamento para os conflitos que surjam dessas diferenças entre as várias regiões em que atuamos. Incentivamos os membros a usá-los.
 22. No plano das relações entre pessoas, somos uma organização aberta, acolhedora, que aprende e ensina. Acreditamos na diversidade.
 23. Incentivamos os membros a questionar o comportamento de outros membros quando o considerarem inadequado, e ao mesmo tempo oferecemos caminhos de escalonamento a quem preferir não tratar do assunto diretamente. Entendemos que pode haver razões muito boas para não tratar de um assunto diretamente.
-24. Sugestões e comentários são bem-vindos. Fale com nosso secretário, [Lennaert Oudshoorn](#lennaert).
+24. Sugestões e comentários são bem-vindos. Fale com nosso secretário, [Eward Driehuis](#eward).

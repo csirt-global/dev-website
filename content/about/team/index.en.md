@@ -1,9 +1,9 @@
 ---
 weight: 1
 title: "Team"
-description: "The people behind CSIRT.global: supervisory board, board and management."
+description: "The people behind CSIRT.global: the board and the management team."
 layout: "team"
 ---
 
-Due to the importance of our work and the sensitivity of some of the information we work with,
-CSIRT.global has two levels of oversight.
+CSIRT.global is governed by a board. The management team is responsible for
+day-to-day operations.
